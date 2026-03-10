@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 02:09:32 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/08 00:35:51 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/10 16:18:57 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,10 @@ void	ft_env(t_env *env)
 	curr = env;
 	while (curr)
 	{
-		if (curr->exported)
-		{
-			if (curr->value)
-				printf("%s=%s\n", curr->key, curr->value);
-			else
-				printf("%s\n", curr->key);
-		}
+		if (curr->data->value)
+			printf("%s=%s\n", curr->data->key, curr->data->value);
+		else
+			printf("%s\n", curr->data->key);
 		curr = curr->next;
 	}
 }

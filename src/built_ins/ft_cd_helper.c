@@ -6,55 +6,55 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 21:10:59 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/09 06:10:45 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/10 16:15:53 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_back_count(char *dir)
-{
-	int		i;
-	int		count;
-	int		done;
+// int	check_back_count(char *dir)
+// {
+// 	int		i;
+// 	int		count;
+// 	int		done;
 
-	i = 2;
-	count = 0;
-	done = 0;
-	while(!done)
-	{
-		while(dir[i])
-		{
-			if (dir[i] == '/' || !dir[i])
-				break ;
-			i++;
-		}
-		if (!dir[i])
-			done = 1 ;
-		if (ft_strncmp("..", dir + i, 2))
-			done = 1 ;
-		count++;
-		i++;
-	}
-	return (count);
-}
+// 	i = 2;
+// 	count = 0;
+// 	done = 0;
+// 	while(!done)
+// 	{
+// 		while(dir[i])
+// 		{
+// 			if (dir[i] == '/' || !dir[i])
+// 				break ;
+// 			i++;
+// 		}
+// 		if (!dir[i])
+// 			done = 1 ;
+// 		if (ft_strncmp("..", dir + i, 2))
+// 			done = 1 ;
+// 		count++;
+// 		i++;
+// 	}
+// 	return (count);
+// }
 
-char	*go_back_path(char *dir, char *last_dir)
-{
-	char	*path;
-	int		count;
-	int		last;
+// char	*go_back_path(char *dir, char *last_dir)
+// {
+// 	char	*path;
+// 	int		count;
+// 	int		last;
 
-	count = check_back_count(dir);
-	while (count)
-	{
-		last = ft_strlen(last_dir) - ft_strlen(ft_strrchr(last_dir, '/'));
-		last_dir[last] = 0;
-		count--;
-	}
-	path = ft_strdup(last_dir);
-	return(path);
-}
+// 	count = check_back_count(dir);
+// 	while (count)
+// 	{
+// 		last = ft_strlen(last_dir) - ft_strlen(ft_strrchr(last_dir, '/'));
+// 		last_dir[last] = 0;
+// 		count--;
+// 	}
+// 	path = ft_strdup(last_dir);
+// 	return(path);
+// }
 
 char	*ft_go_home(char *dir, t_env *env)
 {
@@ -83,24 +83,24 @@ char	*ft_go_home(char *dir, t_env *env)
 	return (path);
 }
 
-char	*ft_go_back(char *dir, t_env *env)
-{
-	char	*path;
-	char	*pwd;
-	int		result;
+// char	*ft_go_back(char *dir, t_env *env)
+// {
+// 	char	*path;
+// 	char	*pwd;
+// 	int		result;
 
-	pwd = get_env_value(env, "PWD");
-	path = go_back_path(dir, pwd);
-	result = chdir(path);
-	if (result == -1)
-	{
-		ft_putstr_fd("cd: no such file or directory: ", 2);
-		ft_putstr_fd(dir, 2);
-		ft_putchar_fd('\n', 2);
-		return (NULL);
-	}
-	return(path);
-}
+// 	pwd = get_env_value(env, "PWD");
+// 	path = go_back_path(dir, pwd);
+// 	result = chdir(path);
+// 	if (result == -1)
+// 	{
+// 		ft_putstr_fd("cd: no such file or directory: ", 2);
+// 		ft_putstr_fd(dir, 2);
+// 		ft_putchar_fd('\n', 2);
+// 		return (NULL);
+// 	}
+// 	return(path);
+// }
 
 char	*ft_go_dir(char *dir, t_env *env)
 {
