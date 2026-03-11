@@ -6,17 +6,17 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 22:12:24 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/10 17:06:14 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/11 23:11:36 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_env_value(t_env *env, char *key)
+char	*get_env_value(t_env **env, char *key)
 {
 	t_env	*curr;
 
-	curr = env;
+	curr = *env;
     while (curr)
     {
         if (!ft_strncmp(curr->data->key, key, ft_strlen(curr->data->key)))
@@ -26,11 +26,11 @@ char	*get_env_value(t_env *env, char *key)
     return NULL;
 }
 
-t_env	*find_key(t_env *env, char	*key)
+t_env	*find_key(t_env **env, char	*key)
 {
 	t_env	*curr;
 
-	curr = env;
+	curr = *env;
 	while (curr)
 	{
 		if (!ft_strncmp(curr->data->key, key, ft_strlen(curr->data->key)))
@@ -40,11 +40,11 @@ t_env	*find_key(t_env *env, char	*key)
 	return (NULL);
 }
 
-void	change_env_value(t_env *env, char *key, char *value)
+void	change_env_value(t_env **env, char *key, char *value)
 {
 	t_env	*curr;
 
-	curr = env;
+	curr = *env;
 	while (curr)
 	{
 		if (!ft_strncmp(curr->data->key, key, ft_strlen(curr->data->key)))
@@ -58,30 +58,31 @@ void	change_env_value(t_env *env, char *key, char *value)
 	add_new_node(env, key, value);
 }
 
-void	env_clear(t_env *env)
+void	env_clear(t_env **env)
 {
-	t_env	**curr;
-	t_env	**next;
+	t_env	*curr;
+	t_env	*next;
 
-	curr = &env;
+	curr = *env;
 	while (curr)
 	{
-		next = &((*curr)->next);
-		free((*curr)->data->key);
-		free((*curr)->data->value);
-		free((*curr)->data);
+		next = curr->next;
+		free(curr->data->key);
+		free(curr->data->value);
+		free(curr->data);
 		free(curr);
 		curr = next;
 	}
+	free(env);
 }
 
-void	env_unset(t_env *env, char *key)
+void	env_unset(t_env **env, char *key)
 {
 	t_env	*curr;
 	t_env	*next;
 	t_env	*prev;
 
-	curr = env;
+	curr = *env;
 	while (curr)
 	{
 		if (!ft_strncmp(curr->data->key, key, ft_strlen(curr->data->key)))

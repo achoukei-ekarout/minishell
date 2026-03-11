@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 02:08:53 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/10 16:19:36 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/11 22:46:05 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,54 +29,26 @@ int	ft_isempty(char	*arg)
 	return (0);
 }
 
-// char	*ft_check_dir(char *arg, t_env *env)
-// {
-// 	char	*path;
-
-// 	if(ft_isempty(arg))
-// 		path = ft_go_home(arg, env);
-// 	else if (!ft_strncmp(arg, "~", 1))
-// 		path = ft_go_home(arg, env);
-// 	else if(!ft_strncmp(arg, "..", 2))
-// 		path = ft_go_back(arg, env);
-// 	else
-// 		path = ft_go_dir(arg, env);
-// 	return (path);
-// }
-
-// void	ft_cd(char *arg, t_env *env)
-// {
-// 	char	*path;
-
-// 	path = ft_check_dir(arg, env);
-// 	if (!path)
-// 		return ;
-// 	change_env_value(env, "PWD", path);
-// }
-
-void	change_env_pwd(char *old_path, t_env *env)
+void	change_env_pwd(char *old_path, t_env **env)
 {
 	char	*new_path;
 
 	new_path = getcwd(NULL, 0);
-	change_env_value(env, "OLD_PWD", old_path);
+	change_env_value(env, "OLDPWD", old_path);
 	change_env_value(env, "PWD", new_path);
 	
 }
 
-void	ft_cd(char *arg, t_env *env)
+void	ft_cd(char *arg, t_env **env)
 {
-	char	*path;
 	char	*old_path;
 
 	old_path = getcwd(NULL, 0);
 	if(ft_isempty(arg))
-		path = ft_go_home(arg, env);
+		ft_go_home(arg, env);
 	else if (!ft_strncmp(arg, "~", 1))
-		path = ft_go_home(arg, env);
+		ft_go_home(arg, env);
 	else
-		path = ft_go_dir(arg, env);
-	if (!path)
-		return ;
+		ft_go_dir(arg);
 	change_env_pwd(old_path, env);
 }

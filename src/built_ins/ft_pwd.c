@@ -6,13 +6,13 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 02:04:09 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/08 00:31:46 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/11 22:46:42 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_pwd(t_env *env)
+void	ft_pwd(t_env **env)
 {
 	char	*pathname;
 

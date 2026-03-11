@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 13:32:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/08 22:04:44 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/11 23:49:32 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_env	*env;
+	t_env	**env;
 	char	*input;
 	char	*path;
 
@@ -43,9 +43,17 @@ int	main(int argc, char **argv, char **envp)
 			ft_unset(arg, env);
 			free(arg);
 		}
+		else if (!ft_strncmp(input, "echo", 4))
+		{
+			char *arg = ft_substr(input, 5, ft_strlen(input) - 5);
+			ft_echo(arg);
+			free(arg);
+		}
 		free(input);
 		free(path);
 	}
+	free(input);
+	free(path);
 	rl_clear_history();
 	env_clear(env);
 	return (0);

@@ -6,17 +6,17 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 02:09:32 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/10 16:18:57 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/11 22:46:28 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_env(t_env *env)
+void	ft_env(t_env **env)
 {
 	t_env	*curr;
 
-	curr = env;
+	curr = *env;
 	while (curr)
 	{
 		if (curr->data->value)
