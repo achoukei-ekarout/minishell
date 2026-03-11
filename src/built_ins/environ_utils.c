@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environ_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
+/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 22:12:24 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/10 13:41:20 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/10 15:11:31 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	env_unset(t_env *env, char *key)
 	{
 		if (!ft_strncmp(env->data->key, key, ft_strlen(env->data->key)))
 		{
-			free(env)
+			free(env);
 		}
 		env = env->next;
 	}

@@ -1,34 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/06 13:32:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/11 05:47:37 by achoukei         ###   ########.fr       */
+/*   Created: 2026/03/10 14:52:04 by achoukei          #+#    #+#             */
+/*   Updated: 2026/03/11 05:48:09 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "minishell.h"
 
-int	main(int argc, char **argv)
+int	ft_isspace(char c)
 {
-	char	*input;
-	t_token *tokens;
+	return (c == ' ' || (c >= 9 && c <= 13));
+}
 
-	if (!argc || !argv)
-		return (0);
-	while (1)
+char	**free_arr(char ***arr)
+{
+	int	i;
+
+	i = 0;
+	while ((*arr)[i])
 	{
-		input = readline("minishell$ ");
-		if (!input)
-			break ;
-		if (*input)
-			add_history(input);
-		tokens = tokenize(input);
-		print_tokens(tokens);
-		free(input);
+		free((*arr)[i]);
+		i++;
 	}
-	return (0);
+	free(*arr);
+	return (NULL);
+}
+
+int	is_operator(char c)
+{
+	return (c == '|' || c == '>' || c == '<');
 }

@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/06 13:32:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/11 05:47:37 by achoukei         ###   ########.fr       */
+/*   Created: 2026/03/10 23:34:32 by achoukei          #+#    #+#             */
+/*   Updated: 2026/03/11 04:14:49 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "minishell.h"
 
-int	main(int argc, char **argv)
+void	execute_program(char **arr, char **envp)
 {
-	char	*input;
-	t_token *tokens;
+	int	pid;
 
-	if (!argc || !argv)
-		return (0);
-	while (1)
+	if (ft_strncmp(arr[0], "ls", 2) == 0)
 	{
-		input = readline("minishell$ ");
-		if (!input)
-			break ;
-		if (*input)
-			add_history(input);
-		tokens = tokenize(input);
-		print_tokens(tokens);
-		free(input);
+		pid = fork();
+		if (pid == 0)
+		{
+			execve("/usr/bin/ls", arr, envp);
+			exit(1);
+		}
+		waitpid(pid, NULL, 0);
 	}
-	return (0);
 }
