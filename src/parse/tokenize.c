@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 04:04:53 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/11 05:56:07 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/12 17:48:19 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*read_word(char *line, int *i)
 		(*i)++;
 	len = *i - start;
 	word = malloc(len + 1);
-	ft_strlcpy(word, line + start, len);
+	ft_strlcpy(word, line + start, len + 1);
 	word[len] = '\0';
 	return (word);
 }
@@ -73,6 +73,7 @@ t_token	*tokenize(char *line)
 	char	*word;
 	t_token *token;
 
+	tokens = NULL;
 	i = 0;
 	while (line[i])
 	{

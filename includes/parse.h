@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 14:53:25 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/11 05:48:15 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/12 17:31:53 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ int					is_operator(char c);
 t_token				*create_token(t_token_type type, char *value);
 void				add_token(t_token **head, t_token *node);
 void				print_tokens(t_token *tokens);
+void				free_tokens(t_token *tokens);
 
 #endif

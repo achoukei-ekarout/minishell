@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 13:32:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/11 05:47:37 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/12 17:44:02 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,17 @@ int	main(int argc, char **argv)
 		return (0);
 	while (1)
 	{
+		tokens = NULL;
 		input = readline("minishell$ ");
 		if (!input)
 			break ;
 		if (*input)
 			add_history(input);
+		if (!*input)
+			continue ;
 		tokens = tokenize(input);
 		print_tokens(tokens);
+		free_tokens(tokens);
 		free(input);
 	}
 	return (0);
