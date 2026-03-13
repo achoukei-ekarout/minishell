@@ -6,7 +6,7 @@
 /*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 04:04:53 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/12 17:48:19 by user             ###   ########.fr       */
+/*   Updated: 2026/03/13 02:08:11 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ t_token	*tokenize(char *line)
 	int		i;
 	t_token	*tokens;
 	char	*word;
-	t_token *token;
+	t_token	*token;
 
 	tokens = NULL;
 	i = 0;
@@ -96,15 +96,14 @@ t_token	*tokenize(char *line)
 	return (tokens);
 }
 
-void print_tokens(t_token *tokens)
+void	print_tokens(t_token *tokens)
 {
-    while (tokens)
-    {
-        if (tokens->value)
-            printf("TYPE: %d VALUE: %s\n", tokens->type, tokens->value);
-        else
-            printf("TYPE: %d VALUE: NULL\n", tokens->type);
-
-        tokens = tokens->next;
-    }
+	while (tokens)
+	{
+		if (tokens->value)
+			printf("TYPE: %d VALUE: %s\n", tokens->type, tokens->value);
+		else
+			printf("TYPE: %d VALUE: NULL\n", tokens->type);
+		tokens = tokens->next;
+	}
 }
