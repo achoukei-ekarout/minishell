@@ -6,7 +6,7 @@
 /*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/13 13:00:54 by user              #+#    #+#             */
-/*   Updated: 2026/03/13 15:31:56 by user             ###   ########.fr       */
+/*   Updated: 2026/03/13 17:44:14 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_strlen_argv(char **args)
 	int	i;
 
 	i = 0;
-	while (args[i])
+	while (args[i] != NULL)
 		i++;
 	return (i);
 }
@@ -45,7 +45,7 @@ char	**ft_join_argv(char **args, char *value)
 	new_args = malloc(sizeof(char *) * (args_len + 1));
 	while (args[i])
 	{
-		new_args = allocate(args[i]);
+		new_args[i] = allocate(args[i]);
 		ft_memmove(new_args[i], args[i], ft_strlen(args[i]));
 		i++;
 	}
@@ -59,7 +59,7 @@ t_ast	*parse(t_token *tokens)
 	return (parse_pipeline(&tokens));
 }
 
-t_ast	*pasre_pipeline(t_token **tokens)
+t_ast	*parse_pipeline(t_token **tokens)
 {
 	t_ast	*left;
 	t_ast	*node;
@@ -120,9 +120,6 @@ t_ast	*create_pipe_node(void)
 
 void	add_argument(t_ast *node, char *value)
 {
-	int	argv_len;
-
-	argv_len = ft_strlen_argv(node->argv);
 	node->argv = ft_join_argv(node->argv, value);
 }
 
@@ -144,4 +141,35 @@ void	handle_redirection(t_ast *node, t_token **tokens)
 	while (node->redir)
 		node->redir = node->redir->next;
 	node->redir = redirect;
+}
+
+void	free_redir(t_redir **redir)
+{
+	t_redir	*current;
+	t_redir	*next;
+
+	current = *redir;
+	while (current)
+	{
+		next = current->next;
+		free(current->file);
+		free(current);
+		current = next;
+	}
+}
+
+void	free_ast_tree(t_ast **ast)
+{
+	free_ast_node(*ast);
+}
+
+void	free_ast_node(t_ast *node)
+{
+	if (!node)
+		return ;
+	free_arr(&(node->argv));
+	free_redir(&(node->redir));
+	free_ast_node(node->left);
+	free_ast_node(node->right);
+	free(node);
 }

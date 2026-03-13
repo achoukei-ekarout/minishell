@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/04 19:22:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/13 17:28:42 by user             ###   ########.fr       */
+/*   Created: 2026/03/13 17:28:46 by user              #+#    #+#             */
+/*   Updated: 2026/03/13 17:31:31 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
-
-# include "../libft/libft.h"
-# include "built_ins.h"
-# include "data.h"
-# include "environ.h"
-# include "execute.h"
+#ifndef EXECUTE_H
+# define EXECUTE_H
 # include "parse.h"
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <sys/wait.h>
-# include <unistd.h>
+
+// void	execute_ast(t_ast *node);
+// void	execute_pipe(t_ast *node);
+// void	execute_command(t_ast *node);
 
 #endif

@@ -1,29 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   print_tree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/04 19:22:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/13 17:28:42 by user             ###   ########.fr       */
+/*   Created: 2026/03/13 17:08:00 by user              #+#    #+#             */
+/*   Updated: 2026/03/13 17:15:06 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-# include "../libft/libft.h"
-# include "built_ins.h"
-# include "data.h"
-# include "environ.h"
-# include "execute.h"
-# include "parse.h"
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <sys/wait.h>
-# include <unistd.h>
-
-#endif
+void	print_tree(t_ast *node)
+{
+	if (!node)
+		return ;
+	printf("%d\n", node->type);
+	print_tree(node->left);
+	print_tree(node->right);
+}

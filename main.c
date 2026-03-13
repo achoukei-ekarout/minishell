@@ -6,7 +6,7 @@
 /*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 13:32:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/13 13:45:17 by user             ###   ########.fr       */
+/*   Updated: 2026/03/13 17:27:09 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,10 @@ int	main(int argc, char **argv)
 		tokens = tokenize(input);
 		abstract_syntax_tree = parse(tokens);
 
+		print_tree(abstract_syntax_tree);
 		// execute_ast(ast);
 
-		free_ast(abstract_syntax_tree);
+		free_ast_tree(&abstract_syntax_tree);
 		free_tokens(tokens);
 		free(input);
 	}

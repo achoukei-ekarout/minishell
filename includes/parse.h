@@ -6,7 +6,7 @@
 /*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 14:53:25 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/13 13:28:53 by user             ###   ########.fr       */
+/*   Updated: 2026/03/13 17:36:17 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,19 @@ t_token				*create_token(t_token_type type, char *value);
 void				add_token(t_token **head, t_token *node);
 void				print_tokens(t_token *tokens);
 void				free_tokens(t_token *tokens);
+int					ft_strlen_argv(char **args);
+char				*allocate(char *arg);
+char				**ft_join_argv(char **args, char *value);
+t_ast				*parse(t_token *tokens);
+t_ast				*parse_pipeline(t_token **tokens);
+t_ast				*parse_command(t_token **tokens);
+t_ast				*create_command_node(void);
+t_ast				*create_pipe_node(void);
+void				add_argument(t_ast *node, char *value);
+int					is_redirection(t_token_type type);
+void				handle_redirection(t_ast *node, t_token **tokens);
+void				print_tree(t_ast *node);
+void				free_ast_tree(t_ast **ast);
+void				free_ast_node(t_ast *node);
 
 #endif
