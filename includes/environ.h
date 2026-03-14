@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 20:09:03 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/11 22:49:41 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/12 01:40:25 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,4 @@ void		env_clear(t_env **env);
 void		env_unset(t_env **env, char *key);
 void		add_new_node(t_env **env, char *key, char *value);
 
-# endif
+#endif

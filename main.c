@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 13:32:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/11 23:49:32 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/12 22:00:53 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,15 @@ int	main(int argc, char **argv, char **envp)
 			ft_echo(arg);
 			free(arg);
 		}
+		else if (!ft_strncmp(input, "export", 6))
+		{
+			char *arg = ft_substr(input, 7, ft_strlen(input) - 7);
+			ft_export(arg, env);
+			free(arg);
+		}
 		free(input);
 		free(path);
 	}
-	free(input);
 	free(path);
 	rl_clear_history();
 	env_clear(env);

@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 21:10:59 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/11 22:45:40 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/13 22:34:06 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,22 +39,18 @@ void	ft_go_home(char *dir, t_env **env)
 	}
 }
 
+void	ft_go_back(t_env **env)
+{
+	if (!get_env_value(env, "OLDPWD"))
+		ft_putstr_fd("cd: OLDPWD not set", 2);
+	else
+		chdir(get_env_value(env, "OLDPWD"));
+}
+
 void	ft_go_dir(char *dir)
 {
-	// char	*pwd;
-	// char	*new_dir;
-	// char	*path;
 	int		result;
 
-	// pwd = get_env_value(env, "PWD");
-	// if (ft_strncmp(dir, "/", 1))
-	// {
-	// 	new_dir = ft_strjoin("/", dir);
-	// 	path = ft_strjoin(pwd, new_dir);
-	// 	free(new_dir);
-	// }
-	// else
-	// 	path = ft_strjoin(pwd, dir);
 	result = chdir(dir);
 	if (result == -1)
 	{
