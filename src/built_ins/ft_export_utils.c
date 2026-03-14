@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 16:07:15 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/13 03:31:21 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/14 13:41:55 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,4 @@ int	is_valid_key(char *key)
 			return (0);
 	}
 	return (1);
-}
-
-void	ft_key_error(char *key)
-{
-	ft_putstr_fd("export: `", 2);
-	ft_putstr_fd(key, 2);
-	ft_putstr_fd("': not a valid identifier\n", 2);
 }

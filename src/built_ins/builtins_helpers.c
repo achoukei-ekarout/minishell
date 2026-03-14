@@ -1,29 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*   builtins_helpers.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/13 23:24:47 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/14 17:30:43 by ekarout          ###   ########.fr       */
+/*   Created: 2026/03/14 13:31:55 by ekarout           #+#    #+#             */
+/*   Updated: 2026/03/14 13:34:55 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_exit(char *arg, t_env **env)
+int	ft_isspace(int c)
 {
-	if (!arg)
+	if (c == ' ' || c == '\f' || c == '\n')
 		return (1);
-	if (!is_numeric(arg))
+	if (c == '\r' || c == '\t' || c == '\v')
+		return (1);
+	return (0);
+}
+
+int	is_numeric(char *arg)
+{
+	int	i;
+
+	i = 0;
+	while (arg[i])
 	{
-		print_exit_error(arg);
-		change_env_value(env, "exit_code", "2");
-		return (1);
+		if (!ft_isdigit(arg[i]))
+			return (0);
+		i++;
 	}
-	change_env_value(env, "exit_code", arg);
 	return (1);
-	// // free 
-	// exit(2);
 }

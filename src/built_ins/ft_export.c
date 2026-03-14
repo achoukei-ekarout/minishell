@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 19:16:24 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/13 03:28:36 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/14 17:29:19 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_export_key(t_env **env, char *key)
 {
 	if(!is_valid_key(key))
 	{
-		ft_key_error(key);
+		ft_export_key_error(key);
 		return ;
 	}
 	if(find_key(env, key))
@@ -31,7 +31,7 @@ void	ft_export_empty(t_env **env, char *arg)
 	key = ft_substr(arg, 0, ft_strlen(arg) - 1);
 	if(!is_valid_key(key))
 	{
-		ft_key_error(key);
+		ft_export_key_error(key);
 		free(key);
 		return ;
 	}
@@ -46,7 +46,7 @@ void	ft_export_key_value(t_env **env, char *arg)
 
 	key_value = ft_split(arg, '=');
 	if(!is_valid_key(key_value[0]))
-		ft_key_error(key_value[0]);
+		ft_export_key_error(key_value[0]);
 	else
 		change_env_value(env, key_value[0], key_value[1]);
 	i = -1;
@@ -59,7 +59,7 @@ void	ft_check_export(char *arg, t_env **env)
 {
 	if(!ft_isalpha(arg[0]) && arg[0] != '_')
 	{
-		ft_key_error(arg);
+		ft_export_key_error(arg);
 		return ;
 	}
 	if(!ft_strchr(arg, '='))

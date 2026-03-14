@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 02:06:29 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/13 23:33:14 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/14 17:31:37 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_check_export(char *arg, t_env **env);
 void	ft_export_key_value(t_env **env, char *arg);
 void	ft_export_empty(t_env **env, char *arg);
 void	ft_export_key(t_env **env, char *key);
-void	ft_key_error(char *key);
+void	ft_export_key_error(char *key);
 int		is_valid_key(char *key);
 void	ft_insert(t_exp **sorted_env, t_exp *node);
 char	*ft_export_data(t_env *node);
@@ -42,5 +42,9 @@ t_exp	*exp_new(char *data);
 void	ft_exp_clear(t_exp **sorted_env);
 int		compare(t_exp **sorted_env, t_exp *curr, t_exp *prev, t_exp *node);
 int		ft_exit(char *arg, t_env **env);
+void	print_cd_error(char *dir);
+void	print_exit_error(char *arg);
+int		is_numeric(char *arg);
+int		ft_env_size(t_env *env);
 
 #endif

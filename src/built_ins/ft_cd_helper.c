@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 21:10:59 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/13 22:34:06 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/14 13:38:54 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,7 @@ void	ft_go_home(char *dir, t_env **env)
 	result = chdir(path);
 	free(path);
 	if (result == -1)
-	{
-		ft_putstr_fd("cd: no such file or directory: ", 2);
-		ft_putstr_fd(dir, 2);
-		ft_putchar_fd('\n', 2);
-		return ;
-	}
+		print_cd_error(dir);
 }
 
 void	ft_go_back(t_env **env)
@@ -53,10 +48,5 @@ void	ft_go_dir(char *dir)
 
 	result = chdir(dir);
 	if (result == -1)
-	{
-		ft_putstr_fd("cd: no such file or directory: ", 2);
-		ft_putstr_fd(dir, 2);
-		ft_putchar_fd('\n', 2);
-		return ;
-	}
+		print_cd_error(dir);
 }

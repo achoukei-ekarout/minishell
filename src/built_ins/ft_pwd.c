@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 02:04:09 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/12 01:42:59 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/14 17:29:41 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 void	ft_pwd(t_env **env)
 {
 	char	*pathname;
+	char	*home;
 
 	pathname = get_env_value(env, "PWD");
-	printf("%s\n", pathname);
+	home = get_env_value(env, "HOME");
+	printf("%s%s\n", home, pathname);
 }

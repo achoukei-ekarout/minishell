@@ -6,19 +6,11 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 16:15:14 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/11 23:08:25 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/14 13:28:06 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	add_new_node(t_env **env, char *key, char *value)
-{
-	t_env	*node;
-
-	node = env_new(key, value);
-	env_add_back(env, node);
-}
 
 t_env	*env_new(char *key, char *value)
 {

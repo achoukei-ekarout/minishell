@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 13:32:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/12 22:00:53 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/14 17:33:03 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(int argc, char **argv, char **envp)
 		input = readline(path);
 		if (!input)
 			break ;
-		if (!strcmp(input, "pwd"))
+		if (!ft_strncmp(input, "pwd", 3))
 			ft_pwd(env);
 		else if(!ft_strncmp(input, "cd", 2))
 		{
@@ -35,7 +35,7 @@ int	main(int argc, char **argv, char **envp)
 			ft_cd(arg, env);
 			free(arg);
 		}
-		else if (!strcmp(input, "env"))
+		else if (!ft_strncmp(input, "env", 3))
 			ft_env(env);
 		else if (!ft_strncmp(input, "unset", 5))
 		{
