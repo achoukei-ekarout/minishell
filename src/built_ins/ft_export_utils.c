@@ -6,45 +6,15 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 16:07:15 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/14 13:41:55 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/14 21:50:23 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_exp	*exp_new(char *data)
-{
-	t_exp	*node;
-
-	node = malloc(sizeof(t_exp));
-	if (!node)
-		return (NULL);
-	node->data = data;
-	node->next = NULL;
-	return (node);
-}
-
-void	ft_exp_clear(t_exp **sorted_env)
-{
-	t_exp	*curr;
-	t_exp	*next;
-
-	if (!sorted_env || !*sorted_env)
-		return ;
-	curr = *sorted_env;
-	while (curr)
-	{
-		next = curr->next;
-		free(curr->data);
-		free(curr);
-		curr = next;
-	}
-	free(sorted_env);
-}
-
 int	is_valid_key(char *key)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	if (!ft_isalpha(key[0]) && key[0] != '_')
@@ -55,4 +25,84 @@ int	is_valid_key(char *key)
 			return (0);
 	}
 	return (1);
+}
+
+int	compare(t_env **exp, t_env *curr, t_env *prev, t_env *node)
+{
+	if (ft_strcmp(node->data->key, curr->data->key) < 0)
+	{
+		if (!prev)
+		{
+			*exp = node;
+			node->next = curr;
+			return (1);
+		}
+		prev->next = node;
+		node->next = curr;
+		return (1);
+	}
+	return (0);
+}
+
+void	ft_insert(t_env **exp, t_env *node)
+{
+	t_env	*curr;
+	t_env	*prev;
+
+	if (!exp || !*exp)
+	{
+		*exp = node;
+		return ;
+	}
+	curr = *exp;
+	prev = NULL;
+	while (curr)
+	{
+		if (compare(exp, curr, prev, node))
+			return ;
+		prev = curr;
+		curr = curr->next;
+	}
+	prev->next = node;
+}
+
+t_env	**exp_init(t_env **env)
+{
+	t_env	**exp;
+	t_env	*exp_node;
+	t_env	*curr_env;
+
+	exp = (t_env **)malloc(sizeof(t_env *));
+	*exp = NULL;
+	curr_env = *env;
+	while (curr_env)
+	{
+		exp_node = env_new(curr_env->data->key, curr_env->data->value);
+		ft_insert(exp, exp_node);
+		curr_env = curr_env->next;
+	}
+	return (exp);
+}
+
+void	change_exp_value(t_env **exp, t_env **env, char *key, char *value)
+{
+	t_env	*curr;
+	t_env	*exp_node;
+
+	curr = *exp;
+	if (value)
+		change_env_value(env, key, value);
+	while (curr)
+	{
+		if (!ft_strncmp(curr->data->key, key, ft_strlen(curr->data->key)))
+		{
+			if (curr->data->value)
+				free(curr->data->value);
+			curr->data->value = ft_strdup(value);
+			return ;
+		}
+		curr = curr->next;
+	}
+	exp_node = env_new(key, value);
+	ft_insert(exp, exp_node);
 }

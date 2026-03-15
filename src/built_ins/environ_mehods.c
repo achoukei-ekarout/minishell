@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/14 13:17:41 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/14 13:50:16 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/14 21:50:44 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	**env_to_array(t_env **env)
 	curr = *env;
 	while (curr)
 	{
-		if(curr->data->value)
+		if (curr->data->value)
 		{
 			temp = ft_strjoin(curr->data->key, "=");
 			envp[size] = ft_strjoin(temp, curr->data->value);

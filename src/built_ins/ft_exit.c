@@ -6,24 +6,62 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/13 23:24:47 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/14 17:30:43 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/15 04:04:59 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_exit(char *arg, t_env **env)
+int	exit_status_code(char *arg)
 {
+	int	result;
+	int	sign;
+	int	i;
+
+	result = 0;
+	sign = 1;
+	i = 0;
+	if(arg[i] == '+' || arg[i] == '-')
+	{
+		if(arg[i] == '-')
+			sign = -1;
+		i++;
+	}
+	while (arg[i])
+	{
+		if(!ft_isdigit(arg[i]))
+			return (-1);
+		result = (result * 10 + (arg[i] - '0')) % 256;
+		i++;
+	}
+	if (sign == -1)
+		result = (256 - result) % 256;
+	return (result);
+}
+
+void	ft_exit(char *arg)
+{
+	int	exit_code;
+
+	exit_code = 0;
 	if (!arg)
-		return (1);
-	if (!is_numeric(arg))
+		exit(exit_code);
+	exit_code = exit_status_code(arg);
+	ft_putstr_fd("exit\n", 2);
+	if (exit_code == -1)
 	{
 		print_exit_error(arg);
-		change_env_value(env, "exit_code", "2");
-		return (1);
+		exit_code = 2;
 	}
-	change_env_value(env, "exit_code", arg);
-	return (1);
-	// // free 
-	// exit(2);
+	if (ft_strlen(arg) > 9)
+	{
+		print_exit_error(arg);
+		exit_code = 2;
+	}
+	if (ft_strlen(arg) == 9 && ft_strcmp(arg, "9223372036854775807") < 0)
+	{
+		print_exit_error(arg);
+		exit_code = 2;
+	}
+	exit(exit_code);
 }
