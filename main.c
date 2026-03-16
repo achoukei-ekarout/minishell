@@ -6,11 +6,21 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 13:32:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/15 03:51:55 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/16 01:23:46 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "minishell.h"
+
+void sigint_handler(int sig)
+{
+    (void)sig;
+
+    write(1, "\n", 1);
+    rl_on_new_line();
+    rl_replace_line("", 0);
+    rl_redisplay();
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -21,14 +31,19 @@ int	main(int argc, char **argv, char **envp)
 
 	if (!argc || !argv || !*envp)
 		return (0);
+	signal(SIGINT, sigint_handler);
+    rl_catch_signals = 0;
 	env = environ_init(envp);
 	exp = exp_init(env);
+	rl_catch_signals = 0;
 	while (1)
 	{
 		path = ft_strjoin(get_env_value(env, "PWD"), "$ ");
 		input = readline(path);
 		if (!input)
 			break ;
+		if (!*input)
+			continue ;
 		if (*input)
 			add_history(input);
 		if (!ft_strncmp(input, "pwd", 3))

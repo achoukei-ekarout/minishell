@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/13 23:24:47 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/15 04:04:59 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/16 13:06:06 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,12 @@ void	ft_exit(char *arg)
 		print_exit_error(arg);
 		exit_code = 2;
 	}
-	if (ft_strlen(arg) > 9)
+	if (ft_strlen(arg) > 19)
 	{
 		print_exit_error(arg);
 		exit_code = 2;
 	}
-	if (ft_strlen(arg) == 9 && ft_strcmp(arg, "9223372036854775807") < 0)
+	if (ft_strlen(arg) == 19 && ft_strcmp(arg, "9223372036854775807") < 0)
 	{
 		print_exit_error(arg);
 		exit_code = 2;
