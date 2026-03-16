@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/13 17:28:46 by user              #+#    #+#             */
-/*   Updated: 2026/03/16 15:35:07 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/16 16:03:24 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,6 @@
 void	execute_ast(t_ast *node);
 void	execute_pipe(t_ast *node);
 void	execute_command(t_ast *node);
+void	apply_redirections(t_redir *redir);
 
 #endif

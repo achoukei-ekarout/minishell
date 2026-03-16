@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 00:21:23 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/12 17:31:02 by user             ###   ########.fr       */
+/*   Updated: 2026/03/16 16:31:27 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	free_tokens(t_token *tokens)
 {
 	t_token	*tmp;
 
-	while (tokens)
+	while (tokens->next)
 	{
 		tmp = tokens->next;
 		free(tokens->value);

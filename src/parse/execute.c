@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 23:34:32 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/16 15:34:42 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/16 16:38:41 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	execute_ast(t_ast *node)
 
 void	execute_pipe(t_ast *node)
 {
-	int		fd[2];
+	int	fd[2];
 	int	pid1;
 	int	pid2;
 
@@ -74,12 +74,39 @@ void	execute_command(t_ast *node)
 	pid = fork();
 	if (pid == 0)
 	{
-		// apply_redirections(node->redir);
+		apply_redirections(node->redir);
 		// Find the path for the function execve.
-
 		execvp(node->argv[0], node->argv);
 		perror("exec");
 		exit(1);
 	}
 	waitpid(pid, NULL, 0);
+}
+
+void	apply_redirections(t_redir *redir)
+{
+	int	fd;
+
+	while (redir)
+	{
+		if (redir->type == TOKEN_REDIR_IN)
+		{
+			fd = open(redir->file, O_RDONLY);
+			dup2(fd, STDIN_FILENO);
+			close(fd);
+		}
+		else if (redir->type == TOKEN_REDIR_OUT)
+		{
+			fd = open(redir->file, O_CREAT | O_WRONLY, 0644);
+			dup2(fd, STDOUT_FILENO);
+			close(fd);
+		}
+		else if (redir->type == TOKEN_REDIR_APPEND)
+		{
+			fd = open(redir->file, O_CREAT | O_WRONLY | O_APPEND, 0644);
+			dup2(fd, STDOUT_FILENO);
+			close(fd);
+		}
+		redir = redir->next;
+	}
 }
