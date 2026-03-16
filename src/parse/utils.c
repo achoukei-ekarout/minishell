@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 14:52:04 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/11 05:48:09 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/14 21:02:36 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ char	**free_arr(char ***arr)
 	int	i;
 
 	i = 0;
+	if (!(*arr))
+		return (NULL);
 	while ((*arr)[i])
 	{
 		free((*arr)[i]);
