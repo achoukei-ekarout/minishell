@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 23:34:32 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/14 23:35:21 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/16 15:34:42 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,40 +32,40 @@ void	execute_ast(t_ast *node)
 {
 	if (!node)
 		return ;
-	// if (node->type == NODE_PIPE)
-	// 	execute_pipe(node);
+	if (node->type == NODE_PIPE)
+		execute_pipe(node);
 	else if (node->type == NODE_COMMAND)
 		execute_command(node);
 }
 
-// void	execute_pipe(t_ast *node)
-// {
-// 	int		fd[2];
-// 	int	pid1;
-// 	int	pid2;
+void	execute_pipe(t_ast *node)
+{
+	int		fd[2];
+	int	pid1;
+	int	pid2;
 
-// 	pipe(fd);
-// 	pid1 = fork();
-// 	if (pid1 == 0)
-// 	{
-// 		dup2(fd[1], STDOUT_FILENO);
-// 		close(fd[0]);
-// 		execute_ast(node->left);
-// 		exit(0);
-// 	}
-// 	pid2 = fork();
-// 	if (pid2 == 0)
-// 	{
-// 		dup2(fd[0], STDIN_FILENO);
-// 		close(fd[1]);
-// 		execute_ast(node->right);
-// 		exit(0);
-// 	}
-// 	close(fd[0]);
-// 	close(fd[1]);
-// 	waitpid(pid1, NULL, 0);
-// 	waitpid(pid2, NULL, 0);
-// }
+	pipe(fd);
+	pid1 = fork();
+	if (pid1 == 0)
+	{
+		dup2(fd[1], STDOUT_FILENO);
+		close(fd[0]);
+		execute_ast(node->left);
+		exit(0);
+	}
+	pid2 = fork();
+	if (pid2 == 0)
+	{
+		dup2(fd[0], STDIN_FILENO);
+		close(fd[1]);
+		execute_ast(node->right);
+		exit(0);
+	}
+	close(fd[0]);
+	close(fd[1]);
+	waitpid(pid1, NULL, 0);
+	waitpid(pid2, NULL, 0);
+}
 
 void	execute_command(t_ast *node)
 {

@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/13 17:28:46 by user              #+#    #+#             */
-/*   Updated: 2026/03/14 22:36:05 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/16 15:35:07 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include "parse.h"
 
 void	execute_ast(t_ast *node);
-// void	execute_pipe(t_ast *node);
+void	execute_pipe(t_ast *node);
 void	execute_command(t_ast *node);
 
 #endif
