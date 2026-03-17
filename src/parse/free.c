@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/14 23:09:08 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/14 23:10:25 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/17 09:13:08 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	free_redir(t_redir **redir)
 	{
 		next = current->next;
 		free(current->file);
+		current->file = NULL;
 		free(current);
 		current = next;
 	}

@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 00:21:23 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/16 16:31:27 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/17 09:13:46 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void	free_tokens(t_token *tokens)
 	while (tokens->next)
 	{
 		tmp = tokens->next;
-		free(tokens->value);
+		if (tokens->value)
+			free(tokens->value);
 		free(tokens);
 		tokens = tmp;
 	}
