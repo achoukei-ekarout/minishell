@@ -96,14 +96,14 @@ t_token	*tokenize(char *line)
 	return (tokens);
 }
 
-void	print_tokens(t_token *tokens)
-{
-	while (tokens)
-	{
-		if (tokens->value)
-			printf("TYPE: %d VALUE: %s\n", tokens->type, tokens->value);
-		else
-			printf("TYPE: %d VALUE: NULL\n", tokens->type);
-		tokens = tokens->next;
-	}
-}
+// void	print_tokens(t_token *tokens)
+// {
+// 	while (tokens)
+// 	{
+// 		if (tokens->value)
+// 			printf("TYPE: %d VALUE: %s\n", tokens->type, tokens->value);
+// 		else
+// 			printf("TYPE: %d VALUE: NULL\n", tokens->type);
+// 		tokens = tokens->next;
+// 	}
+// }

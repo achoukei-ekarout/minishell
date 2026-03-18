@@ -15,8 +15,8 @@
 int	main(int argc, char **argv)
 {
 	char	*input;
-	t_token *tokens;
-	t_ast *abstract_syntax_tree;
+	t_token	*tokens;
+	t_ast	*abstract_syntax_tree;
 
 	if (!argc || !argv)
 		return (0);
@@ -31,8 +31,9 @@ int	main(int argc, char **argv)
 		if (!*input)
 			continue ;
 		tokens = tokenize(input);
+		print_tokens(tokens);
 		abstract_syntax_tree = parse(tokens);
-		print_tree(abstract_syntax_tree);
+		// print_tree(abstract_syntax_tree);
 		execute_ast(abstract_syntax_tree);
 		free_ast_tree(&abstract_syntax_tree);
 		free_tokens(tokens);

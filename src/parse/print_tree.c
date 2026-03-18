@@ -23,3 +23,12 @@ void	print_tree(t_ast *node)
 	print_tree(node->left);
 	print_tree(node->right);
 }
+
+void print_tokens(t_token *tokens)
+{
+	while (tokens)
+	{
+		printf("%s\n", tokens->value);
+		tokens = tokens->next;
+	}
+}

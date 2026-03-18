@@ -26,7 +26,7 @@ void	handle_redirection(t_ast *node, t_token **tokens)
 	redirect->next = NULL;
 	redirect->type = (*tokens)->type;
 	(*tokens) = (*tokens)->next;
-	redirect->file = (*tokens)->value;
+	redirect->file = ft_strdup((*tokens)->value);
 	while (node->redir)
 		node->redir = node->redir->next;
 	node->redir = redirect;

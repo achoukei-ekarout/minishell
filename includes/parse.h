@@ -57,15 +57,12 @@ typedef struct s_ast
 
 int					ft_isspace(char c);
 char				**free_arr(char ***arr);
-void				execute_program(char **arr, char **envp);
 t_token				*tokenize(char *input);
 int					is_operator(char c);
 t_token				*create_token(t_token_type type, char *value);
 void				add_token(t_token **head, t_token *node);
-void				print_tokens(t_token *tokens);
 void				free_tokens(t_token *tokens);
 int					ft_strlen_argv(char **args);
-char				*allocate(char *arg);
 char				**ft_join_argv(char **args, char *value);
 t_ast				*parse(t_token *tokens);
 t_ast				*parse_pipeline(t_token **tokens);
@@ -78,5 +75,6 @@ void				handle_redirection(t_ast *node, t_token **tokens);
 void				print_tree(t_ast *node);
 void				free_ast_tree(t_ast **ast);
 void				free_ast_node(t_ast *node);
+void				print_tokens(t_token *tokens);
 
 #endif
