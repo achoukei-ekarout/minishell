@@ -55,6 +55,13 @@ typedef struct s_ast
 
 }					t_ast;
 
+typedef enum e_quote
+{
+	NO_QUOTE,
+	SINGLE_QUOTE,
+	DOUBLE_QUOTE
+}	t_quote;
+
 int					ft_isspace(char c);
 char				**free_arr(char ***arr);
 t_token				*tokenize(char *input);

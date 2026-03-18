@@ -12,20 +12,44 @@
 
 #include "minishell.h"
 
-char	*read_word(char *line, int *i)
+char	*read_word(char *line, int *i/* , t_env *env */)
 {
-	int		start;
-	int		len;
-	char	*word;
+	t_quote	state = NO_QUOTE;
+	char	*result = ft_strdup("");
+	char	*tmp;
 
-	start = *i;
-	while (line[*i] && line[*i] != ' ' && !is_operator(line[*i]))
+	while (line[*i])
+	{
+		if (state == NO_QUOTE && (ft_isspace(line[*i]) || is_operator(line[*i])))
+			break;
+		if (line[*i] == '\'' && state == NO_QUOTE)
+			state = SINGLE_QUOTE;
+		else if (line[*i] == '\'' && state == SINGLE_QUOTE)
+			state = NO_QUOTE;
+		else if (line[*i] == '"' && state == NO_QUOTE)
+			state = DOUBLE_QUOTE;
+		else if (line[*i] == '"' && state == DOUBLE_QUOTE)
+			state = NO_QUOTE;
+		else if (line[*i] == '$' && state != SINGLE_QUOTE)
+		{
+			tmp = "test";/* expand_variable(line, i, env); */
+			result = str_join_free(result, tmp);
+			continue;
+		}
+		else
+		{
+			tmp = ft_substr(line, *i, 1);
+			result = str_join_free(result, tmp);
+		}
 		(*i)++;
-	len = *i - start;
-	word = malloc(len + 1);
-	ft_strlcpy(word, line + start, len + 1);
-	word[len] = '\0';
-	return (word);
+	}
+	if (state != NO_QUOTE)
+	{
+		printf("minishell: unclosed quote\n");
+		free(result);
+		return (NULL);
+	}
+	return (result);
 }
 
 t_token	*read_operator(char *line, int *i)
