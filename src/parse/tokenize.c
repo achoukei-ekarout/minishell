@@ -3,53 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 04:04:53 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/13 02:08:11 by user             ###   ########.fr       */
+/*   Updated: 2026/03/19 16:24:37 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*read_word(char *line, int *i/* , t_env *env */)
+char	*read_word(char *line, int *i)
 {
-	t_quote	state = NO_QUOTE;
-	char	*result = ft_strdup("");
-	char	*tmp;
+	int		start;
+	int		len;
+	char	*word;
 
-	while (line[*i])
-	{
-		if (state == NO_QUOTE && (ft_isspace(line[*i]) || is_operator(line[*i])))
-			break;
-		if (line[*i] == '\'' && state == NO_QUOTE)
-			state = SINGLE_QUOTE;
-		else if (line[*i] == '\'' && state == SINGLE_QUOTE)
-			state = NO_QUOTE;
-		else if (line[*i] == '"' && state == NO_QUOTE)
-			state = DOUBLE_QUOTE;
-		else if (line[*i] == '"' && state == DOUBLE_QUOTE)
-			state = NO_QUOTE;
-		else if (line[*i] == '$' && state != SINGLE_QUOTE)
-		{
-			tmp = "test";/* expand_variable(line, i, env); */
-			result = str_join_free(result, tmp);
-			continue;
-		}
-		else
-		{
-			tmp = ft_substr(line, *i, 1);
-			result = str_join_free(result, tmp);
-		}
+	start = *i;
+	while (line[*i] && line[*i] != ' ' && !is_operator(line[*i]))
 		(*i)++;
-	}
-	if (state != NO_QUOTE)
-	{
-		printf("minishell: unclosed quote\n");
-		free(result);
-		return (NULL);
-	}
-	return (result);
+	len = *i - start;
+	word = malloc(len + 1);
+	ft_strlcpy(word, line + start, len + 1);
+	word[len] = '\0';
+	return (word);
 }
 
 t_token	*read_operator(char *line, int *i)
@@ -69,7 +45,6 @@ t_token	*read_operator(char *line, int *i)
 		}
 		else
 		{
-			(*i)++;
 			return (create_token(TOKEN_REDIR_IN, ft_strdup("<")));
 		}
 	}
@@ -83,7 +58,6 @@ t_token	*read_operator(char *line, int *i)
 		}
 		else
 		{
-			(*i)++;
 			return (create_token(TOKEN_REDIR_OUT, ft_strdup(">")));
 		}
 	}
@@ -96,6 +70,7 @@ t_token	*tokenize(char *line)
 	t_token	*tokens;
 	char	*word;
 	t_token	*token;
+	char start;
 
 	tokens = NULL;
 	i = 0;
@@ -105,7 +80,16 @@ t_token	*tokenize(char *line)
 			i++;
 		if (!line[i])
 			break ;
-		if (is_operator(line[i]))
+		if (is_quote(line[i]))
+		{
+			start = i++;
+			if (!line[i])
+				break ; 
+			while (!is_quote(line[i]))
+				i++;
+			add_token(&tokens, create_token(TOKEN_WORD, ft_substr(line, start, (i++ - start) + 1)));
+		}
+		else if (is_operator(line[i]))
 		{
 			token = read_operator(line, &i);
 			if (token)
