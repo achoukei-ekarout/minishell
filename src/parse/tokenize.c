@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 04:04:53 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/19 18:00:45 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/19 21:33:38 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,9 @@ t_token	*tokenize(char *line)
 				i++;
 			while (line[i] && line[i] != ' ')
 				i++;
+			add_token(&tokens, create_token(TOKEN_WORD, ft_substr(line, start, (i - start) + 1)));
 			if (!line[i])
 				break ;
-			add_token(&tokens, create_token(TOKEN_WORD, ft_substr(line, start, (i - start) + 1)));
 		}
 		else if (is_operator(line[i]))
 		{
