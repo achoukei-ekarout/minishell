@@ -1,34 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_export_utils.c                                  :+:      :+:    :+:   */
+/*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/12 16:07:15 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/17 17:11:24 by ekarout          ###   ########.fr       */
+/*   Created: 2026/03/17 19:39:34 by ekarout           #+#    #+#             */
+/*   Updated: 2026/03/17 19:47:16 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_valid_key(char *key)
+char	*param_expand(char *s)
 {
-	int	i;
-
-	i = -1;
-	if (!ft_isalpha(key[0]) && key[0] != '_')
-		return (0);
-	while (key[++i])
-	{
-		if (!ft_isalnum(key[i]) && key[i] != '_')
-			return (0);
-	}
-	return (1);
+	
 }
-
-
-
-
-
-

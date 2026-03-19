@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 02:06:29 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/14 22:33:48 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/17 18:17:22 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,28 +22,24 @@ void	ft_go_back(t_env **env);
 void	ft_go_dir(char *dir);
 void	ft_pwd(t_env **env);
 void	ft_env(t_env **env);
-void	ft_unset(char *arg, t_env **env, t_env **exp);
+void	ft_unset(char *arg, t_env **env, t_exp **exp);
 int		ft_isspace(int c);
 int		ft_check_options(char *arg);
 char	*ft_remove_flag(char *arg);
 void	ft_print(char *arg, int flag);
 void	ft_echo(char *arg);
-void	ft_export(char	*arg, t_env	**env, t_env **exp);
-void	ft_export_all(t_env **env);
-void	ft_check_export(char *arg, t_env **exp, t_env **env);
-void	ft_export_key_value(t_env **exp, t_env **env, char *arg);
-void	ft_export_empty(t_env **exp, t_env **env, char *arg);
-void	ft_export_key(t_env **exp, t_env **env, char *key);
 void	ft_export_key_error(char *key);
 int		is_valid_key(char *key);
-void	ft_insert(t_env **exp, t_env *node);
-t_env	**exp_init(t_env **env);
-void	change_exp_value(t_env **exp, t_env **env, char *key, char *value);
-int		compare(t_env **exp, t_env *curr, t_env *prev, t_env *node);
 void	ft_exit(char *arg);
 void	print_cd_error(char *dir);
 void	print_exit_error(char *arg);
 int		is_numeric(char *arg);
-int		ft_env_size(t_env *env);
+void	ft_export(char	*arg, t_env	**env, t_exp **exp);
+void	ft_check_export(char *arg, t_exp **exp, t_env **env);
+void	ft_export_key_value(t_exp **exp, t_env **env, char *arg);
+void	ft_export_empty(t_exp **exp, t_env **env, char *arg);
+void	ft_export_key(t_exp **exp, t_env **env, char *key);
+void	ft_export_all(t_exp **exp);
+int		is_valid_key(char *key);
 
 #endif

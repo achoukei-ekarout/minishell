@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 22:12:24 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/14 13:28:15 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/17 17:22:35 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_env	*find_key(t_env **env, char	*key)
 	curr = *env;
 	while (curr)
 	{
-		if (!ft_strncmp(curr->data->key, key, ft_strlen(curr->data->key)))
+		if (!ft_strcmp(curr->data->key, key))
 			return (curr);
 		curr = curr->next;
 	}

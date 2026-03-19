@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/14 13:17:41 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/14 21:50:44 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/17 17:30:59 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	env_unset(t_env **env, char *key)
 	curr = *env;
 	while (curr)
 	{
-		if (!ft_strncmp(curr->data->key, key, ft_strlen(curr->data->key)))
+		if (!ft_strcmp(curr->data->key, key))
 		{
 			next = curr->next;
 			free(curr->data->key);
@@ -71,7 +71,7 @@ void	change_env_value(t_env **env, char *key, char *value)
 	curr = *env;
 	while (curr)
 	{
-		if (!ft_strncmp(curr->data->key, key, ft_strlen(curr->data->key)))
+		if (!ft_strcmp(curr->data->key, key))
 		{
 			if (curr->data->value)
 				free(curr->data->value);

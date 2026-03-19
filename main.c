@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 13:32:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/16 01:23:46 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/17 18:08:45 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void sigint_handler(int sig)
 int	main(int argc, char **argv, char **envp)
 {
 	t_env	**env;
-	t_env	**exp;
+	t_exp	**exp;
 	char	*input;
 	char	*path;
 
@@ -86,6 +86,6 @@ int	main(int argc, char **argv, char **envp)
 	free(path);
 	rl_clear_history();
 	env_clear(env);
-	env_clear(exp);
+	exp_clear(exp);
 	return (0);
 }
