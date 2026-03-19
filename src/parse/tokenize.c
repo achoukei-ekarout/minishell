@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 04:04:53 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/19 21:33:38 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/19 21:40:30 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,15 +115,3 @@ t_token	*tokenize(char *line)
 	}
 	return (tokens);
 }
-
-// void	print_tokens(t_token *tokens)
-// {
-// 	while (tokens)
-// 	{
-// 		if (tokens->value)
-// 			printf("TYPE: %d VALUE: %s\n", tokens->type, tokens->value);
-// 		else
-// 			printf("TYPE: %d VALUE: NULL\n", tokens->type);
-// 		tokens = tokens->next;
-// 	}
-// }

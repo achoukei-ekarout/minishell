@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 14:53:25 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/13 17:36:17 by user             ###   ########.fr       */
+/*   Updated: 2026/03/19 21:56:54 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,7 @@ void				free_ast_tree(t_ast **ast);
 void				free_ast_node(t_ast *node);
 void				print_tokens(t_token *tokens);
 int					is_quote(char c);
+void				print_env(char **envp);
+void				print_arr(char **arr);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/13 17:08:00 by user              #+#    #+#             */
-/*   Updated: 2026/03/14 20:59:38 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/19 21:56:43 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,29 @@ void print_tokens(t_token *tokens)
 	{
 		printf("%s\n", tokens->value);
 		tokens = tokens->next;
+	}
+}
+
+void print_env(char **envp)
+{
+	int i;
+
+	i = 0;
+	while (envp[i])
+	{
+		printf("%s\n", envp[i]);
+		i++;
+	}
+}
+
+void print_arr(char **arr)
+{
+	int i;
+	
+	i = 0;
+	while (arr[i])
+	{
+		printf("%s\n", arr[i]);
+		i++;
 	}
 }
