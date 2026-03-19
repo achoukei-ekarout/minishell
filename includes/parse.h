@@ -83,5 +83,6 @@ void				print_tree(t_ast *node);
 void				free_ast_tree(t_ast **ast);
 void				free_ast_node(t_ast *node);
 void				print_tokens(t_token *tokens);
+int					is_quote(char c);
 
 #endif

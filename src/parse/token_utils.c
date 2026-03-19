@@ -55,3 +55,8 @@ void	free_tokens(t_token *tokens)
 		tokens = tmp;
 	}
 }
+
+int is_quote(char c)
+{
+	return (c == '\'' || c == '"');
+}

@@ -6,13 +6,13 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 13:32:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/14 22:35:50 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/19 16:36:18 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-int	main(int argc, char **argv)
+int	main(int argc, char **argv, char **envp)
 {
 	char	*input;
 	t_token	*tokens;
@@ -31,10 +31,11 @@ int	main(int argc, char **argv)
 		if (!*input)
 			continue ;
 		tokens = tokenize(input);
-		print_tokens(tokens);
+		// print_tokens(tokens);
+		// expansion(&tokens); // Here will be the expansion of the tokens one by one
 		abstract_syntax_tree = parse(tokens);
 		// print_tree(abstract_syntax_tree);
-		execute_ast(abstract_syntax_tree);
+		execute_ast(abstract_syntax_tree, envp);
 		free_ast_tree(&abstract_syntax_tree);
 		free_tokens(tokens);
 		free(input);
