@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 23:34:32 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/19 22:37:07 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/19 22:43:02 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	execute_ast(t_ast *node, char **envp)
 	if (node->type == NODE_PIPE)
 		execute_pipe(node, envp);
 	else if (node->type == NODE_COMMAND)
-		execute_command(node, envp,paths);
+		execute_command(node, envp, paths);
 }
 
 void	execute_pipe(t_ast *node, char **envp)
@@ -104,7 +104,10 @@ void	execute_command(t_ast *node, char **envp, char **paths)
 		path = get_path_name(node->argv[0], paths);
 		// printf("%s\n", path);
 		if (!path)
-			return ;
+		{
+			printf("%s: command not found\n", node->argv[0]);
+			exit(127);
+		}
 		apply_redirections(node->redir);
 		// Find the path for the function execve.
 		execve(path, node->argv, envp);
