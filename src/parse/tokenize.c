@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 04:04:53 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/19 16:24:37 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/19 18:00:45 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,20 @@ char	*read_word(char *line, int *i)
 	int		start;
 	int		len;
 	char	*word;
-
+	int		quote_index;
+	
+	quote_index = 0;
 	start = *i;
 	while (line[*i] && line[*i] != ' ' && !is_operator(line[*i]))
+	{
+		if (is_quote(line[(*i)]))
+		{
+			quote_index = (*i);
+			while (line[*i] != line[quote_index])
+				(*i)++;
+		}
 		(*i)++;
+	}
 	len = *i - start;
 	word = malloc(len + 1);
 	ft_strlcpy(word, line + start, len + 1);
@@ -70,7 +80,7 @@ t_token	*tokenize(char *line)
 	t_token	*tokens;
 	char	*word;
 	t_token	*token;
-	char start;
+	int		start;
 
 	tokens = NULL;
 	i = 0;
@@ -83,11 +93,13 @@ t_token	*tokenize(char *line)
 		if (is_quote(line[i]))
 		{
 			start = i++;
-			if (!line[i])
-				break ; 
-			while (!is_quote(line[i]))
+			while (line[i] && line[i] != line[start])
 				i++;
-			add_token(&tokens, create_token(TOKEN_WORD, ft_substr(line, start, (i++ - start) + 1)));
+			while (line[i] && line[i] != ' ')
+				i++;
+			if (!line[i])
+				break ;
+			add_token(&tokens, create_token(TOKEN_WORD, ft_substr(line, start, (i - start) + 1)));
 		}
 		else if (is_operator(line[i]))
 		{

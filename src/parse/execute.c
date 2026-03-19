@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 23:34:32 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/19 16:41:18 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/19 17:05:44 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ void	execute_command(t_ast *node, char **envp)
 	{
 		apply_redirections(node->redir);
 		// Find the path for the function execve.
-		execve(node->argv[0], node->argv, envp);
+		(void)envp;
+		execvp(node->argv[0], node->argv/* , envp */);
 		perror("exec");
 		exit(1);
 	}
