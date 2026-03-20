@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/13 17:08:00 by user              #+#    #+#             */
-/*   Updated: 2026/03/19 21:56:43 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/20 14:14:24 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	print_tree(t_ast *node)
 	print_tree(node->right);
 }
 
-void print_tokens(t_token *tokens)
+void	print_tokens(t_token *tokens)
 {
 	while (tokens)
 	{
@@ -33,9 +33,9 @@ void print_tokens(t_token *tokens)
 	}
 }
 
-void print_env(char **envp)
+void	print_env(char **envp)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (envp[i])
@@ -45,10 +45,10 @@ void print_env(char **envp)
 	}
 }
 
-void print_arr(char **arr)
+void	print_arr(char **arr)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (arr[i])
 	{

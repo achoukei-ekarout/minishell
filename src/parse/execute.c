@@ -6,17 +6,17 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 23:34:32 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/19 22:43:02 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/20 14:14:11 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char *get_path_name(char *func_name, char **paths)
+char	*get_path_name(char *func_name, char **paths)
 {
-	int i;
-	char *full_path;
-	char *add_slash;
+	int		i;
+	char	*full_path;
+	char	*add_slash;
 
 	i = 0;
 	while (paths[i])
@@ -32,15 +32,15 @@ char *get_path_name(char *func_name, char **paths)
 	return (NULL);
 }
 
-char *get_path(char **envp)
+char	*get_path(char **envp)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (envp[i])
 	{
 		if (ft_strnstr(envp[i], "PATH", ft_strlen("PATH")))
-			return envp[i];
+			return (envp[i]);
 		i++;
 	}
 	return (NULL);
@@ -48,10 +48,10 @@ char *get_path(char **envp)
 
 void	execute_ast(t_ast *node, char **envp)
 {
-	char *path;
-	char **paths;
-	char *full_path;
-	
+	char	*path;
+	char	**paths;
+	char	*full_path;
+
 	full_path = get_path(envp);
 	path = ft_substr(full_path, ft_strlen("PATH="), ft_strlen(full_path));
 	// free(full_path);
@@ -95,8 +95,8 @@ void	execute_pipe(t_ast *node, char **envp)
 
 void	execute_command(t_ast *node, char **envp, char **paths)
 {
-	int	pid;
-	char *path;
+	int		pid;
+	char	*path;
 
 	pid = fork();
 	if (pid == 0)
