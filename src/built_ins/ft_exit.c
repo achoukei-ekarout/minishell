@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/13 23:24:47 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/16 13:06:06 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/20 19:17:40 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@ int	exit_status_code(char *arg)
 	result = 0;
 	sign = 1;
 	i = 0;
-	if(arg[i] == '+' || arg[i] == '-')
+	if (arg[i] == '+' || arg[i] == '-')
 	{
-		if(arg[i] == '-')
+		if (arg[i] == '-')
 			sign = -1;
 		i++;
 	}
 	while (arg[i])
 	{
-		if(!ft_isdigit(arg[i]))
+		if (!ft_isdigit(arg[i]))
 			return (-1);
 		result = (result * 10 + (arg[i] - '0')) % 256;
 		i++;

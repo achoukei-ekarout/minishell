@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 17:33:08 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/17 18:12:06 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/20 19:45:21 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,5 @@ void	exp_unset(t_exp **env, char *key);
 t_exp	*find_exp_key(t_exp **exp, char	*key);
 void	add_new_exp_node(t_exp **exp, char *key, char *value, int exported);
 void	exp_clear(t_exp **env);
-
 
 #endif
