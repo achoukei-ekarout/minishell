@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 00:21:23 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/19 16:48:48 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/21 10:27:02 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,19 @@ void	free_tokens(t_token *tokens)
 	}
 }
 
-int is_quote(char c)
+int	is_quote(char c)
 {
 	return (c == '\'' || c == '"');
+}
+
+int	get_quote_index(char *line, int *i)
+{
+	int	start;
+
+	start = (*i)++;
+	while (line[*i] && line[*i] != line[start])
+		(*i)++;
+	while (line[*i] && line[*i] != ' ')
+		(*i)++;
+	return (start);
 }

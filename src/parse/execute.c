@@ -6,45 +6,11 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 23:34:32 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/20 14:14:11 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/21 00:59:46 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*get_path_name(char *func_name, char **paths)
-{
-	int		i;
-	char	*full_path;
-	char	*add_slash;
-
-	i = 0;
-	while (paths[i])
-	{
-		add_slash = ft_strjoin(paths[i], "/");
-		full_path = ft_strjoin(add_slash, func_name);
-		if (access(full_path, X_OK) == 0)
-			return (full_path);
-		i++;
-		free(add_slash);
-		free(full_path);
-	}
-	return (NULL);
-}
-
-char	*get_path(char **envp)
-{
-	int	i;
-
-	i = 0;
-	while (envp[i])
-	{
-		if (ft_strnstr(envp[i], "PATH", ft_strlen("PATH")))
-			return (envp[i]);
-		i++;
-	}
-	return (NULL);
-}
 
 void	execute_ast(t_ast *node, char **envp)
 {
@@ -54,7 +20,6 @@ void	execute_ast(t_ast *node, char **envp)
 
 	full_path = get_path(envp);
 	path = ft_substr(full_path, ft_strlen("PATH="), ft_strlen(full_path));
-	// free(full_path);
 	paths = ft_split(path, ':');
 	if (!node)
 		return ;
@@ -102,14 +67,12 @@ void	execute_command(t_ast *node, char **envp, char **paths)
 	if (pid == 0)
 	{
 		path = get_path_name(node->argv[0], paths);
-		// printf("%s\n", path);
 		if (!path)
 		{
 			printf("%s: command not found\n", node->argv[0]);
 			exit(127);
 		}
 		apply_redirections(node->redir);
-		// Find the path for the function execve.
 		execve(path, node->argv, envp);
 		perror("exec");
 		exit(1);

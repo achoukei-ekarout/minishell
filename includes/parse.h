@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 14:53:25 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/19 21:56:54 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/21 00:46:45 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef enum e_node_type
 
 typedef struct s_redir
 {
-	int				type;
+	t_token_type	type;
 	char			*file;
 	struct s_redir	*next;
 }					t_redir;
@@ -60,7 +60,7 @@ typedef enum e_quote
 	NO_QUOTE,
 	SINGLE_QUOTE,
 	DOUBLE_QUOTE
-}	t_quote;
+}					t_quote;
 
 int					ft_isspace(char c);
 char				**free_arr(char ***arr);
@@ -86,5 +86,6 @@ void				print_tokens(t_token *tokens);
 int					is_quote(char c);
 void				print_env(char **envp);
 void				print_arr(char **arr);
+int					get_quote_index(char *line, int *i);
 
 #endif
