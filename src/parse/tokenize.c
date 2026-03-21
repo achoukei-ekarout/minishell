@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 04:04:53 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/21 10:27:06 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/21 10:32:15 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,16 +77,16 @@ t_token	*tokenize(char *line)
 	{
 		token = NULL;
 		while (ft_isspace(line[i]))
-		i++;
+			i++;
 		if (is_quote(line[i]))
 		{
 			start = get_quote_index(line, &i);
 			token = create_token(0, ft_substr(line, start, (i - start) + 1));
 		}
 		else if (is_operator(line[i]))
-		token = read_operator(line, &i);
+			token = read_operator(line, &i);
 		else if (line[i])
-		token = create_token(TOKEN_WORD, read_word(line, &i));
+			token = create_token(TOKEN_WORD, read_word(line, &i));
 		if (token)
 			add_token(&t_tokens, token);
 	}
