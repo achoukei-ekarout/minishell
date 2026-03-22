@@ -1,31 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   garbage_collector.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/04 19:22:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/22 21:26:43 by achoukei         ###   ########.fr       */
+/*   Created: 2026/03/22 21:23:55 by achoukei          #+#    #+#             */
+/*   Updated: 2026/03/22 21:26:18 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef GARBAGE_COLLECTOR_H
+# define GARBAGE_COLLECTOR_H
 
-# include "../libft/libft.h"
-# include "built_ins.h"
-# include "data.h"
-# include "environ.h"
-# include "execute.h"
-# include "garbage_collector.h"
-# include "parse.h"
-# include <fcntl.h>
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <sys/wait.h>
-# include <unistd.h>
+typedef struct e_garbage_collector
+{
+	void						*value;
+	struct e_garbage_collector	*next;
+}								t_gc;
 
 #endif
