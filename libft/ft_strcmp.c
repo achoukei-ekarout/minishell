@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_unset.c                                         :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/07 02:09:54 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/22 19:45:34 by ekarout          ###   ########.fr       */
+/*   Created: 2026/03/12 02:01:51 by ekarout           #+#    #+#             */
+/*   Updated: 2026/03/12 16:17:23 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	ft_unset(char *arg, t_env **env, t_env **exp)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	char	**vars;
-	int		i;
+	size_t	i;
 
-	vars = ft_split(arg, ' ');
 	i = 0;
-	while (vars[i])
-	{
-		env_unset(env, vars[i]);
-		env_unset(exp, vars[i]);
-		free(vars[i]);
+	while (s1[i] == s2[i] && s1[i])
 		i++;
-	}
-	free(vars);
+	return (s1[i] - s2[i]);
 }

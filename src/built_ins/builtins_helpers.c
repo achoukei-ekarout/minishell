@@ -1,30 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_unset.c                                         :+:      :+:    :+:   */
+/*   builtins_helpers.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/07 02:09:54 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/22 19:45:34 by ekarout          ###   ########.fr       */
+/*   Created: 2026/03/14 13:31:55 by ekarout           #+#    #+#             */
+/*   Updated: 2026/03/14 13:34:55 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_unset(char *arg, t_env **env, t_env **exp)
+int	ft_isspace(int c)
 {
-	char	**vars;
-	int		i;
+	if (c == ' ' || c == '\f' || c == '\n')
+		return (1);
+	if (c == '\r' || c == '\t' || c == '\v')
+		return (1);
+	return (0);
+}
 
-	vars = ft_split(arg, ' ');
+int	is_numeric(char *arg)
+{
+	int	i;
+
 	i = 0;
-	while (vars[i])
+	while (arg[i])
 	{
-		env_unset(env, vars[i]);
-		env_unset(exp, vars[i]);
-		free(vars[i]);
+		if (!ft_isdigit(arg[i]))
+			return (0);
 		i++;
 	}
-	free(vars);
+	return (1);
 }

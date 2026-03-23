@@ -32,8 +32,11 @@ fclean: clean
 	make -C $(LIBFT_DIR) fclean
 
 valgrind:
-	valgrind --leak-check=full ./$(NAME)
+	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
+
+debug:
+	gdb -tui ./$(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean valgrind re
+.PHONY: all clean fclean valgrind debug re
