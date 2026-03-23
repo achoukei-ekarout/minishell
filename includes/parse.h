@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 14:53:25 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/23 01:44:42 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/23 16:22:02 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ typedef enum e_quote
 	DOUBLE_QUOTE
 }					t_quote;
 
-int					ft_isspace(char c);
 char				**free_arr(char ***arr);
 t_token				*tokenize(char *input, t_gc **head_gc);
 int					is_operator(char c);

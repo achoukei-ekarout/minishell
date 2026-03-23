@@ -1,35 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/10 14:52:04 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/23 16:16:46 by ekarout          ###   ########.fr       */
+/*   Created: 2026/03/23 16:17:02 by ekarout           #+#    #+#             */
+/*   Updated: 2026/03/23 16:17:17 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-char	**free_arr(char ***arr)
+int	ft_isspace(int c)
 {
-	int	i;
-
-	i = 0;
-	if (!(*arr))
-		return (NULL);
-	while ((*arr)[i])
-	{
-		free((*arr)[i]);
-		(*arr)[i] = NULL;
-		i++;
-	}
-	free(*arr);
-	return (NULL);
-}
-
-int	is_operator(char c)
-{
-	return (c == '|' || c == '>' || c == '<');
+	return (c == ' ' || (c >= 9 && c <= 13));
 }

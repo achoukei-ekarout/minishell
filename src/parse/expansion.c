@@ -6,19 +6,19 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 19:39:34 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/20 18:59:13 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/23 16:25:55 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_expand	*init_expand_data(char *value, t_env **env)
+t_expand	*init_expand_data(char *value, t_env **env, int len)
 {
 	t_expand	*expand_data;
 
 	expand_data = (t_expand *)malloc(sizeof(t_expand));
 	expand_data->old_value = value;
-	expand_data->new_value = (char *)malloc(sizeof(char) * (i + 1));
+	expand_data->new_value = (char *)malloc(sizeof(char) * (len + 1));
 	expand_data->env = env;
 	return (expand_data);
 }
@@ -30,7 +30,7 @@ char	*expand_value(char *value, t_env **env)
 	int			j;
 
 	i = get_new_size(value, env);
-	expand_data = init_expand_data(value, env);
+	expand_data = init_expand_data(value, env, i);
 	expand_data->new_value[i] = 0;
 	i = 0;
 	j = 0;
@@ -57,7 +57,8 @@ void	expand(t_token **token, t_env **env)
 	char	*value;
 	char	*new_value;
 
-	expand_value(value, env);
+	value = (*token)->value;
+	new_value = expand_value(value, env);
 	free((*token)->value);
 	(*token)->value = new_value;
 }

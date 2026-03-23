@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 13:32:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/23 15:50:29 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/23 16:22:56 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int	main(int argc, char **argv, char **envp)
 		free_garbage(&garbage_collector);
 		free(input);
 	}
-	free(path);
 	rl_clear_history();
 	return (0);
 }

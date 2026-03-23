@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 20:21:22 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/12 02:03:59 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/23 16:20:56 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,7 @@ char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
+int		ft_isspace(int c);
+int		is_numeric(char *arg);
 
 #endif
