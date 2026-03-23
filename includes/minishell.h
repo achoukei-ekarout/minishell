@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 19:22:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/22 21:26:43 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/23 15:43:53 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,12 @@
 # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include "export_environ.h"
+# include "expansion.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <signal.h>
 
 #endif

@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 13:32:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/23 02:57:09 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/23 16:22:56 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "minishell.h"
+
+void sigint_handler(int sig)
+{
+    (void)sig;
+
+    write(1, "\n", 1);
+    rl_on_new_line();
+    rl_replace_line("", 0);
+    rl_redisplay();
+}
 
 int	main(int argc, char **argv, char **envp)
 {

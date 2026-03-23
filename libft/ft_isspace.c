@@ -1,28 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   data.h                                             :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/07 02:06:31 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/23 15:22:47 by ekarout          ###   ########.fr       */
+/*   Created: 2026/03/23 16:17:02 by ekarout           #+#    #+#             */
+/*   Updated: 2026/03/23 16:17:17 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DATA_H
-# define DATA_H
+#include "libft.h"
 
-typedef struct s_env_data
+int	ft_isspace(int c)
 {
-	char			*key;
-	char			*value;
-}	t_env_data;
-
-typedef struct s_env
-{
-	t_env_data		*data;
-	struct s_env	*next;
-}	t_env;
-
-#endif
+	return (c == ' ' || (c >= 9 && c <= 13));
+}

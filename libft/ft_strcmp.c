@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   data.h                                             :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/07 02:06:31 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/23 15:22:47 by ekarout          ###   ########.fr       */
+/*   Created: 2026/03/12 02:01:51 by ekarout           #+#    #+#             */
+/*   Updated: 2026/03/12 16:17:23 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DATA_H
-# define DATA_H
+#include "libft.h"
 
-typedef struct s_env_data
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	char			*key;
-	char			*value;
-}	t_env_data;
+	size_t	i;
 
-typedef struct s_env
-{
-	t_env_data		*data;
-	struct s_env	*next;
-}	t_env;
-
-#endif
+	i = 0;
+	while (s1[i] == s2[i] && s1[i])
+		i++;
+	return (s1[i] - s2[i]);
+}

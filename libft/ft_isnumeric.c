@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   data.h                                             :+:      :+:    :+:   */
+/*   ft_isnumeric.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/07 02:06:31 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/23 15:22:47 by ekarout          ###   ########.fr       */
+/*   Created: 2026/03/23 16:14:42 by ekarout           #+#    #+#             */
+/*   Updated: 2026/03/23 16:15:18 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DATA_H
-# define DATA_H
+#include "libft.h"
 
-typedef struct s_env_data
+int	is_numeric(char *arg)
 {
-	char			*key;
-	char			*value;
-}	t_env_data;
+	int	i;
 
-typedef struct s_env
-{
-	t_env_data		*data;
-	struct s_env	*next;
-}	t_env;
-
-#endif
+	i = 0;
+	while (arg[i])
+	{
+		if (!ft_isdigit(arg[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}

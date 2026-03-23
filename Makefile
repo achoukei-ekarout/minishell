@@ -6,7 +6,7 @@ CFLAGS = -g -Wall -Wextra -Werror -I includes
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
-SRC =  main.c $(wildcard src/parse/*.c)
+SRC =  main.c $(wildcard src/built_ins/*.c) $(wildcard src/execusion/*.c) $(wildcard src/helpers/*.c) $(wildcard src/parse/*.c)
 
 OBJ = $(SRC:.c=.o)
 
@@ -32,8 +32,11 @@ fclean: clean
 	make -C $(LIBFT_DIR) fclean
 
 valgrind:
-	valgrind --leak-check=full ./$(NAME)
+	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
+
+debug:
+	gdb -tui ./$(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean valgrind re
+.PHONY: all clean fclean valgrind debug re

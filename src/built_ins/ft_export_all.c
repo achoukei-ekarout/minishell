@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   data.h                                             :+:      :+:    :+:   */
+/*   ft_export_all.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/07 02:06:31 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/23 15:22:47 by ekarout          ###   ########.fr       */
+/*   Created: 2026/03/12 01:55:01 by ekarout           #+#    #+#             */
+/*   Updated: 2026/03/23 14:43:48 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DATA_H
-# define DATA_H
+#include "minishell.h"
 
-typedef struct s_env_data
+void	ft_export_all(t_env **exp)
 {
-	char			*key;
-	char			*value;
-}	t_env_data;
+	t_env	*curr;
 
-typedef struct s_env
-{
-	t_env_data		*data;
-	struct s_env	*next;
-}	t_env;
-
-#endif
+	curr = *exp;
+	while (curr)
+	{
+		if (curr->data->value)
+		{
+			printf("declare -x ");
+			printf("%s=\"%s\"\n", curr->data->key, curr->data->value);
+		}
+		else
+			printf("declare -x %s\n", curr->data->key);
+		curr = curr->next;
+	}
+}
