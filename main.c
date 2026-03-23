@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 13:32:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/23 14:01:05 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/23 15:50:29 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,69 +24,34 @@ void sigint_handler(int sig)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_env	**env;
-	t_env	**exp;
 	char	*input;
-	char	*path;
+	t_token	*tokens;
+	t_ast	*abstract_syntax_tree;
+	t_gc	*garbage_collector;
 
-	if (!argc || !argv || !*envp)
+	if (!argc || !argv)
 		return (0);
-	signal(SIGINT, sigint_handler);
-    rl_catch_signals = 0;
-	env = environ_init(envp);
-	exp = exp_init(env);
-	rl_catch_signals = 0;
 	while (1)
 	{
-		path = ft_strjoin(get_env_value(env, "PWD"), "$ ");
-		input = readline(path);
+		garbage_collector = NULL;
+		tokens = NULL;
+		input = readline("minishell$ ");
 		if (!input)
 			break ;
-		if (!*input)
-			continue ;
 		if (*input)
 			add_history(input);
-		// printf("%s\n", expand_value(input, env));
-		if (!ft_strncmp(input, "pwd", 3))
-			ft_pwd(env);
-		else if(!ft_strncmp(input, "cd", 2))
-		{
-			char *arg = ft_substr(input, 3, ft_strlen(input) - 3);
-			ft_cd(arg, env);
-			free(arg);
-		}
-		else if (!ft_strncmp(input, "env", 3))
-			ft_env(env);
-		else if (!ft_strncmp(input, "unset", 5))
-		{
-			char *arg = ft_substr(input, 6, ft_strlen(input) - 6);
-			ft_unset(arg, env, exp);
-			free(arg);
-		}
-		else if (!ft_strncmp(input, "echo", 4))
-		{
-			char *arg = ft_substr(input, 5, ft_strlen(input) - 5);
-			ft_echo(arg);
-			free(arg);
-		}
-		else if (!ft_strncmp(input, "export", 6))
-		{
-			char *arg = ft_substr(input, 7, ft_strlen(input) - 7);
-			ft_export(arg, env, exp);
-			free(arg);
-		}
-		else if (!ft_strncmp(input, "exit", 4))
-		{
-			char *arg = ft_substr(input, 5, ft_strlen(input) - 5);
-			ft_exit(arg);
-			free(arg);
-		}
+		if (!*input)
+			continue ;
+		tokens = tokenize(input, &garbage_collector);
+		// print_tokens(tokens);
+		// expansion(&tokens); // Here will be the expansion of the tokens one by one
+		abstract_syntax_tree = parse(tokens, &garbage_collector);
+		// print_tree(abstract_syntax_tree);
+		execute_ast(abstract_syntax_tree, envp, &garbage_collector);
+		free_garbage(&garbage_collector);
 		free(input);
-		free(path);
 	}
 	free(path);
 	rl_clear_history();
-	env_clear(env);
-	env_clear(exp);
 	return (0);
 }
