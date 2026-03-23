@@ -6,13 +6,13 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 04:04:53 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/21 10:32:15 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/23 02:52:01 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*read_word(char *line, int *i)
+char	*read_word(char *line, int *i, t_gc **head_gc)
 {
 	int		start;
 	int		len;
@@ -32,39 +32,44 @@ char	*read_word(char *line, int *i)
 		(*i)++;
 	}
 	len = *i - start;
-	word = malloc(len + 1);
+	word = allocate(head_gc, len + 1);
 	ft_strlcpy(word, line + start, len + 1);
 	word[len] = '\0';
 	return (word);
 }
 
-t_token	*read_operator(char *line, int *i)
+t_token	*read_operator(char *line, int *i, t_gc **head_gc)
 {
 	if (line[*i] == '|')
 	{
 		(*i)++;
-		return (create_token(TOKEN_PIPE, ft_strdup("|")));
+		return (create_token(TOKEN_PIPE, ft_strdup_allocate("|", head_gc),
+				head_gc));
 	}
 	if (line[*i] == '<')
 	{
 		(*i)++;
 		if (line[*i] == '<')
-			return ((*i)++, create_token(TOKEN_HEREDOC, ft_strdup("<<")));
+			return ((*i)++, create_token(TOKEN_HEREDOC, ft_strdup_allocate("<<",
+						head_gc), head_gc));
 		else
-			return (create_token(TOKEN_REDIR_IN, ft_strdup("<")));
+			return (create_token(TOKEN_REDIR_IN, ft_strdup_allocate("<",
+						head_gc), head_gc));
 	}
 	if (line[*i] == '>')
 	{
 		(*i)++;
 		if (line[*i] == '>')
-			return ((*i)++, create_token(TOKEN_REDIR_APPEND, ft_strdup(">>")));
+			return ((*i)++, create_token(TOKEN_REDIR_APPEND,
+					ft_strdup_allocate(">>", head_gc), head_gc));
 		else
-			return (create_token(TOKEN_REDIR_OUT, ft_strdup(">")));
+			return (create_token(TOKEN_REDIR_OUT, ft_strdup_allocate(">",
+						head_gc), head_gc));
 	}
 	return (NULL);
 }
 
-t_token	*tokenize(char *line)
+t_token	*tokenize(char *line, t_gc **head_gc)
 {
 	int		i;
 	t_token	*t_tokens;
@@ -81,12 +86,14 @@ t_token	*tokenize(char *line)
 		if (is_quote(line[i]))
 		{
 			start = get_quote_index(line, &i);
-			token = create_token(0, ft_substr(line, start, (i - start) + 1));
+			token = create_token(0, ft_substr_allocate(line, start, (i - start)
+						+ 1, head_gc), head_gc);
 		}
 		else if (is_operator(line[i]))
-			token = read_operator(line, &i);
+			token = read_operator(line, &i, head_gc);
 		else if (line[i])
-			token = create_token(TOKEN_WORD, read_word(line, &i));
+			token = create_token(TOKEN_WORD, read_word(line, &i, head_gc),
+					head_gc);
 		if (token)
 			add_token(&t_tokens, token);
 	}

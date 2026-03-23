@@ -6,12 +6,13 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 14:53:25 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/21 00:46:45 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/23 01:44:42 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSE_H
 # define PARSE_H
+# include "garbage_collector.h"
 
 typedef enum e_token_type
 {
@@ -64,21 +65,23 @@ typedef enum e_quote
 
 int					ft_isspace(char c);
 char				**free_arr(char ***arr);
-t_token				*tokenize(char *input);
+t_token				*tokenize(char *input, t_gc **head_gc);
 int					is_operator(char c);
-t_token				*create_token(t_token_type type, char *value);
+t_token				*create_token(t_token_type type, char *value,
+						t_gc **head_gc);
 void				add_token(t_token **head, t_token *node);
 void				free_tokens(t_token *tokens);
 int					ft_strlen_argv(char **args);
-char				**ft_join_argv(char **args, char *value);
-t_ast				*parse(t_token *tokens);
-t_ast				*parse_pipeline(t_token **tokens);
-t_ast				*parse_command(t_token **tokens);
-t_ast				*create_command_node(void);
-t_ast				*create_pipe_node(void);
-void				add_argument(t_ast *node, char *value);
+char				**ft_join_argv(char **args, char *value, t_gc **head_gc);
+t_ast				*parse(t_token *tokens, t_gc **head_gc);
+t_ast				*parse_pipeline(t_token **tokens, t_gc **head_gc);
+t_ast				*parse_command(t_token **tokens, t_gc **head_gc);
+t_ast				*create_command_node(t_gc **head_gc);
+t_ast				*create_pipe_node(t_gc **head_gc);
+void				add_argument(t_ast *node, char *value, t_gc **head_gc);
 int					is_redirection(t_token_type type);
-void				handle_redirection(t_ast *node, t_token **tokens);
+void				handle_redirection(t_ast *node, t_token **tokens,
+						t_gc **head_gc);
 void				print_tree(t_ast *node);
 void				free_ast_tree(t_ast **ast);
 void				free_ast_node(t_ast *node);

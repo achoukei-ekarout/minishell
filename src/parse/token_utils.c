@@ -6,21 +6,21 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 00:21:23 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/21 10:27:02 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/23 01:34:05 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*create_token(t_token_type type, char *value)
+t_token	*create_token(t_token_type type, char *value, t_gc **head_gc)
 {
 	t_token	*node;
 
-	node = malloc(sizeof(t_token));
+	node = allocate(head_gc, sizeof(t_token));
 	if (!node)
 		return (NULL);
 	node->type = type;
-	node->value = ft_strdup(value);
+	node->value = ft_strdup_allocate(value, head_gc);
 	node->next = NULL;
 	return (node);
 }

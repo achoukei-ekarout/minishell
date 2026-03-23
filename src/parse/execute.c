@@ -6,30 +6,30 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 23:34:32 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/21 00:59:46 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/23 02:58:17 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execute_ast(t_ast *node, char **envp)
+void	execute_ast(t_ast *node, char **envp, t_gc **head_gc)
 {
 	char	*path;
 	char	**paths;
 	char	*full_path;
 
 	full_path = get_path(envp);
-	path = ft_substr(full_path, ft_strlen("PATH="), ft_strlen(full_path));
-	paths = ft_split(path, ':');
+	path = ft_substr_allocate(full_path, ft_strlen("PATH="), ft_strlen(full_path), head_gc);
+	paths = ft_split_allocate(path, ':', head_gc);
 	if (!node)
 		return ;
 	if (node->type == NODE_PIPE)
-		execute_pipe(node, envp);
+		execute_pipe(node, envp, head_gc);
 	else if (node->type == NODE_COMMAND)
 		execute_command(node, envp, paths);
 }
 
-void	execute_pipe(t_ast *node, char **envp)
+void	execute_pipe(t_ast *node, char **envp, t_gc **head_gc)
 {
 	int	fd[2];
 	int	pid1;
@@ -41,7 +41,7 @@ void	execute_pipe(t_ast *node, char **envp)
 	{
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[0]);
-		execute_ast(node->left, envp);
+		execute_ast(node->left, envp, head_gc);
 		exit(0);
 	}
 	pid2 = fork();
@@ -49,7 +49,7 @@ void	execute_pipe(t_ast *node, char **envp)
 	{
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[1]);
-		execute_ast(node->right, envp);
+		execute_ast(node->right, envp, head_gc);
 		exit(0);
 	}
 	close(fd[0]);
