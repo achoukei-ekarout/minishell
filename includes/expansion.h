@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
+/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 19:18:59 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/23 16:24:28 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/23 21:01:23 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define EXPANSION_H
 
 # include "data.h"
+# include "garbage_collector.h"
 
 typedef struct s_expand
 {
@@ -22,10 +23,10 @@ typedef struct s_expand
 	t_env		**env;
 }	t_expand;
 
-void		param_expand(t_token **tokens, t_env **env);
-void		expand(t_token **token, t_env **env);
-char		*expand_value(char *value, t_env **env);
-t_expand	*init_expand_data(char *value, t_env **env, int len);
+void		param_expand(t_token **tokens, t_env **env, t_gc **head_gc);
+void		expand(t_token **token, t_env **env, t_gc **head_gc);
+char		*expand_value(char *value, t_env **env, t_gc **head_gc);
+t_expand	*init_expand_data(char *value, t_env **env, int len, t_gc **head_gc);
 void		handle_double_quotes(t_expand *expand_data, int *i, int *j);
 void		handle_dollar(t_expand *expand_data, int *i, int *j);
 void		handle_single_quotes(t_expand *expand_data, int *i, int *j);

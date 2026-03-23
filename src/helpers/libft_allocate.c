@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 01:00:55 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/23 03:01:26 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/23 21:06:00 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,4 +122,31 @@ char	**ft_split_allocate(char const *s, char c, t_gc **head_gc)
 	}
 	result[k] = NULL;
 	return (result);
+}
+
+char	*ft_strjoin_allocate(char const *s1, char const *s2, t_gc **head_gc)
+{
+	char	*new;
+	int		len;
+	int		i;
+
+	if (!s1 && !s2)
+		return (NULL);
+	len = ft_strlen((char *)s1) + ft_strlen((char *)s2) + 1;
+	i = 0;
+	new = (char *)allocate(head_gc, len * sizeof(char));
+	if (!new)
+		return (NULL);
+	while (s1[i])
+	{
+		new[i] = s1[i];
+		i++;
+	}
+	while (s2[i - ft_strlen((char *)s1)])
+	{
+		new[i] = s2[i - ft_strlen((char *)s1)];
+		i++;
+	}
+	new[i] = '\0';
+	return (new);
 }

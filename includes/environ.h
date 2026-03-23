@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environ.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
+/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 20:09:03 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/17 17:36:44 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/23 21:01:47 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define ENVIRON_H
 
 # include "data.h"
+# include "garbage_collector.h"
 
 t_env		*env_new(char *key, char *value);
 t_env		*create_env_node(char *s);
@@ -25,7 +26,7 @@ void		change_env_value(t_env **env, char *key, char *value);
 void		env_clear(t_env **env);
 void		env_unset(t_env **env, char *key);
 void		add_new_node(t_env **env, char *key, char *value);
-char		**env_to_array(t_env **env);
+char		**env_to_array(t_env **env, t_gc **head_gc);
 int			ft_env_size(t_env *env);
 
 #endif

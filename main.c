@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 13:32:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/23 20:40:43 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/23 21:10:52 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,13 @@ int	main(int argc, char **argv, char **envp)
 	t_token	*tokens;
 	t_ast	*abstract_syntax_tree;
 	t_gc	*garbage_collector;
+	t_gc	*p_garbage_collector;
 	t_env **env;
 	char **env_char;
 
+	p_garbage_collector = NULL;
 	env = environ_init(envp);
-	env_char = env_to_array(env);
+	env_char = env_to_array(env, &p_garbage_collector);
 	if (!argc || !argv)
 		return (0);
 	while (1)
@@ -47,7 +49,7 @@ int	main(int argc, char **argv, char **envp)
 		if (!*input)
 			continue ;
 		tokens = tokenize(input, &garbage_collector);
-		expand(&tokens, env); // Here will be the expansion of the tokens one by one
+		expand(&tokens, env, &garbage_collector); // Here will be the expansion of the tokens one by one
 		print_tokens(tokens);
 		abstract_syntax_tree = parse(tokens, &garbage_collector);
 		// print_tree(abstract_syntax_tree);
@@ -55,6 +57,8 @@ int	main(int argc, char **argv, char **envp)
 		free_garbage(&garbage_collector);
 		free(input);
 	}
+	free_garbage(&p_garbage_collector);
+	env_clear(env);
 	rl_clear_history();
 	return (0);
 }
