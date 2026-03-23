@@ -6,11 +6,23 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 18:21:48 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/20 18:22:16 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/23 19:32:22 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	**get_all_paths(char **envp, t_gc **head_gc)
+{
+	char	*path;
+	char	*full_path;
+	char **paths;
+	
+	full_path = get_path(envp);
+	path = ft_substr_allocate(full_path, ft_strlen("PATH="), ft_strlen(full_path), head_gc);
+	paths = ft_split_allocate(path, ':', head_gc);
+	return (paths);
+}
 
 char	*get_path_name(char *func_name, char **paths)
 {

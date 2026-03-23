@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 23:34:32 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/23 02:58:17 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/23 19:31:33 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,9 @@
 
 void	execute_ast(t_ast *node, char **envp, t_gc **head_gc)
 {
-	char	*path;
 	char	**paths;
-	char	*full_path;
 
-	full_path = get_path(envp);
-	path = ft_substr_allocate(full_path, ft_strlen("PATH="), ft_strlen(full_path), head_gc);
-	paths = ft_split_allocate(path, ':', head_gc);
+	paths = get_all_paths(envp, head_gc);
 	if (!node)
 		return ;
 	if (node->type == NODE_PIPE)
