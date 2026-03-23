@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_unset.c                                         :+:      :+:    :+:   */
+/*   export_environ.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/07 02:09:54 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/22 19:45:34 by ekarout          ###   ########.fr       */
+/*   Created: 2026/03/23 14:11:24 by ekarout           #+#    #+#             */
+/*   Updated: 2026/03/23 14:40:14 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef EXPORT_ENVIRON_H
+# define EXPORT_ENVIRON_H
 
-void	ft_unset(char *arg, t_env **env, t_env **exp)
-{
-	char	**vars;
-	int		i;
+# include "data.h"
 
-	vars = ft_split(arg, ' ');
-	i = 0;
-	while (vars[i])
-	{
-		env_unset(env, vars[i]);
-		env_unset(exp, vars[i]);
-		free(vars[i]);
-		i++;
-	}
-	free(vars);
-}
+void	change_exp_value(t_env **exp, char *key, char *value);
+int		compare(t_env **exp, t_env *curr, t_env *prev, t_env *node);
+void	ft_insert(t_env **exp, t_env *node);
+t_env	**exp_init(t_env **env);
+
+#endif

@@ -6,26 +6,26 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 01:55:01 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/17 17:17:22 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/23 14:43:48 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_export_all(t_exp **exp)
+void	ft_export_all(t_env **exp)
 {
-	t_exp	*curr;
+	t_env	*curr;
 
 	curr = *exp;
 	while (curr)
 	{
-		if (curr->data->exported)
+		if (curr->data->value)
 		{
-			if (curr->data->value)
-				printf("declare -x %s=\"%s\"\n", curr->data->key, curr->data->value);
-			else
-				printf("declare -x %s\n", curr->data->key);
+			printf("declare -x ");
+			printf("%s=\"%s\"\n", curr->data->key, curr->data->value);
 		}
+		else
+			printf("declare -x %s\n", curr->data->key);
 		curr = curr->next;
 	}
 }

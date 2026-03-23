@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 19:22:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/19 19:20:39 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/23 14:45:47 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "data.h"
 # include "built_ins.h"
 # include "environ.h"
-# include "shell_environ.h"
+# include "export_environ.h"
 # include "expansion.h"
 # include <stdio.h>
 # include <stdlib.h>
