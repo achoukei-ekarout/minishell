@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
+/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 13:32:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/23 16:22:56 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/23 20:40:43 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,11 @@ int	main(int argc, char **argv, char **envp)
 	t_token	*tokens;
 	t_ast	*abstract_syntax_tree;
 	t_gc	*garbage_collector;
+	t_env **env;
+	char **env_char;
 
+	env = environ_init(envp);
+	env_char = env_to_array(env);
 	if (!argc || !argv)
 		return (0);
 	while (1)
@@ -43,11 +47,11 @@ int	main(int argc, char **argv, char **envp)
 		if (!*input)
 			continue ;
 		tokens = tokenize(input, &garbage_collector);
-		// print_tokens(tokens);
-		// expansion(&tokens); // Here will be the expansion of the tokens one by one
+		expand(&tokens, env); // Here will be the expansion of the tokens one by one
+		print_tokens(tokens);
 		abstract_syntax_tree = parse(tokens, &garbage_collector);
 		// print_tree(abstract_syntax_tree);
-		execute_ast(abstract_syntax_tree, envp, &garbage_collector);
+		execute_ast(abstract_syntax_tree, env_char, &garbage_collector);
 		free_garbage(&garbage_collector);
 		free(input);
 	}

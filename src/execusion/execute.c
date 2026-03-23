@@ -6,23 +6,23 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 23:34:32 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/23 19:31:33 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/23 20:20:38 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execute_ast(t_ast *node, char **envp, t_gc **head_gc)
+void	execute_ast(t_ast *node, char **env, t_gc **head_gc)
 {
 	char	**paths;
 
-	paths = get_all_paths(envp, head_gc);
+	paths = get_all_paths(env, head_gc);
 	if (!node)
 		return ;
 	if (node->type == NODE_PIPE)
-		execute_pipe(node, envp, head_gc);
+		execute_pipe(node, env, head_gc);
 	else if (node->type == NODE_COMMAND)
-		execute_command(node, envp, paths);
+		execute_command(node, env, paths);
 }
 
 void	execute_pipe(t_ast *node, char **envp, t_gc **head_gc)

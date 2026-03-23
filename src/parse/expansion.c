@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
+/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 19:39:34 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/23 16:25:55 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/23 20:46:10 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	expand(t_token **token, t_env **env)
 
 	value = (*token)->value;
 	new_value = expand_value(value, env);
-	free((*token)->value);
+	// free((*token)->value);
 	(*token)->value = new_value;
 }
 
