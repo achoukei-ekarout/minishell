@@ -6,13 +6,13 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 02:09:32 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/14 17:29:01 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/24 13:00:08 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_env(t_env **env)
+int	ft_env(t_env **env)
 {
 	t_env	*curr;
 
@@ -25,4 +25,5 @@ void	ft_env(t_env **env)
 			printf("%s\n", curr->data->key);
 		curr = curr->next;
 	}
+	return (0);
 }
