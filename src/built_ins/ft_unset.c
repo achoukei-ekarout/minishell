@@ -6,25 +6,22 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 02:09:54 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/23 15:48:29 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/24 16:24:56 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_unset(char *arg, t_env **env, t_env **exp)
+int	ft_unset(char **argv, t_env **env, t_env **exp)
 {
-	char	**vars;
 	int		i;
 
-	vars = ft_split(arg, ' ');
-	i = 0;
-	while (vars[i])
+	i = 1;
+	while (argv[i])
 	{
-		env_unset(env, vars[i]);
-		env_unset(exp, vars[i]);
-		free(vars[i]);
+		env_unset(env, argv[i]);
+		env_unset(exp, argv[i]);
 		i++;
 	}
-	free(vars);
+	return (0);
 }

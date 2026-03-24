@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/13 23:24:47 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/20 19:17:40 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/24 16:26:07 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,29 +39,27 @@ int	exit_status_code(char *arg)
 	return (result);
 }
 
-void	ft_exit(char *arg)
+void	ft_exit(char **argv)
 {
-	int	exit_code;
+	int		exit_code;
+	char	*arg;
 
 	exit_code = 0;
+	if (ft_count_args(argv) > 2)
+	{
+		args_error("exit");
+		return ;
+	}
+	arg = argv[1];
 	if (!arg)
 		exit(exit_code);
 	exit_code = exit_status_code(arg);
 	ft_putstr_fd("exit\n", 2);
 	if (exit_code == -1)
-	{
-		print_exit_error(arg);
-		exit_code = 2;
-	}
+		exit_code = exit_error(arg);
 	if (ft_strlen(arg) > 19)
-	{
-		print_exit_error(arg);
-		exit_code = 2;
-	}
+		exit_code = exit_error(arg);
 	if (ft_strlen(arg) == 19 && ft_strcmp(arg, "9223372036854775807") < 0)
-	{
-		print_exit_error(arg);
-		exit_code = 2;
-	}
+		exit_code = exit_error(arg);
 	exit(exit_code);
 }
