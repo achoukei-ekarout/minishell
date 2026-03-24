@@ -6,13 +6,13 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 01:55:01 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/23 14:43:48 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/24 13:11:49 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_export_all(t_env **exp)
+int	ft_export_all(t_env **exp)
 {
 	t_env	*curr;
 
@@ -28,4 +28,5 @@ void	ft_export_all(t_env **exp)
 			printf("declare -x %s\n", curr->data->key);
 		curr = curr->next;
 	}
+	return (0);
 }

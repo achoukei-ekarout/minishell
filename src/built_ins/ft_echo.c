@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 23:17:00 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/14 17:45:39 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/23 20:55:31 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,77 +17,71 @@ int	ft_check_options(char *arg)
 	int	i;
 
 	i = 0;
+	if (arg[i] != '-')
+		return (0);
+	i++;
 	while (arg[i])
 	{
-		if (arg[i] == '-')
-		{
-			i++;
-			if (arg[i] == 'n')
-				return (1);
-		}
-		if (!ft_isspace(arg[i]))
-			return (0);
+		if (arg[i] != 'n')
+			return (0) ;
 		i++;
 	}
-	return (0);
+	if (i == 1)
+		return (0);
+	return (1);
 }
 
-char	*ft_remove_flag(char *arg)
+int	ft_remove_flag(char **argv)
 {
 	int	i;
+	int	flags;
 
-	i = 0;
-	while (arg[i])
+	i = 2;
+	flags = 1;
+	while (argv[i])
 	{
-		if (arg[i] == '-')
-		{
-			while (arg[i])
-			{
-				i++;
-				if (!ft_isspace(arg[i]) && arg[i] != '-' && arg[i] != 'n')
-					break ;
-			}
-		}
-		if (!ft_isspace(arg[i]))
-			break ;
+		if (!ft_check_options(argv[i]))
+			return (flags);
 		i++;
+		flags++;
 	}
-	return (arg + i);
+	return (flags);
 }
 
-void	ft_print(char *arg, int flag)
+void	ft_print(char **argv, int flag)
 {
-	int		i;
-	char	*args;
+	int	i;
+	int	j;
 
-	i = -1;
-	args = ft_strtrim(arg, " \n\t\r\v\f");
-	while (args[++i])
+	i = flag;
+	while (argv[++i])
 	{
-		if (args[i] == '\\')
-			continue ;
-		if (ft_isspace(args[i]))
-		{
-			while (ft_isspace(args[i]))
-				i++;
+		if (i != flag + 1)
 			ft_putchar_fd(' ', 1);
-			i--;
-			continue ;
+		j = 0;
+		while(argv[i][j])
+		{
+			ft_putchar_fd(argv[i][j], 1);
+			j++;
 		}
-		ft_putchar_fd(args[i], 1);
 	}
 	if (!flag)
 		ft_putchar_fd('\n', 1);
-	free(args);
 }
 
-void	ft_echo(char *arg)
+int	ft_echo(char **argv)
 {
 	int	flag;
 
-	flag = ft_check_options(arg);
+	if (!argv[1])
+	{
+		ft_putchar_fd('\n', 1);
+		return (0);
+	}
+	flag = ft_check_options(argv[1]);
 	if (flag)
-		ft_print(ft_remove_flag(arg), 1);
+		ft_print(argv, ft_remove_flag(argv));
 	else
-		ft_print(arg, 0);
+		ft_print(argv, 0);
+	return (0);
 }
