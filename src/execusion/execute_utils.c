@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 18:21:48 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/23 19:32:22 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/24 16:25:30 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@ char	**get_all_paths(char **envp, t_gc **head_gc)
 {
 	char	*path;
 	char	*full_path;
-	char **paths;
-	
+	char	**paths;
+
 	full_path = get_path(envp);
-	path = ft_substr_allocate(full_path, ft_strlen("PATH="), ft_strlen(full_path), head_gc);
+	path = ft_substr_allocate(full_path, ft_strlen("PATH="),
+			ft_strlen(full_path), head_gc);
 	paths = ft_split_allocate(path, ':', head_gc);
 	return (paths);
 }
@@ -56,4 +57,54 @@ char	*get_path(char **envp)
 		i++;
 	}
 	return (NULL);
+}
+
+int	is_built_ins(char *str)
+{
+	char	**built_ins;
+	int		i;
+
+	built_ins = malloc(sizeof(char *) * 8);
+	built_ins[0] = ft_strdup("echo");
+	built_ins[1] = ft_strdup("cd");
+	built_ins[2] = ft_strdup("pwd");
+	built_ins[3] = ft_strdup("export");
+	built_ins[4] = ft_strdup("unset");
+	built_ins[5] = ft_strdup("env");
+	built_ins[6] = ft_strdup("exit");
+	built_ins[7] = NULL;
+	i = 0;
+	while (built_ins[i])
+	{
+		if (ft_strcmp(str, built_ins[i]) == 0)
+		{
+			built_ins = free_arr(built_ins);
+			return (1);
+		}
+		i++;
+	}
+	built_ins = free_arr(built_ins);
+	return (0);
+}
+
+int	call_built_ins(char *str, char **input, t_env env)
+{
+	int	result;
+
+	result = -1;
+	if (ft_strcmp(str, "echo") == 0)
+		/* result =  */ft_echo(input);
+	else if (ft_strcmp(str, "cd") == 0)
+		/* result =  */ft_cd(input);
+	else if (ft_strcmp(str, "pwd") == 0)
+		/* result =  */ft_pwd(input);
+	else if (ft_strcmp(str, "export") == 0)
+	/* result =  */ft_export(input);
+	else if (ft_strcmp(str, "unset") == 0)
+	/* result =  */ft_unset(input);
+	else if (ft_strcmp(str, "env") == 0)
+	/* result =  */ft_env(input);
+	else if (ft_strcmp(str, "exit") == 0)
+	/* result =  */ft_exit(input);
+	return (result);
 }

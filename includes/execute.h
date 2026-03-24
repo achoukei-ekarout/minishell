@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/13 17:28:46 by user              #+#    #+#             */
-/*   Updated: 2026/03/23 20:20:05 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/24 15:33:53 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	apply_redirections(t_redir *redir);
 char	*get_path(char **envp);
 char	*get_path(char **envp);
 char	*get_path_name(char *func_name, char **paths);
-char    **get_all_paths(char **envp, t_gc **head_gc);
+char	**get_all_paths(char **envp, t_gc **head_gc);
+int		is_built_ins(char *str);
 
 #endif

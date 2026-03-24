@@ -6,26 +6,23 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 23:34:32 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/23 20:20:38 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/24 16:29:46 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execute_ast(t_ast *node, char **env, t_gc **head_gc)
+void	execute_ast(t_ast *node, t_env **env, t_gc **head_gc)
 {
-	char	**paths;
-
-	paths = get_all_paths(env, head_gc);
 	if (!node)
 		return ;
 	if (node->type == NODE_PIPE)
 		execute_pipe(node, env, head_gc);
 	else if (node->type == NODE_COMMAND)
-		execute_command(node, env, paths);
+		execute_command(node, env);
 }
 
-void	execute_pipe(t_ast *node, char **envp, t_gc **head_gc)
+void	execute_pipe(t_ast *node, t_env **env, t_gc **head_gc)
 {
 	int	fd[2];
 	int	pid1;
@@ -37,7 +34,7 @@ void	execute_pipe(t_ast *node, char **envp, t_gc **head_gc)
 	{
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[0]);
-		execute_ast(node->left, envp, head_gc);
+		execute_ast(node->left, env, head_gc);
 		exit(0);
 	}
 	pid2 = fork();
@@ -45,7 +42,7 @@ void	execute_pipe(t_ast *node, char **envp, t_gc **head_gc)
 	{
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[1]);
-		execute_ast(node->right, envp, head_gc);
+		execute_ast(node->right, env, head_gc);
 		exit(0);
 	}
 	close(fd[0]);
@@ -54,7 +51,7 @@ void	execute_pipe(t_ast *node, char **envp, t_gc **head_gc)
 	waitpid(pid2, NULL, 0);
 }
 
-void	execute_command(t_ast *node, char **envp, char **paths)
+void	execute_command(t_ast *node, t_env **env)
 {
 	int		pid;
 	char	*path;
@@ -69,9 +66,14 @@ void	execute_command(t_ast *node, char **envp, char **paths)
 			exit(127);
 		}
 		apply_redirections(node->redir);
-		execve(path, node->argv, envp);
-		perror("exec");
-		exit(1);
+		if (is_built_ins(node->argv[0]))
+			call_built_ins(node->argv[0], node->argv, env);
+		else
+		{
+			execve(path, node->argv, envp);
+			perror("exec");
+			exit(1);
+		}
 	}
 	waitpid(pid, NULL, 0);
 }
