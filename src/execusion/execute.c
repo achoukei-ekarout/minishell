@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 23:34:32 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/24 16:29:46 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/24 17:36:45 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	execute_ast(t_ast *node, t_env **env, t_gc **head_gc)
 	if (node->type == NODE_PIPE)
 		execute_pipe(node, env, head_gc);
 	else if (node->type == NODE_COMMAND)
-		execute_command(node, env);
+		execute_command(node, env, head_gc);
 }
 
 void	execute_pipe(t_ast *node, t_env **env, t_gc **head_gc)
@@ -51,26 +51,32 @@ void	execute_pipe(t_ast *node, t_env **env, t_gc **head_gc)
 	waitpid(pid2, NULL, 0);
 }
 
-void	execute_command(t_ast *node, t_env **env)
+void	execute_command(t_ast *node, t_env **env, t_gc **head_gc)
 {
 	int		pid;
 	char	*path;
+	char **env_argv;
+	int		result;
 
 	pid = fork();
 	if (pid == 0)
 	{
-		path = get_path_name(node->argv[0], paths);
-		if (!path)
-		{
-			printf("%s: command not found\n", node->argv[0]);
-			exit(127);
-		}
 		apply_redirections(node->redir);
 		if (is_built_ins(node->argv[0]))
-			call_built_ins(node->argv[0], node->argv, env);
+		{
+			result = call_built_ins(node->argv[0], node->argv, env);
+			exit(result);
+		}
 		else
 		{
-			execve(path, node->argv, envp);
+			env_argv = env_to_array(env, head_gc);
+			path = get_path_name(node->argv[0], get_all_paths(env_argv, head_gc));
+			if (!path)
+			{
+				printf("%s: command not found\n", node->argv[0]);
+				exit(127);
+			}
+			execve(path, node->argv, env_argv);
 			perror("exec");
 			exit(1);
 		}
