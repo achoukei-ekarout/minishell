@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 16:15:14 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/14 13:28:06 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/26 21:11:20 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,11 @@ t_env	**environ_init(char **envp)
 		i++;
 	}
 	return (env);
+}
+
+void	vars_init(t_vars *vars, char  **envp)
+{
+	vars->env = environ_init(envp);
+	vars->exp = exp_init(vars->env);
+	vars->exit_code = 0;	
 }
