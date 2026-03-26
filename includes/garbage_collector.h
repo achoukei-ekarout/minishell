@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 21:23:55 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/23 02:51:07 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/23 21:06:07 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@ char							*ft_substr_allocate(char const *s,
 									t_gc **head_gc);
 char							**ft_split_allocate(char const *s, char c,
 									t_gc **head_gc);
+char	*ft_strjoin_allocate(char const *s1, char const *s2, t_gc **head_gc);
 
 #endif

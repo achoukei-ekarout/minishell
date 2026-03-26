@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   environ_mehods.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
+/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/14 13:17:41 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/23 14:27:29 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/23 21:07:12 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**env_to_array(t_env **env)
+char	**env_to_array(t_env **env, t_gc **head_gc)
 {
 	char	**envp;
 	char	*temp;
@@ -20,7 +20,7 @@ char	**env_to_array(t_env **env)
 	int		size;
 
 	size = ft_env_size(*env);
-	envp = (char **)malloc((size + 1) * sizeof(char *));
+	envp = (char **)allocate(head_gc, (size + 1) * sizeof(char *));
 	size = 0;
 	curr = *env;
 	while (curr)
@@ -28,11 +28,11 @@ char	**env_to_array(t_env **env)
 		if (curr->data->value)
 		{
 			temp = ft_strjoin(curr->data->key, "=");
-			envp[size] = ft_strjoin(temp, curr->data->value);
+			envp[size] = ft_strjoin_allocate(temp, curr->data->value, head_gc);
 			free(temp);
 		}
 		else
-			envp[size] = ft_strdup(curr->data->key);
+			envp[size] = ft_strdup_allocate(curr->data->key, head_gc);
 		size++;
 		curr = curr->next;
 	}
