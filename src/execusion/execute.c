@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
+/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 23:34:32 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/24 20:48:26 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/26 17:19:38 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,18 @@ void	execute_command(t_ast *node, t_env **env, t_env **exp, t_gc **head_gc)
 	int		pid;
 	char	*path;
 	char **env_argv;
+	int saved_stds[2];
 
 	if (is_built_ins(node->argv[0]))
 	{
-			call_built_ins(node->argv[0], node->argv, env, exp);
+		saved_stds[0] = dup(STDIN_FILENO);
+		saved_stds[1] = dup(STDOUT_FILENO);
+		apply_redirections(node->redir);
+		call_built_ins(node->argv[0], node->argv, env, exp);
+		dup2(saved_stds[0], STDIN_FILENO);
+		dup2(saved_stds[1], STDOUT_FILENO);
+		close(saved_stds[0]);
+		close(saved_stds[1]);
 		return ;
 	}
 	pid = fork();
