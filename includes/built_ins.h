@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 02:06:29 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/26 23:34:00 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/27 17:48:22 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,6 @@ int		exit_error(char *arg);
 int		cd_dir_error(char *dir);
 int		args_error(char *fn);
 int		export_key_error(char *key);
-int 	ft_count_args(char  **argv);
+int		ft_count_args(char **argv);
 
 #endif

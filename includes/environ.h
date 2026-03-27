@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 20:09:03 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/26 21:12:09 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/27 17:49:33 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ void		env_unset(t_env **env, char *key);
 void		add_new_node(t_env **env, char *key, char *value);
 char		**env_to_array(t_env **env, t_gc **head_gc);
 int			ft_env_size(t_env *env);
-void		vars_init(t_vars *vars, char  **envp);
+void		vars_init(t_vars *vars, char **envp);
 
 #endif

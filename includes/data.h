@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 02:06:31 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/26 21:11:26 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/27 17:48:51 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-typedef	struct s_vars
+typedef struct s_vars
 {
 	t_env	**env;
 	t_env	**exp;

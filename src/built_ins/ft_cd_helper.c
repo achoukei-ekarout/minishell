@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 21:10:59 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/24 12:55:49 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/27 17:59:20 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,6 @@ int	ft_go_dir(char *dir)
 
 	result = chdir(dir);
 	if (result == -1)
-		return (cd_dir_error(dir));	
+		return (cd_dir_error(dir));
 	return (result);
 }

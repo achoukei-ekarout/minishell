@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 13:32:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/27 17:26:14 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/27 17:29:25 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	main(int argc, char **argv, char **envp)
 	if (!argc || !argv)
 		return (0);
 	signal(SIGINT, sigint_handler);
-    rl_catch_signals = 0;
+	rl_catch_signals = 0;
 	p_garbage_collector = NULL;
 	vars_init(&vars, envp);
 	run_shell(&vars);

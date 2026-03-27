@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 19:39:34 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/26 21:03:06 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/27 17:58:15 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_expand	*init_expand_data(char *value, t_vars vars, int len, t_gc **head_gc)
 
 	expand_data = (t_expand *)allocate(head_gc, sizeof(t_expand));
 	expand_data->old_value = value;
-	expand_data->new_value = (char *)allocate(head_gc, sizeof(char) * (len + 1));
+	expand_data->new_value = (char *)allocate(head_gc, sizeof(char) * len);
 	expand_data->vars = vars;
 	return (expand_data);
 }
@@ -29,7 +29,7 @@ char	*expand_value(char *value, t_vars vars, t_gc **head_gc)
 	int			i;
 	int			j;
 
-	i = get_new_size(value, vars);
+	i = get_new_size(value, vars) + 1;
 	expand_data = init_expand_data(value, vars, i, head_gc);
 	expand_data->new_value[i] = 0;
 	i = 0;
@@ -59,7 +59,6 @@ void	expand(t_token **token, t_vars vars, t_gc **head_gc)
 
 	value = (*token)->value;
 	new_value = expand_value(value, vars, head_gc);
-	// free((*token)->value);
 	(*token)->value = new_value;
 }
 

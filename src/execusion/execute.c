@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 23:34:32 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/26 21:21:44 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/27 18:26:06 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,33 @@ void	execute_pipe(t_ast *node, t_vars *vars, t_gc **head_gc)
 	waitpid(pid2, NULL, 0);
 }
 
+void	child_process(t_ast *node, t_vars *vars, t_gc **head_gc)
+{
+	char	**envp;
+	char	*path;
+
+	apply_redirections(node->redir);
+	envp = env_to_array(vars->env, head_gc);
+	if (access(node->argv[0], X_OK) == 0)
+		path = node->argv[0];
+	else
+	{
+		path = get_path_name(node->argv[0], get_all_paths(envp, head_gc));
+		if (!path)
+		{
+			printf("%s: command not found\n", node->argv[0]);
+			exit(127);
+		}
+	}
+	execve(path, node->argv, envp);
+	perror("exec");
+	exit(1);
+}
+
 void	execute_command(t_ast *node, t_vars *vars, t_gc **head_gc)
 {
 	int		pid;
-	char	*path;
-	char 	**env_argv;
-	int 	saved_stds[2];
+	int		saved_stds[2];
 	int		status;
 
 	if (is_built_ins(node->argv[0]))
@@ -73,24 +94,7 @@ void	execute_command(t_ast *node, t_vars *vars, t_gc **head_gc)
 	}
 	pid = fork();
 	if (pid == 0)
-	{
-		apply_redirections(node->redir);
-		env_argv = env_to_array(vars->env, head_gc);
-		if (access(node->argv[0], X_OK) == 0)
-			path = node->argv[0];
-		else
-		{
-			path = get_path_name(node->argv[0], get_all_paths(env_argv, head_gc));
-			if (!path)
-			{
-				printf("%s: command not found\n", node->argv[0]);
-				exit(127);
-			}
-		}
-		execve(path, node->argv, env_argv);
-		perror("exec");
-		exit(1);
-	}
+		child_process(node, vars, head_gc);
 	waitpid(pid, &status, 0);
 	vars->exit_code = status >> 8;
 }
