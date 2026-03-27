@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 23:34:32 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/26 17:19:38 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/26 21:21:44 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execute_ast(t_ast *node, t_env **env, t_env **exp, t_gc **head_gc)
+void	execute_ast(t_ast *node, t_vars *vars, t_gc **head_gc)
 {
 	if (!node)
 		return ;
 	if (node->type == NODE_PIPE)
-		execute_pipe(node, env, exp, head_gc);
+		execute_pipe(node, vars, head_gc);
 	else if (node->type == NODE_COMMAND)
-		execute_command(node, env, exp, head_gc);
+		execute_command(node, vars, head_gc);
 }
 
-void	execute_pipe(t_ast *node, t_env **env, t_env **exp, t_gc **head_gc)
+void	execute_pipe(t_ast *node, t_vars *vars, t_gc **head_gc)
 {
 	int	fd[2];
 	int	pid1;
@@ -34,7 +34,7 @@ void	execute_pipe(t_ast *node, t_env **env, t_env **exp, t_gc **head_gc)
 	{
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[0]);
-		execute_ast(node->left, env, exp, head_gc);
+		execute_ast(node->left, vars, head_gc);
 		exit(0);
 	}
 	pid2 = fork();
@@ -42,7 +42,7 @@ void	execute_pipe(t_ast *node, t_env **env, t_env **exp, t_gc **head_gc)
 	{
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[1]);
-		execute_ast(node->right, env, exp, head_gc);
+		execute_ast(node->right, vars, head_gc);
 		exit(0);
 	}
 	close(fd[0]);
@@ -51,19 +51,20 @@ void	execute_pipe(t_ast *node, t_env **env, t_env **exp, t_gc **head_gc)
 	waitpid(pid2, NULL, 0);
 }
 
-void	execute_command(t_ast *node, t_env **env, t_env **exp, t_gc **head_gc)
+void	execute_command(t_ast *node, t_vars *vars, t_gc **head_gc)
 {
 	int		pid;
 	char	*path;
-	char **env_argv;
-	int saved_stds[2];
+	char 	**env_argv;
+	int 	saved_stds[2];
+	int		status;
 
 	if (is_built_ins(node->argv[0]))
 	{
 		saved_stds[0] = dup(STDIN_FILENO);
 		saved_stds[1] = dup(STDOUT_FILENO);
 		apply_redirections(node->redir);
-		call_built_ins(node->argv[0], node->argv, env, exp);
+		vars->exit_code = call_built_ins(node->argv[0], node->argv, *vars);
 		dup2(saved_stds[0], STDIN_FILENO);
 		dup2(saved_stds[1], STDOUT_FILENO);
 		close(saved_stds[0]);
@@ -74,7 +75,7 @@ void	execute_command(t_ast *node, t_env **env, t_env **exp, t_gc **head_gc)
 	if (pid == 0)
 	{
 		apply_redirections(node->redir);
-		env_argv = env_to_array(env, head_gc);
+		env_argv = env_to_array(vars->env, head_gc);
 		if (access(node->argv[0], X_OK) == 0)
 			path = node->argv[0];
 		else
@@ -90,7 +91,8 @@ void	execute_command(t_ast *node, t_env **env, t_env **exp, t_gc **head_gc)
 		perror("exec");
 		exit(1);
 	}
-	waitpid(pid, NULL, 0);
+	waitpid(pid, &status, 0);
+	vars->exit_code = status >> 8;
 }
 
 void	apply_redirections(t_redir *redir)
