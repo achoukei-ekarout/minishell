@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/13 17:08:00 by user              #+#    #+#             */
-/*   Updated: 2026/03/21 10:26:56 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/27 20:51:04 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	print_tokens(t_token *tokens)
 {
 	while (tokens)
 	{
-		printf("%s\n", tokens->value);
+		printf("Token value: %s, Token type: %i\n", tokens->value, tokens->type);
 		tokens = tokens->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 08:43:13 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/27 19:34:43 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/27 21:52:05 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void    proccess_node_heredoc(t_ast *node)
             redir->fd = apply_heredoc(redir->file);
         redir = redir->next;
     }
-    
 }
 
 int apply_heredoc(char *delimeter)
@@ -46,7 +45,7 @@ int apply_heredoc(char *delimeter)
     char    *line;
 
     if (pipe(fd) == -1)
-    perror("pipe");
+        perror("pipe");
     while (1)
     {
         line = readline("> ");

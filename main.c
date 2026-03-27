@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
+/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 13:32:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/26 21:03:13 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/27 20:52:57 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,7 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		param_expand(&tokens, vars, &garbage_collector);
-			// Here will be the expansion of the tokens one by one
-		// print_tokens(tokens);
 		abstract_syntax_tree = parse(tokens, &garbage_collector);
-		// print_tree(abstract_syntax_tree);
 		execute_ast(abstract_syntax_tree, &vars, &garbage_collector);
 		free_garbage(&garbage_collector);
 		free(input);
