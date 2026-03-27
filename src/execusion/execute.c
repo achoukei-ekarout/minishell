@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
+/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 23:34:32 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/26 21:21:44 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/27 20:12:43 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	execute_command(t_ast *node, t_vars *vars, t_gc **head_gc)
 	int 	saved_stds[2];
 	int		status;
 
+	proccess_heredoc(node);
 	if (is_built_ins(node->argv[0]))
 	{
 		saved_stds[0] = dup(STDIN_FILENO);
@@ -118,6 +119,11 @@ void	apply_redirections(t_redir *redir)
 			fd = open(redir->file, O_CREAT | O_WRONLY | O_APPEND, 0644);
 			dup2(fd, STDOUT_FILENO);
 			close(fd);
+		}
+		else if (redir->type == TOKEN_HEREDOC)
+		{
+			dup2(redir->fd, STDIN_FILENO);
+			close(redir->fd);
 		}
 		redir = redir->next;
 	}
