@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 04:04:53 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/23 02:52:01 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/28 15:32:55 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ char	*read_word(char *line, int *i, t_gc **head_gc)
 			quote_index = (*i);
 			while (line[*i] != line[quote_index])
 				(*i)++;
+			// if (!line[*i])
+			// {
+			// 	quotes_error();
+			// 	return (NULL);
+			// }
 		}
 		(*i)++;
 	}
@@ -36,6 +41,23 @@ char	*read_word(char *line, int *i, t_gc **head_gc)
 	ft_strlcpy(word, line + start, len + 1);
 	word[len] = '\0';
 	return (word);
+}
+
+t_token	*check_redir_type(t_token_type type, t_gc **head_gc, int *i)
+{
+	if (type == TOKEN_HEREDOC)
+		return ((*i)++, create_token(TOKEN_HEREDOC, ft_strdup_allocate("<<",
+					head_gc), head_gc));
+	if (type == TOKEN_REDIR_IN)
+		return (create_token(TOKEN_REDIR_IN, ft_strdup_allocate("<",
+					head_gc), head_gc));
+	if (type == TOKEN_REDIR_APPEND)
+		return ((*i)++, create_token(TOKEN_REDIR_APPEND,
+				ft_strdup_allocate(">>", head_gc), head_gc));
+	if (type == TOKEN_REDIR_OUT)
+		return (create_token(TOKEN_REDIR_OUT, ft_strdup_allocate(">",
+					head_gc), head_gc));
+	return (NULL);
 }
 
 t_token	*read_operator(char *line, int *i, t_gc **head_gc)
@@ -50,21 +72,17 @@ t_token	*read_operator(char *line, int *i, t_gc **head_gc)
 	{
 		(*i)++;
 		if (line[*i] == '<')
-			return ((*i)++, create_token(TOKEN_HEREDOC, ft_strdup_allocate("<<",
-						head_gc), head_gc));
+			return (check_redir_type(TOKEN_HEREDOC, head_gc, i));
 		else
-			return (create_token(TOKEN_REDIR_IN, ft_strdup_allocate("<",
-						head_gc), head_gc));
+			return (check_redir_type(TOKEN_REDIR_IN, head_gc, i));
 	}
 	if (line[*i] == '>')
 	{
 		(*i)++;
 		if (line[*i] == '>')
-			return ((*i)++, create_token(TOKEN_REDIR_APPEND,
-					ft_strdup_allocate(">>", head_gc), head_gc));
+			return (check_redir_type(TOKEN_REDIR_APPEND, head_gc, i));
 		else
-			return (create_token(TOKEN_REDIR_OUT, ft_strdup_allocate(">",
-						head_gc), head_gc));
+			return (check_redir_type(TOKEN_REDIR_OUT, head_gc, i));
 	}
 	return (NULL);
 }

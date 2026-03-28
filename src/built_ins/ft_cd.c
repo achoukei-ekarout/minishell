@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 02:08:53 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/24 13:06:20 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/27 18:02:10 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ void	change_env_pwd(char *old_path, t_env **env)
 	free(new_path);
 }
 
-int ft_count_args(char  **argv)
+int	ft_count_args(char **argv)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (argv[i])

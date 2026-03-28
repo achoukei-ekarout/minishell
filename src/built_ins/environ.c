@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 16:15:14 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/14 13:28:06 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/27 18:01:26 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,18 @@ t_env	*create_env_node(char *s)
 	char	**key_value;
 	t_env	*node;
 	int		i;
+	int		level;
 
 	key_value = ft_split(s, '=');
 	if (!key_value)
 		return (NULL);
+	if (!ft_strcmp(key_value[0], "SHLVL"))
+	{
+		level = ft_atoi(key_value[1]);
+		level++;
+		free(key_value[1]);
+		key_value[1] = ft_itoa(level);
+	}
 	node = env_new(key_value[0], key_value[1]);
 	i = 0;
 	while (key_value[i])
@@ -77,4 +85,11 @@ t_env	**environ_init(char **envp)
 		i++;
 	}
 	return (env);
+}
+
+void	vars_init(t_vars *vars, char **envp)
+{
+	vars->env = environ_init(envp);
+	vars->exp = exp_init(vars->env);
+	vars->exit_code = 0;
 }

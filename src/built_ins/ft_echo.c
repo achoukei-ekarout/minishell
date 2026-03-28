@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 23:17:00 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/23 20:55:31 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/27 18:02:34 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_check_options(char *arg)
 	while (arg[i])
 	{
 		if (arg[i] != 'n')
-			return (0) ;
+			return (0);
 		i++;
 	}
 	if (i == 1)
@@ -59,7 +59,7 @@ void	ft_print(char **argv, int flag)
 		if (i != flag + 1)
 			ft_putchar_fd(' ', 1);
 		j = 0;
-		while(argv[i][j])
+		while (argv[i][j])
 		{
 			ft_putchar_fd(argv[i][j], 1);
 			j++;

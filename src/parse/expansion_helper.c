@@ -6,25 +6,35 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 18:56:34 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/20 19:01:20 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/27 19:05:50 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_value(char *value, int *i, t_env **env)
+char	*get_value(char *value, int *i, t_vars vars)
 {
 	int		start;
 	char	*key;
 	char	*result;
 
 	start = *i;
+	if (value[*i] == '?')
+	{
+		(*i)++;
+		return (ft_itoa(vars.exit_code));
+	}
+	if (ft_isdigit(value[*i]))
+	{
+		(*i)++;
+		return (NULL);
+	}
 	while ((ft_isalnum(value[*i]) || value[*i] == '_'))
 		(*i)++;
 	if (*i == start)
 		return ("$");
 	key = ft_substr(value, start, *i - start);
-	result = get_env_value(env, key);
+	result = get_env_value(vars.env, key);
 	free(key);
 	return (result);
 }
@@ -48,7 +58,7 @@ void	handle_dollar(t_expand *expand_data, int *i, int *j)
 	int		k;
 
 	(*i)++;
-	expanded = get_value(expand_data->old_value, i, expand_data->env);
+	expanded = get_value(expand_data->old_value, i, expand_data->vars);
 	if (expanded)
 	{
 		k = -1;
@@ -57,6 +67,7 @@ void	handle_dollar(t_expand *expand_data, int *i, int *j)
 			expand_data->new_value[*j] = expanded[k];
 			(*j)++;
 		}
+		free(expanded);
 	}
 }
 
