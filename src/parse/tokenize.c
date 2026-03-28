@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 04:04:53 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/28 13:27:54 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/28 15:32:55 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,22 @@ char	*read_word(char *line, int *i, t_gc **head_gc)
 	int		start;
 	int		len;
 	char	*word;
+	int		quote_index;
 
+	quote_index = 0;
 	start = *i;
 	while (line[*i] && line[*i] != ' ' && !is_operator(line[*i]))
 	{
 		if (is_quote(line[(*i)]))
 		{
-			(*i)++;
-			while (!is_quote(line[*i]) && line[*i])
+			quote_index = (*i);
+			while (line[*i] != line[quote_index])
 				(*i)++;
-			if (!line[*i])
-			{
-				quotes_error();
-				return (NULL);
-			}
+			// if (!line[*i])
+			// {
+			// 	quotes_error();
+			// 	return (NULL);
+			// }
 		}
 		(*i)++;
 	}
@@ -111,7 +113,6 @@ t_token	*tokenize(char *line, t_gc **head_gc)
 			token = create_token(TOKEN_WORD, read_word(line, &i, head_gc),
 					head_gc);
 		if (token)
-		
 			add_token(&t_tokens, token);
 	}
 	return (t_tokens);
