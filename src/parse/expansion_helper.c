@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 18:56:34 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/26 21:13:32 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/27 17:25:10 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	handle_dollar(t_expand *expand_data, int *i, int *j)
 			expand_data->new_value[*j] = expanded[k];
 			(*j)++;
 		}
+		free(expanded);
 	}
 }
 
