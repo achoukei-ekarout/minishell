@@ -21,7 +21,7 @@ int	is_redirection(t_token_type type)
 void	handle_redirection(t_ast *node, t_token **tokens, t_gc **head_gc)
 {
 	t_redir	*redirect;
-	t_redir *last;
+	t_redir	*last;
 
 	redirect = allocate(head_gc, sizeof(t_redir));
 	redirect->next = NULL;
@@ -29,13 +29,13 @@ void	handle_redirection(t_ast *node, t_token **tokens, t_gc **head_gc)
 	redirect->type = (*tokens)->type;
 	(*tokens) = (*tokens)->next;
 	redirect->file = ft_strdup_allocate((*tokens)->value, head_gc);
-	 if (!node->redir)
-    {
-        node->redir = redirect;
-        return;
-    }
-    last = node->redir;
-    while (last->next)
-        last = last->next;
-    last->next = redirect;
+	if (!node->redir)
+	{
+		node->redir = redirect;
+		return ;
+	}
+	last = node->redir;
+	while (last->next)
+		last = last->next;
+	last->next = redirect;
 }

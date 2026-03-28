@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 14:53:25 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/27 09:10:17 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/28 23:32:25 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,6 @@ int					is_quote(char c);
 void				print_env(char **envp);
 void				print_arr(char **arr);
 int					get_quote_index(char *line, int *i);
+void				skip_spaces(char *line, int *i);
 
 #endif

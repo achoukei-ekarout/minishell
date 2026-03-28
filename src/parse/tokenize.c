@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 04:04:53 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/28 23:17:13 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/28 23:32:07 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,7 @@ char	*read_word(char *line, int *i, t_gc **head_gc)
 			while (line[*i] && line[*i] != line[quote_index])
 				(*i)++;
 			if (!line[*i])
-			{
-				quotes_error();
-				return (NULL);
-			}
+				return (quotes_error(), NULL);
 		}
 		(*i)++;
 	}
@@ -49,14 +46,14 @@ t_token	*check_redir_type(t_token_type type, t_gc **head_gc, int *i)
 		return ((*i)++, create_token(TOKEN_HEREDOC, ft_strdup_allocate("<<",
 					head_gc), head_gc));
 	if (type == TOKEN_REDIR_IN)
-		return (create_token(TOKEN_REDIR_IN, ft_strdup_allocate("<",
-					head_gc), head_gc));
+		return (create_token(TOKEN_REDIR_IN, ft_strdup_allocate("<", head_gc),
+				head_gc));
 	if (type == TOKEN_REDIR_APPEND)
 		return ((*i)++, create_token(TOKEN_REDIR_APPEND,
 				ft_strdup_allocate(">>", head_gc), head_gc));
 	if (type == TOKEN_REDIR_OUT)
-		return (create_token(TOKEN_REDIR_OUT, ft_strdup_allocate(">",
-					head_gc), head_gc));
+		return (create_token(TOKEN_REDIR_OUT, ft_strdup_allocate(">", head_gc),
+				head_gc));
 	return (NULL);
 }
 
@@ -87,40 +84,85 @@ t_token	*read_operator(char *line, int *i, t_gc **head_gc)
 	return (NULL);
 }
 
+// t_token	*tokenize(char *line, t_gc **head_gc)
+// {
+// 	int		i;
+// 	t_token	*t_tokens;
+// 	t_token	*token;
+// 	int		start;
+// 	char	*word;
+
+// 	t_tokens = NULL;
+// 	i = 0;
+// 	while (line[i])
+// 	{
+// 		token = NULL;
+// 		while (ft_isspace(line[i]))
+// 			i++;
+// 		if (is_quote(line[i]))
+// 		{
+// 			start = get_quote_index(line, &i);
+// 			if (start < 0)
+// 				return (NULL);
+// 			token = create_token(0, ft_substr_allocate(line, start, (i - start)
+// 						+ 1, head_gc), head_gc);
+// 		}
+// 		else if (is_operator(line[i]))
+// 			token = read_operator(line, &i, head_gc);
+// 		else if (line[i])
+// 		{
+// 			word = read_word(line, &i, head_gc);
+// 			if (!word)
+// 				return (NULL);
+// 			token = create_token(TOKEN_WORD, word, head_gc);
+// 		}
+// 		if (token)
+// 			add_token(&t_tokens, token);
+// 	}
+// 	return (t_tokens);
+// }
+
+static t_token	*get_next_token(char *line, int *i, t_gc **head_gc)
+{
+	char	*word;
+	int		start;
+
+	if (is_quote(line[*i]))
+	{
+		start = get_quote_index(line, i);
+		if (start < 0)
+			return (NULL);
+		return (create_token(0, ft_substr_allocate(line, start, (*i - start)
+					+ 1, head_gc), head_gc));
+	}
+	else if (is_operator(line[*i]))
+		return (read_operator(line, i, head_gc));
+	else
+	{
+		word = read_word(line, i, head_gc);
+		if (!word)
+			return (NULL);
+		return (create_token(TOKEN_WORD, word, head_gc));
+	}
+}
+
 t_token	*tokenize(char *line, t_gc **head_gc)
 {
 	int		i;
-	t_token	*t_tokens;
+	t_token	*tokens;
 	t_token	*token;
-	int		start;
-	char	*word;
 
-	t_tokens = NULL;
 	i = 0;
+	tokens = NULL;
 	while (line[i])
 	{
-		token = NULL;
-		while (ft_isspace(line[i]))
-			i++;
-		if (is_quote(line[i]))
-		{
-			start = get_quote_index(line, &i);
-			if (start < 0)
-				return (NULL);
-			token = create_token(0, ft_substr_allocate(line, start, (i - start)
-						+ 1, head_gc), head_gc);
-		}
-		else if (is_operator(line[i]))
-			token = read_operator(line, &i, head_gc);
-		else if (line[i])
-		{
-			word = read_word(line, &i, head_gc);
-			if (!word)
-				return (NULL);
-			token = create_token(TOKEN_WORD, word, head_gc);
-		}
-		if (token)
-			add_token(&t_tokens, token);
+		skip_spaces(line, &i);
+		if (!line[i])
+			break ;
+		token = get_next_token(line, &i, head_gc);
+		if (!token)
+			return (NULL);
+		add_token(&tokens, token);
 	}
-	return (t_tokens);
+	return (tokens);
 }

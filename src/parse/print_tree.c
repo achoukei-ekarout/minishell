@@ -28,7 +28,8 @@ void	print_tokens(t_token *tokens)
 {
 	while (tokens)
 	{
-		printf("Token value: %s, Token type: %i\n", tokens->value, tokens->type);
+		printf("Token value: %s, Token type: %i\n", tokens->value,
+			tokens->type);
 		tokens = tokens->next;
 	}
 }
