@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 02:08:53 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/27 18:02:10 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/28 20:28:28 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ int	ft_isempty(char	*arg)
 	return (0);
 }
 
-void	change_env_pwd(char *old_path, t_env **env)
+void	change_env_pwd(char *old_path, t_env **env, t_gc **perm_gc)
 {
 	char	*new_path;
 
 	new_path = getcwd(NULL, 0);
-	change_env_value(env, "OLDPWD", old_path);
-	change_env_value(env, "PWD", new_path);
+	change_env_value(env, "OLDPWD", old_path, perm_gc);
+	change_env_value(env, "PWD", new_path, perm_gc);
 	free(new_path);
 }
 
@@ -49,7 +49,7 @@ int	ft_count_args(char **argv)
 	return (i);
 }
 
-int	ft_cd(char **argv, t_env **env)
+int	ft_cd(char **argv, t_env **env, t_gc **perm_gc)
 {
 	char	*old_path;
 	char	*arg;
@@ -68,7 +68,7 @@ int	ft_cd(char **argv, t_env **env)
 	else
 		result = ft_go_dir(arg);
 	if (result != -1)
-		change_env_pwd(old_path, env);
+		change_env_pwd(old_path, env, perm_gc);
 	free(old_path);
 	return (result);
 }

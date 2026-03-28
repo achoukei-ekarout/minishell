@@ -6,23 +6,23 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 19:16:24 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/27 20:58:00 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/28 20:37:05 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_export_key(t_env **exp, char *key)
+int	ft_export_key(t_env **exp, char *key, t_gc **perm_gc)
 {
 	if (!is_valid_key(key))
 		return (export_key_error(key));
 	if (find_key(exp, key))
 		return (0);
-	change_exp_value(exp, key, NULL);
+	change_exp_value(exp, key, NULL, perm_gc);
 	return (0);
 }
 
-int	ft_export_empty(t_env **exp, t_env **env, char *arg)
+int	ft_export_empty(t_env **exp, t_env **env, char *arg, t_gc **perm_gc)
 {
 	char	*key;
 
@@ -33,13 +33,13 @@ int	ft_export_empty(t_env **exp, t_env **env, char *arg)
 		free(key);
 		return (-1);
 	}
-	change_exp_value(exp, key, "");
-	change_env_value(env, key, "");
+	change_exp_value(exp, key, "", perm_gc);
+	change_env_value(env, key, "", perm_gc);
 	free(key);
 	return (0);
 }
 
-int	ft_export_key_value(t_env **exp, t_env **env, char *arg)
+int	ft_export_key_value(t_env **exp, t_env **env, char *arg, t_gc **perm_gc)
 {
 	char	**key_value;
 	int		i;
@@ -47,8 +47,8 @@ int	ft_export_key_value(t_env **exp, t_env **env, char *arg)
 	key_value = ft_split(arg, '=');
 	if (!is_valid_key(key_value[0]))
 		return (export_key_error(key_value[0]));
-	change_exp_value(exp, key_value[0], key_value[1]);
-	change_env_value(env, key_value[0], key_value[1]);
+	change_exp_value(exp, key_value[0], key_value[1], perm_gc);
+	change_env_value(env, key_value[0], key_value[1], perm_gc);
 	i = -1;
 	while (key_value[++i])
 		free(key_value[i]);
@@ -56,18 +56,18 @@ int	ft_export_key_value(t_env **exp, t_env **env, char *arg)
 	return (0);
 }
 
-int	ft_check_export(char *arg, t_env **exp, t_env **env)
+int	ft_check_export(char *arg, t_env **exp, t_env **env, t_gc **perm_gc)
 {
 	if (!ft_isalpha(arg[0]) && arg[0] != '_')
 		return (export_key_error(arg));
 	if (!ft_strchr(arg, '='))
-		return (ft_export_key(exp, arg));
+		return (ft_export_key(exp, arg, perm_gc));
 	if (ft_strlen(ft_strchr(arg, '=')) == 1)
-		return (ft_export_empty(exp, env, arg));
-	return (ft_export_key_value(exp, env, arg));
+		return (ft_export_empty(exp, env, arg, perm_gc));
+	return (ft_export_key_value(exp, env, arg, perm_gc));
 }
 
-int	ft_export(char **argv, t_env **env, t_env **exp)
+int	ft_export(char **argv, t_env **env, t_env **exp, t_gc **perm_gc)
 {
 	int	i;
 	int	result;
@@ -78,7 +78,7 @@ int	ft_export(char **argv, t_env **env, t_env **exp)
 	result = 0;
 	while (argv[i])
 	{
-		if (ft_check_export(argv[i], exp, env) == -1)
+		if (ft_check_export(argv[i], exp, env, perm_gc) == -1)
 			result = -1;
 		i++;
 	}

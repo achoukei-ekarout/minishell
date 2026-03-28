@@ -6,24 +6,25 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/13 17:28:46 by user              #+#    #+#             */
-/*   Updated: 2026/03/27 18:27:11 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/28 20:44:14 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTE_H
 # define EXECUTE_H
+
 # include "parse.h"
 
-void	execute_ast(t_ast *node, t_vars *vars, t_gc **head_gc);
-void	execute_pipe(t_ast *node, t_vars *vars, t_gc **head_gc);
-void	execute_command(t_ast *node, t_vars *vars, t_gc **head_gc);
+void	execute_ast(t_ast *node, t_vars *vars, t_gc **head_gc, t_gc **perm_gc);
+void	execute_pipe(t_ast *node, t_vars *vars, t_gc **head_gc, t_gc **perm_gc);
+void	execute_command(t_ast *node, t_vars *vars, t_gc **head_gc, t_gc **perm_gc);
 void	apply_redirections(t_redir *redir);
 char	*get_path(char **envp);
 char	*get_path(char **envp);
 char	*get_path_name(char *func_name, char **paths);
 char	**get_all_paths(char **envp, t_gc **head_gc);
 int		is_built_ins(char *str);
-int		call_built_ins(char *str, char **input, t_vars vars);
+int		call_built_ins(char *str, char **input, t_vars vars, t_gc **perm_gc);
 void	child_process(t_ast *node, t_vars *vars, t_gc **head_gc);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 18:21:48 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/27 17:52:46 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/28 20:38:52 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	is_built_ins(char *str)
 	return (0);
 }
 
-int	call_built_ins(char *str, char **input, t_vars vars)
+int	call_built_ins(char *str, char **input, t_vars vars, t_gc **perm_gc)
 {
 	int	result;
 
@@ -95,11 +95,11 @@ int	call_built_ins(char *str, char **input, t_vars vars)
 	if (ft_strcmp(str, "echo") == 0)
 		result = ft_echo(input);
 	else if (ft_strcmp(str, "cd") == 0)
-		result = ft_cd(input, vars.env);
+		result = ft_cd(input, vars.env, perm_gc);
 	else if (ft_strcmp(str, "pwd") == 0)
 		result = ft_pwd(vars.env);
 	else if (ft_strcmp(str, "export") == 0)
-		result = ft_export(input, vars.env, vars.exp);
+		result = ft_export(input, vars.env, vars.exp, perm_gc);
 	else if (ft_strcmp(str, "unset") == 0)
 		result = ft_unset(input, vars.env, vars.exp);
 	else if (ft_strcmp(str, "env") == 0)

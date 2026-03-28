@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 13:32:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/27 21:33:44 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/28 20:46:41 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,30 +21,30 @@ void	sigint_handler(int sig)
 	rl_redisplay();
 }
 
-void	read_input(char	*input, t_vars *vars, t_gc **garbage_collector)
+void	read_input(char	*input, t_vars *vars, t_gc **gc, t_gc **perm_gc)
 {
 	t_token	*tokens;
 	t_ast	*abstract_syntax_tree;
 
 	tokens = NULL;
-	tokens = tokenize(input, garbage_collector);
+	tokens = tokenize(input, gc);
 	if (!tokens)
 		return ;
-	param_expand(&tokens, *vars, garbage_collector);
+	param_expand(&tokens, *vars, gc);
 	// print_tokens(tokens);
-	abstract_syntax_tree = parse(tokens, garbage_collector);
+	abstract_syntax_tree = parse(tokens, gc);
 	// print_tree(abstract_syntax_tree);
-	execute_ast(abstract_syntax_tree, vars, garbage_collector);
+	execute_ast(abstract_syntax_tree, vars, gc, perm_gc);
 }
 
-void	run_shell(t_vars *vars)
+void	run_shell(t_vars *vars, t_gc **perm_gc)
 {
 	char	*input;
-	t_gc	*garbage_collector;
+	t_gc	*gc;
 
 	while (1)
 	{
-		garbage_collector = NULL;
+		gc = NULL;
 		input = readline("minishell$ ");
 		if (!input)
 			break ;
@@ -52,27 +52,27 @@ void	run_shell(t_vars *vars)
 			add_history(input);
 		if (!*input)
 			continue ;
-		read_input(input, vars, &garbage_collector);
-		free_garbage(&garbage_collector);
+		read_input(input, vars, &gc, perm_gc);
+		free_garbage(&gc);
 		free(input);
 	}
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_gc	*p_garbage_collector;
+	t_gc	*perm_gc;
 	t_vars	vars;
 
 	if (!argc || !argv)
 		return (0);
 	signal(SIGINT, sigint_handler);
 	rl_catch_signals = 0;
-	p_garbage_collector = NULL;
-	vars_init(&vars, envp);
-	run_shell(&vars);
-	free_garbage(&p_garbage_collector);
-	env_clear(vars.env);
-	env_clear(vars.exp);
+	perm_gc = NULL;
+	vars_init(&vars, envp, &perm_gc);
+	run_shell(&vars, &perm_gc);
+	free_garbage(&perm_gc);
+	// env_clear(vars.env);
+	// env_clear(vars.exp);
 	rl_clear_history();
 	return (0);
 }

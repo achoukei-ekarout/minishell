@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environ_mehods.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/14 13:17:41 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/23 21:07:12 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/28 18:36:31 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	env_unset(t_env **env, char *key)
 	}
 }
 
-void	change_env_value(t_env **env, char *key, char *value)
+void	change_env_value(t_env **env, char *key, char *value, t_gc **perm_gc)
 {
 	t_env	*curr;
 
@@ -80,12 +80,12 @@ void	change_env_value(t_env **env, char *key, char *value)
 		{
 			if (curr->data->value)
 				free(curr->data->value);
-			curr->data->value = ft_strdup(value);
+			curr->data->value = ft_strdup_allocate(value, perm_gc);
 			return ;
 		}
 		curr = curr->next;
 	}
-	add_new_node(env, key, value);
+	add_new_node(env, key, value, perm_gc);
 }
 
 int	ft_env_size(t_env *env)
