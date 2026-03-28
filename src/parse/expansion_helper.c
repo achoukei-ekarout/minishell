@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 18:56:34 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/27 17:25:10 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/27 19:05:50 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ char	*get_value(char *value, int *i, t_vars vars)
 	{
 		(*i)++;
 		return (ft_itoa(vars.exit_code));
+	}
+	if (ft_isdigit(value[*i]))
+	{
+		(*i)++;
+		return (NULL);
 	}
 	while ((ft_isalnum(value[*i]) || value[*i] == '_'))
 		(*i)++;
