@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/14 23:11:06 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/23 01:36:12 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/27 21:15:47 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,21 @@ int	is_redirection(t_token_type type)
 void	handle_redirection(t_ast *node, t_token **tokens, t_gc **head_gc)
 {
 	t_redir	*redirect;
+	t_redir	*last;
 
 	redirect = allocate(head_gc, sizeof(t_redir));
 	redirect->next = NULL;
+	redirect->fd = -1;
 	redirect->type = (*tokens)->type;
 	(*tokens) = (*tokens)->next;
 	redirect->file = ft_strdup_allocate((*tokens)->value, head_gc);
-	while (node->redir)
-		node->redir = node->redir->next;
-	node->redir = redirect;
+	if (!node->redir)
+	{
+		node->redir = redirect;
+		return ;
+	}
+	last = node->redir;
+	while (last->next)
+		last = last->next;
+	last->next = redirect;
 }

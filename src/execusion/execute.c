@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
+/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 23:34:32 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/27 18:26:06 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/28 20:44:36 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,11 @@ void	apply_redirections(t_redir *redir)
 			fd = open(redir->file, O_CREAT | O_WRONLY | O_APPEND, 0644);
 			dup2(fd, STDOUT_FILENO);
 			close(fd);
+		}
+		else if (redir->type == TOKEN_HEREDOC)
+		{
+			dup2(redir->fd, STDIN_FILENO);
+			close(redir->fd);
 		}
 		redir = redir->next;
 	}

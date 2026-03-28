@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
+/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 14:53:25 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/23 16:22:02 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/28 23:32:25 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_redir
 {
 	t_token_type	type;
 	char			*file;
+	int				fd;
 	struct s_redir	*next;
 }					t_redir;
 
@@ -89,5 +90,6 @@ int					is_quote(char c);
 void				print_env(char **envp);
 void				print_arr(char **arr);
 int					get_quote_index(char *line, int *i);
+void				skip_spaces(char *line, int *i);
 
 #endif

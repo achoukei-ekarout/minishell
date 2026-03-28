@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
+/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 00:21:23 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/27 21:35:23 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/28 23:31:56 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,16 +61,4 @@ void	free_tokens(t_token *tokens)
 int	is_quote(char c)
 {
 	return (c == '\'' || c == '"');
-}
-
-int	get_quote_index(char *line, int *i)
-{
-	int	start;
-
-	start = (*i)++;
-	while (line[*i] && line[*i] != line[start])
-		(*i)++;
-	while (line[*i] && line[*i] != ' ')
-		(*i)++;
-	return (start);
 }
