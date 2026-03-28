@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 04:04:53 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/28 20:16:00 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/28 23:17:13 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ char	*read_word(char *line, int *i, t_gc **head_gc)
 		if (is_quote(line[(*i)]))
 		{
 			quote_index = (*i)++;
-			while (line[*i] != line[quote_index])
+			while (line[*i] && line[*i] != line[quote_index])
 				(*i)++;
-			// if (!line[*i])
-			// {
-			// 	quotes_error();
-			// 	return (NULL);
-			// }
+			if (!line[*i])
+			{
+				quotes_error();
+				return (NULL);
+			}
 		}
 		(*i)++;
 	}
@@ -93,6 +93,7 @@ t_token	*tokenize(char *line, t_gc **head_gc)
 	t_token	*t_tokens;
 	t_token	*token;
 	int		start;
+	char	*word;
 
 	t_tokens = NULL;
 	i = 0;
@@ -104,14 +105,20 @@ t_token	*tokenize(char *line, t_gc **head_gc)
 		if (is_quote(line[i]))
 		{
 			start = get_quote_index(line, &i);
+			if (start < 0)
+				return (NULL);
 			token = create_token(0, ft_substr_allocate(line, start, (i - start)
 						+ 1, head_gc), head_gc);
 		}
 		else if (is_operator(line[i]))
 			token = read_operator(line, &i, head_gc);
 		else if (line[i])
-			token = create_token(TOKEN_WORD, read_word(line, &i, head_gc),
-					head_gc);
+		{
+			word = read_word(line, &i, head_gc);
+			if (!word)
+				return (NULL);
+			token = create_token(TOKEN_WORD, word, head_gc);
+		}
 		if (token)
 			add_token(&t_tokens, token);
 	}
