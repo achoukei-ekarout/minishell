@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 19:16:24 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/27 17:59:44 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/27 20:58:00 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	ft_check_export(char *arg, t_env **exp, t_env **env)
 	return (ft_export_key_value(exp, env, arg));
 }
 
-int	ft_export(char	**argv, t_env	**env, t_env **exp)
+int	ft_export(char **argv, t_env **env, t_env **exp)
 {
 	int	i;
 	int	result;

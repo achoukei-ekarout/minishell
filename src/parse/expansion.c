@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 19:39:34 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/27 17:58:15 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/27 19:01:00 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ char	*expand_value(char *value, t_vars vars, t_gc **head_gc)
 
 	i = get_new_size(value, vars) + 1;
 	expand_data = init_expand_data(value, vars, i, head_gc);
-	expand_data->new_value[i] = 0;
 	i = 0;
 	j = 0;
 	while (expand_data->old_value[i])
@@ -49,6 +48,7 @@ char	*expand_value(char *value, t_vars vars, t_gc **head_gc)
 			j++;
 		}
 	}
+	expand_data->new_value[j] = 0;
 	return (expand_data->new_value);
 }
 

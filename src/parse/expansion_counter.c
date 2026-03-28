@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 18:57:58 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/26 21:13:14 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/27 19:13:02 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,7 @@
 
 int	get_value_len(char *value, int *i, t_vars vars)
 {
-	int		start;
-	char	*key;
-	char	*result;
-	int		len;
-
-	start = *i;
-	if (value[*i] == '?')
-	{
-		(*i)++;
-		result = ft_itoa(vars.exit_code);
-		len = ft_strlen(result);
-		free(result);
-		return (len);
-	}
-	while ((ft_isalnum(value[*i]) || value[*i] == '_'))
-		(*i)++;
-	if (*i == start)
-		return (1);
-	key = ft_substr(value, start, *i - start);
-	result = get_env_value(vars.env, key);
-	free(key);
-	if (!result)
-		return (0);
-	return (ft_strlen(result));
+	return (ft_strlen(get_value(value, i, vars)));
 }
 
 void	handle_single_quotes_len(char *value, int *i, int *len)
@@ -74,8 +51,8 @@ void	handle_double_quote_len(char *value, int *i, int *len, t_vars vars)
 
 int	get_new_size(char *value, t_vars vars)
 {
-	int	i;
-	int	len;
+	int		i;
+	int		len;
 
 	i = 0;
 	len = 0;
