@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 13:32:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/28 16:24:33 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/28 20:45:07 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	read_input(char	*input, t_vars *vars, t_gc **garbage_collector)
 	param_expand(&tokens, *vars, garbage_collector);
 	// print_tokens(tokens);
 	abstract_syntax_tree = parse(tokens, garbage_collector);
+	proccess_heredoc(abstract_syntax_tree);
 	// print_tree(abstract_syntax_tree);
 	execute_ast(abstract_syntax_tree, vars, garbage_collector);
 }

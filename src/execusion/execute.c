@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 23:34:32 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/28 14:45:48 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/28 20:44:36 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ void	execute_command(t_ast *node, t_vars *vars, t_gc **head_gc)
 	int		saved_stds[2];
 	int		status;
 
-	proccess_heredoc(node);
 	if (is_built_ins(node->argv[0]))
 	{
 		saved_stds[0] = dup(STDIN_FILENO);
