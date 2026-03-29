@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 19:16:24 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/29 02:32:41 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/29 23:35:39 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,12 @@ int	ft_export_empty(t_env **exp, t_env **env, char *arg, t_gc **perm_gc)
 int	ft_export_key_value(t_env **exp, t_env **env, char *arg, t_gc **perm_gc)
 {
 	char	**key_value;
-	// int		i;
 
 	key_value = ft_split_allocate(arg, '=', perm_gc);
 	if (!is_valid_key(key_value[0]))
 		return (export_key_error(key_value[0]));
 	change_exp_value(exp, key_value[0], key_value[1], perm_gc);
 	change_env_value(env, key_value[0], key_value[1], perm_gc);
-	// i = -1;
-	// while (key_value[++i])
-	// 	free(key_value[i]);
-	// free(key_value);
 	return (0);
 }
 

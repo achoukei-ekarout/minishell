@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft_allocate_cont.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 17:57:18 by ekarout           #+#    #+#             */
-<<<<<<< HEAD:src/helpers/ft_split_allocate.c
-/*   Updated: 2026/03/28 23:24:30 by achoukei         ###   ########.fr       */
-=======
-/*   Updated: 2026/03/28 18:27:37 by ekarout          ###   ########.fr       */
->>>>>>> ekarout:src/helpers/libft_allocate_cont.c
+/*   Updated: 2026/03/29 23:12:05 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
