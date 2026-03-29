@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 22:12:24 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/23 15:47:36 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/28 18:35:04 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ t_env	*find_key(t_env **env, char	*key)
 	return (NULL);
 }
 
-void	add_new_node(t_env **env, char *key, char *value)
+void	add_new_node(t_env **env, char *key, char *value, t_gc **perm_gc)
 {
 	t_env	*node;
 
-	node = env_new(key, value);
+	node = env_new(key, value, perm_gc);
 	env_add_back(env, node);
 }
 

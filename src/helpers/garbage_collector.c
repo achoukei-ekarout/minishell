@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   garbage_collector.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 20:47:34 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/24 15:17:24 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/28 20:52:41 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void	free_garbage(t_gc **head)
 	while (current)
 	{
 		next = current->next;
-		free(current->value);
+		if(current->value)
+			free(current->value);
 		free(current);
 		current = next;
 	}
