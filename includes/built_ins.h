@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 02:06:29 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/28 20:37:27 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/29 22:11:05 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		ft_remove_flag(char **argv);
 void	ft_print(char **argv, int flag);
 int		ft_echo(char **argv);
 int		is_valid_key(char *key);
-int		ft_exit(char **argv);
+int		ft_exit(char **argv, t_gc **gc, t_gc **perm_gc);
 int		is_numeric(char *arg);
 int		ft_export(char	**argv, t_env	**env, t_env **exp, t_gc **perm_gc);
 int		ft_check_export(char *arg, t_env **exp, t_env **env, t_gc **perm_gc);

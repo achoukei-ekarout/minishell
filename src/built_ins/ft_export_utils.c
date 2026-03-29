@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 16:07:15 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/28 20:37:56 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/29 02:29:37 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ void	change_exp_value(t_env **exp, char *key, char *value, t_gc **perm_gc)
 	{
 		if (!ft_strcmp(curr->data->key, key))
 		{
-			if (curr->data->value)
-				free(curr->data->value);
-			curr->data->value = ft_strdup(value);
+			// if (curr->data->value)
+			// 	free(curr->data->value);
+			curr->data->value = ft_strdup_allocate(value, perm_gc);
 			return ;
 		}
 		curr = curr->next;

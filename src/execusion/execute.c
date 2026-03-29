@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 23:34:32 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/28 20:47:13 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/29 22:14:11 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	execute_command(t_ast *node, t_vars *vars, t_gc **head_gc, t_gc **perm_gc)
 		saved_stds[0] = dup(STDIN_FILENO);
 		saved_stds[1] = dup(STDOUT_FILENO);
 		apply_redirections(node->redir);
-		vars->exit_code = call_built_ins(node->argv[0], node->argv, *vars, perm_gc);
+		vars->exit_code = call_built_ins(node->argv, *vars, head_gc, perm_gc);
 		dup2(saved_stds[0], STDIN_FILENO);
 		dup2(saved_stds[1], STDOUT_FILENO);
 		close(saved_stds[0]);

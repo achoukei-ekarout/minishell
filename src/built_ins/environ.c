@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 16:15:14 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/28 18:34:18 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/29 02:34:24 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_env	*create_env_node(char *s, t_gc **perm_gc)
 	int		i;
 	int		level;
 
-	key_value = ft_split_allocate(s, '=', perm_gc);
+	key_value = ft_split(s, '=');
 	if (!key_value)
 		return (NULL);
 	if (!ft_strcmp(key_value[0], "SHLVL"))

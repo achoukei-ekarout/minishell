@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/13 23:24:47 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/26 23:33:31 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/29 22:12:42 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,14 @@ int	exit_status_code(char *arg)
 	return (result);
 }
 
-int	ft_exit(char **argv)
+void	exit_shell(int exit_code, t_gc **gc, t_gc **perm_gc)
+{
+	free_garbage(gc);
+	free_garbage(perm_gc);
+	exit(exit_code);
+}
+
+int	ft_exit(char **argv, t_gc **gc, t_gc **perm_gc)
 {
 	int		exit_code;
 	char	*arg;
@@ -49,7 +56,7 @@ int	ft_exit(char **argv)
 		return (args_error("exit"));
 	arg = argv[1];
 	if (!arg)
-		exit(exit_code);
+		exit_shell(exit_code, gc, perm_gc);
 	exit_code = exit_status_code(arg);
 	ft_putstr_fd("exit\n", 2);
 	if (exit_code == -1)
@@ -58,5 +65,6 @@ int	ft_exit(char **argv)
 		exit_code = exit_error(arg);
 	if (ft_strlen(arg) == 19 && ft_strcmp(arg, "9223372036854775807") < 0)
 		exit_code = exit_error(arg);
-	exit(exit_code);
+	exit_shell(exit_code, gc, perm_gc);
+	return (0);
 }
