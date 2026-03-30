@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/14 23:11:06 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/27 21:15:47 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/30 22:53:47 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	is_redirection(t_token_type type)
 {
 	return (type == TOKEN_REDIR_APPEND || type == TOKEN_REDIR_IN
-		|| type == TOKEN_REDIR_OUT || type == TOKEN_HEREDOC);
+		|| type == TOKEN_REDIR_OUT || type == TOKEN_HEREDOC || type == TOKEN_HEREDOC_NOEXP);
 }
 
 void	handle_redirection(t_ast *node, t_token **tokens, t_gc **head_gc)

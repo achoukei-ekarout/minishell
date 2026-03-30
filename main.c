@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
+/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 13:32:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/30 03:00:34 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/30 23:17:20 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,11 @@ void	read_input(char	*input, t_vars *vars, t_gc **gc, t_gc **perm_gc)
 	tokens = tokenize(input, gc);
 	if (!tokens)
 		return ;
+	print_tokens(tokens);
+	check_heredoc(&tokens);
 	param_expand(&tokens, *vars, gc);
-	// print_tokens(tokens);
 	abstract_syntax_tree = parse(tokens, gc);
-	proccess_heredoc(abstract_syntax_tree);
+	proccess_heredoc(abstract_syntax_tree, *vars, gc);
 	// print_tree(abstract_syntax_tree);
 	execute_ast(abstract_syntax_tree, vars, gc, perm_gc);
 }

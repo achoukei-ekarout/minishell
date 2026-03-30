@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
+/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/13 17:28:46 by user              #+#    #+#             */
-/*   Updated: 2026/03/30 02:53:16 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/30 22:50:14 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,10 @@ char	**get_all_paths(char **envp, t_gc **head_gc);
 int		is_built_ins(char *str);
 int		call_built_ins(char **input, t_vars *vars, t_gc **gc, t_gc **perm_gc);
 void	child_process(t_ast *node, t_vars *vars, t_gc **head_gc);
-void	proccess_heredoc(t_ast *node);
-void	proccess_node_heredoc(t_ast *node);
-int		apply_heredoc(char *delimeter);
+void	proccess_heredoc(t_ast *node, t_vars vars, t_gc **head_gc);
+void	proccess_node_heredoc(t_ast *node, t_vars vars, t_gc **head_gc);
+int		apply_heredoc(char *delimeter, t_token_type type, t_vars vars, t_gc **head_gc);
+t_token_type	check_expand(t_token *token);
+void	check_heredoc(t_token **tokens);
 
 #endif
