@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 23:34:32 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/28 20:44:36 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/30 03:09:15 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execute_ast(t_ast *node, t_vars *vars, t_gc **head_gc)
+void	execute_ast(t_ast *node, t_vars *vars, t_gc **head_gc, t_gc **perm_gc)
 {
 	if (!node)
 		return ;
 	if (node->type == NODE_PIPE)
-		execute_pipe(node, vars, head_gc);
+		execute_pipe(node, vars, head_gc, perm_gc);
 	else if (node->type == NODE_COMMAND)
-		execute_command(node, vars, head_gc);
+		execute_command(node, vars, head_gc, perm_gc);
 }
 
-void	execute_pipe(t_ast *node, t_vars *vars, t_gc **head_gc)
+void	execute_pipe(t_ast *node, t_vars *vars, t_gc **head_gc, t_gc **perm_gc)
 {
 	int	fd[2];
 	int	pid1;
@@ -34,7 +34,7 @@ void	execute_pipe(t_ast *node, t_vars *vars, t_gc **head_gc)
 	{
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[0]);
-		execute_ast(node->left, vars, head_gc);
+		execute_ast(node->left, vars, head_gc, perm_gc);
 		exit(0);
 	}
 	pid2 = fork();
@@ -42,7 +42,7 @@ void	execute_pipe(t_ast *node, t_vars *vars, t_gc **head_gc)
 	{
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[1]);
-		execute_ast(node->right, vars, head_gc);
+		execute_ast(node->right, vars, head_gc, perm_gc);
 		exit(0);
 	}
 	close(fd[0]);
@@ -74,7 +74,7 @@ void	child_process(t_ast *node, t_vars *vars, t_gc **head_gc)
 	exit(1);
 }
 
-void	execute_command(t_ast *node, t_vars *vars, t_gc **head_gc)
+void	execute_command(t_ast *node, t_vars *vars, t_gc **gc, t_gc **perm_gc)
 {
 	int		pid;
 	int		saved_stds[2];
@@ -85,7 +85,7 @@ void	execute_command(t_ast *node, t_vars *vars, t_gc **head_gc)
 		saved_stds[0] = dup(STDIN_FILENO);
 		saved_stds[1] = dup(STDOUT_FILENO);
 		apply_redirections(node->redir);
-		vars->exit_code = call_built_ins(node->argv[0], node->argv, *vars);
+		vars->exit_code = call_built_ins(node->argv, vars, gc, perm_gc);
 		dup2(saved_stds[0], STDIN_FILENO);
 		dup2(saved_stds[1], STDOUT_FILENO);
 		close(saved_stds[0]);
@@ -94,10 +94,43 @@ void	execute_command(t_ast *node, t_vars *vars, t_gc **head_gc)
 	}
 	pid = fork();
 	if (pid == 0)
-		child_process(node, vars, head_gc);
+		child_process(node, vars, gc);
 	waitpid(pid, &status, 0);
 	vars->exit_code = status >> 8;
 }
+
+// void	apply_redirections(t_redir *redir)
+// {
+// 	int	fd;
+
+// 	while (redir)
+// 	{
+// 		if (redir->type == TOKEN_REDIR_OUT)
+// 		{
+// 			fd = open(redir->file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+// 			dup2(fd, STDOUT_FILENO);
+// 			close(fd);
+// 		}
+// 		else if (redir->type == TOKEN_REDIR_APPEND)
+// 		{
+// 			fd = open(redir->file, O_CREAT | O_WRONLY | O_APPEND, 0644);
+// 			dup2(fd, STDOUT_FILENO);
+// 			close(fd);
+// 		}
+// 		else if (redir->type == TOKEN_REDIR_IN)
+// 		{
+// 			fd = open(redir->file, O_RDONLY);
+// 			dup2(fd, STDIN_FILENO);
+// 			close(fd);
+// 		}
+// 		else if (redir->type == TOKEN_HEREDOC)
+// 		{
+// 			dup2(redir->fd, STDIN_FILENO);
+// 			close(redir->fd);
+// 		}
+// 		redir = redir->next;
+// 	}
+// }
 
 void	apply_redirections(t_redir *redir)
 {
@@ -105,28 +138,23 @@ void	apply_redirections(t_redir *redir)
 
 	while (redir)
 	{
-		if (redir->type == TOKEN_REDIR_IN)
+		if (redir->type == TOKEN_REDIR_OUT || redir->type == TOKEN_REDIR_APPEND)
 		{
-			fd = open(redir->file, O_RDONLY);
+			if (redir->type == TOKEN_REDIR_OUT)
+				fd = open(redir->file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+			else
+				fd = open(redir->file, O_CREAT | O_WRONLY | O_APPEND, 0644);
+			dup2(fd, STDOUT_FILENO);
+			close(fd);
+		}
+		else if (redir->type == TOKEN_REDIR_IN || redir->type == TOKEN_HEREDOC)
+		{
+			if (redir->type == TOKEN_REDIR_IN)
+				fd = open(redir->file, O_RDONLY);
+			else
+				fd = redir->fd;
 			dup2(fd, STDIN_FILENO);
 			close(fd);
-		}
-		else if (redir->type == TOKEN_REDIR_OUT)
-		{
-			fd = open(redir->file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-			dup2(fd, STDOUT_FILENO);
-			close(fd);
-		}
-		else if (redir->type == TOKEN_REDIR_APPEND)
-		{
-			fd = open(redir->file, O_CREAT | O_WRONLY | O_APPEND, 0644);
-			dup2(fd, STDOUT_FILENO);
-			close(fd);
-		}
-		else if (redir->type == TOKEN_HEREDOC)
-		{
-			dup2(redir->fd, STDIN_FILENO);
-			close(redir->fd);
 		}
 		redir = redir->next;
 	}

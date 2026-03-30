@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 16:07:15 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/23 14:42:15 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/29 23:36:18 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	is_valid_key(char *key)
 	return (1);
 }
 
-void	change_exp_value(t_env **exp, char *key, char *value)
+void	change_exp_value(t_env **exp, char *key, char *value, t_gc **perm_gc)
 {
 	t_env	*curr;
 
@@ -36,14 +36,12 @@ void	change_exp_value(t_env **exp, char *key, char *value)
 	{
 		if (!ft_strcmp(curr->data->key, key))
 		{
-			if (curr->data->value)
-				free(curr->data->value);
-			curr->data->value = ft_strdup(value);
+			curr->data->value = ft_strdup_allocate(value, perm_gc);
 			return ;
 		}
 		curr = curr->next;
 	}
-	curr = env_new(key, value);
+	curr = env_new(key, value, perm_gc);
 	ft_insert(exp, curr);
 }
 
@@ -86,18 +84,18 @@ void	ft_insert(t_env **exp, t_env *node)
 	prev->next = node;
 }
 
-t_env	**exp_init(t_env **env)
+t_env	**exp_init(t_env **env, t_gc **perm_gc)
 {
 	t_env	**exp;
 	t_env	*exp_node;
 	t_env	*curr_env;
 
-	exp = (t_env **)malloc(sizeof(t_env *));
+	exp = (t_env **)allocate(perm_gc, sizeof(t_env *));
 	*exp = NULL;
 	curr_env = *env;
 	while (curr_env)
 	{
-		exp_node = env_new(curr_env->data->key, curr_env->data->value);
+		exp_node = env_new(curr_env->data->key, curr_env->data->value, perm_gc);
 		ft_insert(exp, exp_node);
 		curr_env = curr_env->next;
 	}
