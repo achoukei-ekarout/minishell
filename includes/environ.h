@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 20:09:03 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/28 18:36:53 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/30 02:53:37 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void		env_add_back(t_env **env, t_env *new);
 t_env		**environ_init(char **envp, t_gc **perm_gc);
 char		*get_env_value(t_env **env, char *key);
 t_env		*find_key(t_env **env, char	*key);
-void		change_env_value(t_env **env, char *key, char *value, t_gc **perm_gc);
+void		change_env_value(t_env **env, char *key, char *value, t_gc **gc);
 void		env_clear(t_env **env);
 void		env_unset(t_env **env, char *key);
 void		add_new_node(t_env **env, char *key, char *value, t_gc **perm_gc);

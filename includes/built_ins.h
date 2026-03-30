@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 02:06:29 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/29 22:11:05 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/30 02:50:36 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ int		ft_echo(char **argv);
 int		is_valid_key(char *key);
 int		ft_exit(char **argv, t_gc **gc, t_gc **perm_gc);
 int		is_numeric(char *arg);
-int		ft_export(char	**argv, t_env	**env, t_env **exp, t_gc **perm_gc);
-int		ft_check_export(char *arg, t_env **exp, t_env **env, t_gc **perm_gc);
-int		ft_export_key_value(t_env **exp, t_env **env, char *arg, t_gc **perm_gc);
-int		ft_export_empty(t_env **exp, t_env **env, char *arg, t_gc **perm_gc);
+int		ft_export(char	**argv, t_vars *vars, t_gc **perm_gc);
+int		ft_check_export(char *arg, t_vars *vars, t_gc **perm_gc);
+int		ft_export_key_value(t_vars *vars, char *arg, t_gc **perm_gc);
+int		ft_export_empty(t_vars *vars, char *arg, t_gc **perm_gc);
 int		ft_export_key(t_env **exp, char *key, t_gc **perm_gc);
 int		ft_export_all(t_env **exp);
 int		is_valid_key(char *key);

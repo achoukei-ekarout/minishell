@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/14 13:17:41 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/29 23:35:12 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/30 02:53:56 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	env_unset(t_env **env, char *key)
 	}
 }
 
-void	change_env_value(t_env **env, char *key, char *value, t_gc **perm_gc)
+void	change_env_value(t_env **env, char *key, char *value, t_gc **gc)
 {
 	t_env	*curr;
 
@@ -73,12 +73,12 @@ void	change_env_value(t_env **env, char *key, char *value, t_gc **perm_gc)
 	{
 		if (!ft_strcmp(curr->data->key, key))
 		{
-			curr->data->value = ft_strdup_allocate(value, perm_gc);
+			curr->data->value = ft_strdup_allocate(value, gc);
 			return ;
 		}
 		curr = curr->next;
 	}
-	add_new_node(env, key, value, perm_gc);
+	add_new_node(env, key, value, gc);
 }
 
 int	ft_env_size(t_env *env)

@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 13:32:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/29 23:08:30 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/30 03:00:34 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,6 @@ int	main(int argc, char **argv, char **envp)
 	vars_init(&vars, envp, &perm_gc);
 	run_shell(&vars, &perm_gc);
 	free_garbage(&perm_gc);
-	// env_clear(vars.env);
-	// env_clear(vars.exp);
 	rl_clear_history();
 	return (0);
 }

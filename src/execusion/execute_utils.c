@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 18:21:48 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/29 23:00:10 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/30 02:59:10 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	is_built_ins(char *str)
 	return (0);
 }
 
-int	call_built_ins(char **input, t_vars vars, t_gc **gc, t_gc **perm_gc)
+int	call_built_ins(char **input, t_vars *vars, t_gc **gc, t_gc **perm_gc)
 {
 	char	*str;
 	int		result;
@@ -97,15 +97,15 @@ int	call_built_ins(char **input, t_vars vars, t_gc **gc, t_gc **perm_gc)
 	if (ft_strcmp(str, "echo") == 0)
 		result = ft_echo(input);
 	else if (ft_strcmp(str, "cd") == 0)
-		result = ft_cd(input, vars.env, perm_gc);
+		result = ft_cd(input, vars->env, perm_gc);
 	else if (ft_strcmp(str, "pwd") == 0)
-		result = ft_pwd(vars.env);
+		result = ft_pwd(vars->env);
 	else if (ft_strcmp(str, "export") == 0)
-		result = ft_export(input, vars.env, vars.exp, perm_gc);
+		result = ft_export(input, vars, perm_gc);
 	else if (ft_strcmp(str, "unset") == 0)
-		result = ft_unset(input, vars.env, vars.exp);
+		result = ft_unset(input, vars->env, vars->exp);
 	else if (ft_strcmp(str, "env") == 0)
-		result = ft_env(vars.env);
+		result = ft_env(vars->env);
 	else if (ft_strcmp(str, "exit") == 0)
 		ft_exit(input, gc, perm_gc);
 	return (result);
