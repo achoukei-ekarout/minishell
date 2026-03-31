@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 14:53:25 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/29 23:51:36 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/31 06:10:13 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,6 @@ void				print_env(char **envp);
 void				print_arr(char **arr);
 int					get_quote_index(char *line, int *i);
 void				skip_spaces(char *line, int *i);
+void				replace_token(t_token **head, t_token **prev_node, t_token *new_node);
 
 #endif

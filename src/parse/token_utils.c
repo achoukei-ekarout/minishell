@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 00:21:23 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/28 23:31:56 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/03/31 06:09:59 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,24 @@ void	add_token(t_token **head, t_token *node)
 	while (current->next)
 		current = current->next;
 	current->next = node;
+}
+
+void	replace_token(t_token **head,t_token **prev_node, t_token *new_node)
+{
+	t_token *next;
+
+	if(!head && !prev_node)
+		return ;
+	if	(!*prev_node)
+	{
+		*head = new_node;
+		return ;
+	}
+	next = (*prev_node)->next;
+	(*prev_node)->next = new_node;
+	while (new_node->next)
+		new_node = new_node->next;
+	new_node->next = next->next;
 }
 
 void	free_tokens(t_token *tokens)
