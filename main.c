@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 13:32:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/01 15:14:13 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/01 17:07:43 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,34 +19,6 @@ void	sigint_handler(int sig)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-}
-
-int	valid_redir(char *input, t_vars *vars)
-{
-	char	*s;
-	int		i;
-
-	s = ft_strtrim(input, " \n\t\v\f\r");
-	i =  -1;
-	while (s[++i])
-	{
-		if (is_operator(s[i]))
-		{
-			i++;
-			if (is_operator(s[i]))
-				i++;
-			while(s[i] && ft_isspace(s[i]))
-				i++;
-			if(!s[i] || is_operator(s[i]))
-			{
-				vars->exit_code = redir_error(s[i]);
-				free(s);
-				return (0);
-			}
-		}
-	}
-	free(s);
-	return (1);
 }
 
 void	read_input(char	*input, t_vars *vars, t_gc **gc, t_gc **perm_gc)

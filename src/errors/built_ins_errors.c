@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   built_ins_errors.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/14 13:34:20 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/01 15:13:43 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/01 16:29:40 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,21 +41,4 @@ int	export_key_error(char *key)
 	ft_putstr_fd(key, 2);
 	ft_putstr_fd("': not a valid identifier\n", 2);
 	return (1);
-}
-
-int	quotes_error(void)
-{
-	ft_putstr_fd("error: unclosed quote\n", 2);
-	return (2);
-}
-
-int	redir_error(char s)
-{
-	ft_putstr_fd("syntax error near unexpected token `", 2);
-	if (s)
-		ft_putchar_fd(s, 2);
-	else
-		ft_putstr_fd("newline", 2);
-	ft_putstr_fd("\'\n", 2);
-	return (2);
 }

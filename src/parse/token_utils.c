@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 00:21:23 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/31 09:18:37 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/01 15:25:23 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ void	add_token(t_token **head, t_token *node)
 	current->next = node;
 }
 
-void	replace_token(t_token **head,t_token **prev_node, t_token *new_node)
+void	replace_token(t_token **head, t_token **prev_node, t_token *new_node)
 {
-	t_token *next;
+	t_token	*next;
 
-	if(!head && !prev_node)
+	if (!head && !prev_node)
 		return ;
-	if	(!*prev_node)
+	if (!*prev_node)
 	{
 		*head = new_node;
 		return ;

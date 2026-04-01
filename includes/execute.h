@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/13 17:28:46 by user              #+#    #+#             */
-/*   Updated: 2026/03/30 22:50:14 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/04/01 16:38:12 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@ int		call_built_ins(char **input, t_vars *vars, t_gc **gc, t_gc **perm_gc);
 void	child_process(t_ast *node, t_vars *vars, t_gc **head_gc);
 void	proccess_heredoc(t_ast *node, t_vars vars, t_gc **head_gc);
 void	proccess_node_heredoc(t_ast *node, t_vars vars, t_gc **head_gc);
-int		apply_heredoc(char *delimeter, t_token_type type, t_vars vars, t_gc **head_gc);
-t_token_type	check_expand(t_token *token);
+int		check_expand(t_token *token);
 void	check_heredoc(t_token **tokens);
+int		apply_heredoc(char *delimeter, t_token_type type,
+			t_vars vars, t_gc **head_gc);
 
 #endif

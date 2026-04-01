@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 08:43:13 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/31 00:04:20 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/04/01 16:49:45 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,12 @@ void	proccess_node_heredoc(t_ast *node, t_vars vars, t_gc **head_gc)
 	}
 }
 
-int	apply_heredoc(char *delimeter, t_token_type type, t_vars vars, t_gc **head_gc)
+int	apply_heredoc(char *delimeter, t_token_type type,
+		t_vars vars, t_gc **head_gc)
 {
-	int		fd[2];
 	char	*line;
 	char	*expand;
+	int		fd[2];
 
 	if (pipe(fd) == -1)
 		perror("pipe");
@@ -50,50 +51,50 @@ int	apply_heredoc(char *delimeter, t_token_type type, t_vars vars, t_gc **head_g
 	{
 		line = readline("> ");
 		if (!line || ft_strcmp(line, delimeter) == 0)
-		{
-			free(line);
 			break ;
-		}
 		if (type == TOKEN_HEREDOC)
 		{
 			expand = expand_value(line, vars, head_gc);
 			write(fd[1], expand, ft_strlen(expand));
-			write(fd[1], "\n", 1);
 		}
 		else
-		{
 			write(fd[1], line, ft_strlen(line));
-			write(fd[1], "\n", 1);
-		}
+		write(fd[1], "\n", 1);
 		free(line);
 	}
+	free(line);
 	close(fd[1]);
 	return (fd[0]);
 }
 
-t_token_type	check_expand(t_token *token)
+int	check_expand(t_token *token)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (token->value[i])
-    {
-        if (token->value[i] == '\'' || token->value[i] == '"')
-            return (TOKEN_HEREDOC_NOEXP);
+	i = 0;
+	while (token->value[i])
+	{
+		if (token->value[i] == '\'' || token->value[i] == '"')
+			return (1);
 		i++;
-    }
-    return (TOKEN_HEREDOC);
+	}
+	return (0);
 }
 
 void	check_heredoc(t_token **tokens)
 {
-	t_token *current;
+	t_token	*current;
 
 	current = *tokens;
 	while (current)
 	{
 		if (current->type == TOKEN_HEREDOC && current->next)
-			current->type = check_expand(current->next);
+		{
+			if (check_expand(current->next))
+				current->type = TOKEN_HEREDOC_NOEXP;
+			else
+				current->type = TOKEN_HEREDOC;
+		}
 		current = current->next;
 	}
 }

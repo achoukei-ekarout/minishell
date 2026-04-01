@@ -6,64 +6,14 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 14:53:25 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/31 08:30:31 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/01 17:08:12 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSE_H
 # define PARSE_H
-# include "garbage_collector.h"
 
-typedef enum e_token_type
-{
-	TOKEN_WORD,
-	TOKEN_PIPE,
-	TOKEN_REDIR_IN,
-	TOKEN_REDIR_OUT,
-	TOKEN_REDIR_APPEND,
-	TOKEN_HEREDOC,
-	TOKEN_HEREDOC_NOEXP
-}					t_token_type;
-
-typedef struct s_token
-{
-	t_token_type	type;
-	char			*value;
-	struct s_token	*next;
-}					t_token;
-
-typedef enum e_node_type
-{
-	NODE_COMMAND,
-	NODE_PIPE
-}					t_node_type;
-
-typedef struct s_redir
-{
-	t_token_type	type;
-	char			*file;
-	int				fd;
-	struct s_redir	*next;
-}					t_redir;
-
-typedef struct s_ast
-{
-	t_node_type		type;
-
-	char			**argv;
-	t_redir			*redir;
-
-	struct s_ast	*left;
-	struct s_ast	*right;
-
-}					t_ast;
-
-typedef enum e_quote
-{
-	NO_QUOTE,
-	SINGLE_QUOTE,
-	DOUBLE_QUOTE
-}					t_quote;
+# include "data.h"
 
 char				**free_arr(char ***arr);
 t_token				*tokenize(char *input, t_gc **head_gc);
@@ -92,6 +42,8 @@ void				print_env(char **envp);
 void				print_arr(char **arr);
 int					get_quote_index(char *line, int *i);
 void				skip_spaces(char *line, int *i);
-void				replace_token(t_token **head, t_token **prev_node, t_token *new_node);
+int					valid_redir(char *input, t_vars *vars);
+void				replace_token(t_token **head, t_token **prev_node,
+						t_token *new_node);
 
 #endif
