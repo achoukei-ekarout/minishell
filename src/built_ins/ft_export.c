@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 19:16:24 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/30 02:52:00 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/02 14:34:34 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_export_empty(t_vars *vars, char *arg, t_gc **perm_gc)
 	{
 		export_key_error(key);
 		free(key);
-		return (-1);
+		return (1);
 	}
 	change_exp_value(vars->exp, key, "", perm_gc);
 	change_env_value(vars->env, key, "", perm_gc);
@@ -73,8 +73,8 @@ int	ft_export(char **argv, t_vars *vars, t_gc **perm_gc)
 	result = 0;
 	while (argv[i])
 	{
-		if (ft_check_export(argv[i], vars, perm_gc) == -1)
-			result = -1;
+		if (ft_check_export(argv[i], vars, perm_gc) == 1)
+			result = 1;
 		i++;
 	}
 	return (result);

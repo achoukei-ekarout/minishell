@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 16:15:14 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/29 02:34:24 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/02 17:16:53 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,28 @@ t_env	*env_new(char *key, char *value, t_gc **perm_gc)
 t_env	*create_env_node(char *s, t_gc **perm_gc)
 {
 	char	**key_value;
+	char	*value;
 	t_env	*node;
 	int		i;
-	int		level;
 
 	key_value = ft_split(s, '=');
 	if (!key_value)
 		return (NULL);
+	i = 1;
 	if (!ft_strcmp(key_value[0], "SHLVL"))
+		key_value[1] = shlvl_value(key_value[1]);
+	if (ft_count_args(key_value) > 2)
 	{
-		level = ft_atoi(key_value[1]);
-		level++;
-		free(key_value[1]);
-		key_value[1] = ft_itoa(level);
+		value = ft_strjoin_allocate(key_value[1], "=", perm_gc);
+		while (key_value[++i])
+		{
+			value = ft_strjoin_allocate(value, key_value[i], perm_gc);
+			value = ft_strjoin_allocate(value, "=", perm_gc);
+		}
+		node = env_new(key_value[0], value, perm_gc);
 	}
-	node = env_new(key_value[0], key_value[1], perm_gc);
+	else
+		node = env_new(key_value[0], key_value[1], perm_gc);
 	i = 0;
 	while (key_value[i])
 	{

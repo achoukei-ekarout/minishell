@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 13:32:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/30 23:17:20 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/04/02 17:24:15 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,15 @@ void	read_input(char	*input, t_vars *vars, t_gc **gc, t_gc **perm_gc)
 	t_ast	*abstract_syntax_tree;
 
 	tokens = NULL;
+	if (!valid_redir(input, vars))
+		return ;
 	tokens = tokenize(input, gc);
 	if (!tokens)
+	{
+		vars->exit_code = 2;
 		return ;
-	print_tokens(tokens);
+	}
+	// print_tokens(tokens);
 	check_heredoc(&tokens);
 	param_expand(&tokens, *vars, gc);
 	abstract_syntax_tree = parse(tokens, gc);
@@ -49,7 +54,7 @@ void	run_shell(t_vars *vars, t_gc **perm_gc)
 		gc = NULL;
 		input = readline("minishell$ ");
 		if (!input)
-			break ;
+			input = "exit";
 		if (*input)
 			add_history(input);
 		if (!*input)

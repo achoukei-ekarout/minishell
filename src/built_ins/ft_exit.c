@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/13 23:24:47 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/29 22:12:42 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/02 14:42:24 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,13 @@ int	ft_exit(char **argv, t_gc **gc, t_gc **perm_gc)
 	char	*arg;
 
 	exit_code = 0;
+	ft_putstr_fd("exit\n", 1);
 	if (ft_count_args(argv) > 2)
 		return (args_error("exit"));
 	arg = argv[1];
 	if (!arg)
 		exit_shell(exit_code, gc, perm_gc);
 	exit_code = exit_status_code(arg);
-	ft_putstr_fd("exit\n", 2);
 	if (exit_code == -1)
 		exit_code = exit_error(arg);
 	if (ft_strlen(arg) > 19)

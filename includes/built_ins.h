@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 02:06:29 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/30 02:50:36 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/01 16:32:14 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,6 @@ int		ft_export_empty(t_vars *vars, char *arg, t_gc **perm_gc);
 int		ft_export_key(t_env **exp, char *key, t_gc **perm_gc);
 int		ft_export_all(t_env **exp);
 int		is_valid_key(char *key);
-int		exit_error(char *arg);
-int		cd_dir_error(char *dir);
-int		args_error(char *fn);
-int		export_key_error(char *key);
-int		quotes_error(void);
 int		ft_count_args(char **argv);
 
 #endif

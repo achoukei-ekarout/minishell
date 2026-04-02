@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 19:39:34 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/27 19:01:00 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/01 17:03:42 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,24 +52,40 @@ char	*expand_value(char *value, t_vars vars, t_gc **head_gc)
 	return (expand_data->new_value);
 }
 
-void	expand(t_token **token, t_vars vars, t_gc **head_gc)
+t_token	*expand(t_token **token, t_vars vars, t_gc **head_gc)
 {
 	char	*value;
 	char	*new_value;
+	t_token	*tokens;
+	int		new_token;
 
 	value = (*token)->value;
-	new_value = expand_value(value, vars, head_gc);
-	(*token)->value = new_value;
+	new_token = check_for_new_token(value);
+	if (new_token)
+		tokens = expanded_token(value, vars, head_gc);
+	if (!new_token || !tokens)
+	{
+		new_value = expand_value(value, vars, head_gc);
+		(*token)->value = new_value;
+		return (NULL);
+	}
+	return (tokens);
 }
 
 void	param_expand(t_token **tokens, t_vars vars, t_gc **head_gc)
 {
 	t_token	*curr;
+	t_token	*prev;
+	t_token	*new_token;
 
 	curr = *tokens;
+	prev = NULL;
 	while (curr)
 	{
-		expand(&curr, vars, head_gc);
+		new_token = expand(&curr, vars, head_gc);
+		if (new_token)
+			replace_token(tokens, &prev, new_token);
+		prev = curr;
 		curr = curr->next;
 	}
 }
