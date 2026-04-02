@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/14 13:34:20 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/01 16:29:40 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/02 14:37:58 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	cd_dir_error(char *dir)
 {
 	ft_putstr_fd("cd: ", 2);
 	ft_putstr_fd(dir, 2);
-	ft_putstr_fd(": no such file or directory\n", 2);
+	ft_putstr_fd(": No such file or directory\n", 2);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 13:32:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/01 17:07:43 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/02 17:24:15 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	run_shell(t_vars *vars, t_gc **perm_gc)
 		gc = NULL;
 		input = readline("minishell$ ");
 		if (!input)
-			break ;
+			input = "exit";
 		if (*input)
 			add_history(input);
 		if (!*input)

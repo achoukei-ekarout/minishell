@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/14 23:11:06 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/01 17:07:46 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/02 14:30:12 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,24 @@ int	valid_redir(char *input, t_vars *vars)
 	i = -1;
 	while (s[++i])
 	{
+		if (s[i] == '\'')
+		{
+			i++;
+			while (s[i] && s[i] != '\'')
+				i++;
+			if (!s[i])
+				break ;
+			continue ;
+		}
+		if (s[i] == '\"')
+		{
+			i++;
+			while (s[i] && s[i] != '\"')
+				i++;
+			if (!s[i])
+				break ;
+			continue ;
+		}
 		if (is_operator(s[i]))
 		{
 			i++;

@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 18:21:48 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/30 02:59:10 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/02 15:20:37 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,6 @@ int	call_built_ins(char **input, t_vars *vars, t_gc **gc, t_gc **perm_gc)
 	else if (ft_strcmp(str, "env") == 0)
 		result = ft_env(vars->env);
 	else if (ft_strcmp(str, "exit") == 0)
-		ft_exit(input, gc, perm_gc);
+		result = ft_exit(input, gc, perm_gc);
 	return (result);
 }

@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 23:34:32 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/01 16:26:57 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/02 17:21:27 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ void	child_process(t_ast *node, t_vars *vars, t_gc **head_gc)
 		path = get_path_name(node->argv[0], get_all_paths(envp, head_gc));
 		if (!path)
 		{
-			printf("%s: command not found\n", node->argv[0]);
+			ft_putstr_fd(node->argv[0], 2);
+			ft_putstr_fd(": command not found\n", 2);
 			exit(127);
 		}
 	}
