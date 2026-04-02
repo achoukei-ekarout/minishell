@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 16:29:16 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/01 16:29:53 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/02 22:08:10 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,12 @@ int	redir_error(char s)
 	else
 		ft_putstr_fd("newline", 2);
 	ft_putstr_fd("\'\n", 2);
+	return (2);
+}
+
+int file_error(char *file)
+{
+	ft_putstr_fd(file, 2);
+	ft_putstr_fd(": No such file or directory\n", 2);
 	return (2);
 }

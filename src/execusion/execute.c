@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 23:34:32 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/02 17:21:27 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/03 01:08:52 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	execute_pipe(t_ast *node, t_vars *vars, t_gc **head_gc, t_gc **perm_gc)
 	int	fd[2];
 	int	pid1;
 	int	pid2;
+	int	status;
 
 	pipe(fd);
 	pid1 = fork();
@@ -48,7 +49,8 @@ void	execute_pipe(t_ast *node, t_vars *vars, t_gc **head_gc, t_gc **perm_gc)
 	close(fd[0]);
 	close(fd[1]);
 	waitpid(pid1, NULL, 0);
-	waitpid(pid2, NULL, 0);
+	waitpid(pid2, &status, 0);
+	vars->exit_code = status >> 8;
 }
 
 void	child_process(t_ast *node, t_vars *vars, t_gc **head_gc)
@@ -56,10 +58,13 @@ void	child_process(t_ast *node, t_vars *vars, t_gc **head_gc)
 	char	**envp;
 	char	*path;
 
-	apply_redirections(node->redir);
+	if (!apply_redirections(node->redir))
+		exit(1);
 	envp = env_to_array(vars->env, head_gc);
-	if (access(node->argv[0], X_OK) == 0)
-		path = node->argv[0];
+	if (ft_strchr(node->argv[0], '/'))
+		return (handle_dir(node->argv, envp));
+	// if (access(node->argv[0], X_OK) == 0)
+	// 	path = node->argv[0];
 	else
 	{
 		path = get_path_name(node->argv[0], get_all_paths(envp, head_gc));
@@ -85,7 +90,11 @@ void	execute_command(t_ast *node, t_vars *vars, t_gc **gc, t_gc **perm_gc)
 	{
 		saved_stds[0] = dup(STDIN_FILENO);
 		saved_stds[1] = dup(STDOUT_FILENO);
-		apply_redirections(node->redir);
+		if (!apply_redirections(node->redir))
+		{
+			vars->exit_code = 1;
+			return ;
+		}
 		vars->exit_code = call_built_ins(node->argv, vars, gc, perm_gc);
 		dup2(saved_stds[0], STDIN_FILENO);
 		dup2(saved_stds[1], STDOUT_FILENO);
@@ -98,6 +107,8 @@ void	execute_command(t_ast *node, t_vars *vars, t_gc **gc, t_gc **perm_gc)
 		child_process(node, vars, gc);
 	waitpid(pid, &status, 0);
 	vars->exit_code = status >> 8;
+	if (!isatty(STDIN_FILENO))
+		exit(vars->exit_code);
 }
 
 // void	apply_redirections(t_redir *redir)
@@ -133,7 +144,7 @@ void	execute_command(t_ast *node, t_vars *vars, t_gc **gc, t_gc **perm_gc)
 // 	}
 // }
 
-void	apply_redirections(t_redir *redir)
+int	apply_redirections(t_redir *redir)
 {
 	int	fd;
 
@@ -152,7 +163,14 @@ void	apply_redirections(t_redir *redir)
 			|| redir->type == TOKEN_HEREDOC_NOEXP)
 		{
 			if (redir->type == TOKEN_REDIR_IN)
+			{
 				fd = open(redir->file, O_RDONLY);
+				if (fd < 0)
+				{
+					file_error(redir->file);
+					return (0);
+				}
+			}
 			else
 				fd = redir->fd;
 			dup2(fd, STDIN_FILENO);
@@ -160,4 +178,32 @@ void	apply_redirections(t_redir *redir)
 		}
 		redir = redir->next;
 	}
+	return (1);
+}
+
+void	handle_dir(char **argv, char **envp)
+{
+	struct stat	st;
+	char	*dir;
+
+	dir = argv[0];
+	if (stat(dir, &st) == -1)
+	{
+		perror(dir);
+		exit(127);
+	}
+	if (S_ISDIR(st.st_mode))
+	{
+		ft_putstr_fd(dir, 2);
+		ft_putstr_fd(": Is a directory\n", 2);
+		exit(126);
+	}
+	if (access(dir, X_OK) != 0)
+	{
+		perror(dir);
+		exit(126);
+	}
+	execve(dir, argv, envp);
+	perror("exec");
+	exit(1);
 }
