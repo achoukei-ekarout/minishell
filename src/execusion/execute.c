@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 23:34:32 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/03 01:08:52 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/03 11:48:57 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,15 @@ void	execute_pipe(t_ast *node, t_vars *vars, t_gc **head_gc, t_gc **perm_gc)
 	int	fd[2];
 	int	pid1;
 	int	pid2;
-	int	status;
-
+	int status1;
+	int status2;
+	
 	pipe(fd);
 	pid1 = fork();
 	if (pid1 == 0)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[0]);
 		execute_ast(node->left, vars, head_gc, perm_gc);
@@ -41,6 +44,8 @@ void	execute_pipe(t_ast *node, t_vars *vars, t_gc **head_gc, t_gc **perm_gc)
 	pid2 = fork();
 	if (pid2 == 0)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[1]);
 		execute_ast(node->right, vars, head_gc, perm_gc);
@@ -48,9 +53,12 @@ void	execute_pipe(t_ast *node, t_vars *vars, t_gc **head_gc, t_gc **perm_gc)
 	}
 	close(fd[0]);
 	close(fd[1]);
-	waitpid(pid1, NULL, 0);
-	waitpid(pid2, &status, 0);
-	vars->exit_code = status >> 8;
+	waitpid(pid1, &status1, 0);
+	waitpid(pid2, &status2, 0);
+	if (WIFEXITED(status2))
+    vars->exit_code = WEXITSTATUS(status2);
+	else if (WIFSIGNALED(status2))
+    vars->exit_code = 128 + WTERMSIG(status2);
 }
 
 void	child_process(t_ast *node, t_vars *vars, t_gc **head_gc)
@@ -58,6 +66,8 @@ void	child_process(t_ast *node, t_vars *vars, t_gc **head_gc)
 	char	**envp;
 	char	*path;
 
+	signal(SIGINT, SIG_DFL);
+    signal(SIGQUIT, SIG_DFL);
 	if (!apply_redirections(node->redir))
 		exit(1);
 	envp = env_to_array(vars->env, head_gc);
@@ -106,9 +116,13 @@ void	execute_command(t_ast *node, t_vars *vars, t_gc **gc, t_gc **perm_gc)
 	if (pid == 0)
 		child_process(node, vars, gc);
 	waitpid(pid, &status, 0);
-	vars->exit_code = status >> 8;
-	if (!isatty(STDIN_FILENO))
-		exit(vars->exit_code);
+	// vars->exit_code = status >> 8;
+	// if (!isatty(STDIN_FILENO))
+	// 	exit(vars->exit_code);
+	if (WIFEXITED(status))
+    	vars->exit_code = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+    	vars->exit_code = 128 + WTERMSIG(status);
 }
 
 // void	apply_redirections(t_redir *redir)

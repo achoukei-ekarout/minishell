@@ -6,19 +6,37 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 13:32:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/03 05:58:53 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/03 11:45:28 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	sigint_handler(int sig)
+void	sigint_prompt(int sig)
 {
 	(void)sig;
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
+}
+
+void	sigint_exec(int sig)
+{
+    (void)sig;
+    write(1, "\n", 1);
+}
+
+void setup_signals_prompt(void)
+{
+    signal(SIGINT, sigint_prompt);
+    signal(SIGQUIT, SIG_IGN);
+}
+
+void	setup_signals_exec(void)
+{
+    signal(SIGINT, sigint_exec);
+    signal(SIGQUIT, SIG_IGN);
 }
 
 void	read_input(char	*input, t_vars *vars, t_gc **gc, t_gc **perm_gc)
@@ -46,6 +64,7 @@ void	read_input(char	*input, t_vars *vars, t_gc **gc, t_gc **perm_gc)
 	abstract_syntax_tree = parse(tokens, gc);
 	proccess_heredoc(abstract_syntax_tree, *vars, gc);
 	// print_tree(abstract_syntax_tree);
+	setup_signals_exec();
 	execute_ast(abstract_syntax_tree, vars, gc, perm_gc);
 }
 
@@ -56,6 +75,7 @@ void	run_shell(t_vars *vars, t_gc **perm_gc)
 
 	while (1)
 	{
+		setup_signals_prompt();
 		gc = NULL;
 		input = readline("minishell$ ");
 		if (!input)
@@ -77,7 +97,6 @@ int	main(int argc, char **argv, char **envp)
 
 	if (!argc || !argv)
 		return (0);
-	signal(SIGINT, sigint_handler);
 	rl_catch_signals = 0;
 	perm_gc = NULL;
 	vars_init(&vars, envp, &perm_gc);
