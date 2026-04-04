@@ -3,68 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
+/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 14:53:25 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/23 16:22:02 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/04 18:13:28 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSE_H
 # define PARSE_H
-# include "garbage_collector.h"
 
-typedef enum e_token_type
-{
-	TOKEN_WORD,
-	TOKEN_PIPE,
-	TOKEN_REDIR_IN,
-	TOKEN_REDIR_OUT,
-	TOKEN_REDIR_APPEND,
-	TOKEN_HEREDOC
-}					t_token_type;
-
-typedef struct s_token
-{
-	t_token_type	type;
-	char			*value;
-	struct s_token	*next;
-}					t_token;
-
-typedef enum e_node_type
-{
-	NODE_COMMAND,
-	NODE_PIPE
-}					t_node_type;
-
-typedef struct s_redir
-{
-	t_token_type	type;
-	char			*file;
-	struct s_redir	*next;
-}					t_redir;
-
-typedef struct s_ast
-{
-	t_node_type		type;
-
-	char			**argv;
-	t_redir			*redir;
-
-	struct s_ast	*left;
-	struct s_ast	*right;
-
-}					t_ast;
-
-typedef enum e_quote
-{
-	NO_QUOTE,
-	SINGLE_QUOTE,
-	DOUBLE_QUOTE
-}					t_quote;
+# include "data.h"
 
 char				**free_arr(char ***arr);
-t_token				*tokenize(char *input, t_gc **head_gc);
+t_token				*tokenize(char *input, t_gc **head_gc, t_vars *vars);
 int					is_operator(char c);
 t_token				*create_token(t_token_type type, char *value,
 						t_gc **head_gc);
@@ -88,6 +40,11 @@ void				print_tokens(t_token *tokens);
 int					is_quote(char c);
 void				print_env(char **envp);
 void				print_arr(char **arr);
-int					get_quote_index(char *line, int *i);
+int					get_quote_index(char *line, int *i, t_vars *vars);
+void				skip_spaces(char *line, int *i);
+int					valid_redir(char *input, t_vars *vars);
+void				remove_token(t_token **head, t_token **prev, t_token *node);
+void				replace_token(t_token **head, t_token **prev_node,
+						t_token *new_node);
 
 #endif

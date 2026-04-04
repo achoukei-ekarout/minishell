@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 19:18:59 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/27 17:33:40 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/01 17:05:51 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_expand
 }	t_expand;
 
 void		param_expand(t_token **tokens, t_vars vars, t_gc **head_gc);
-void		expand(t_token **token, t_vars vars, t_gc **head_gc);
+t_token		*expand(t_token **token, t_vars vars, t_gc **head_gc);
 char		*expand_value(char *value, t_vars vars, t_gc **head_gc);
 t_expand	*init_expand_data(char *value, t_vars vars,
 				int len, t_gc **head_gc);
@@ -36,5 +36,8 @@ void		handle_double_quote_len(char *value, int *i, int *len, t_vars vars);
 void		handle_single_quotes_len(char *value, int *i, int *len);
 int			get_value_len(char *value, int *i, t_vars vars);
 char		*get_value(char *value, int *i, t_vars vars);
+int			check_for_new_token(char *value);
+t_token		*expanded_token(char *value, t_vars vars, t_gc **head_gc);
+t_token		*start_node(char *new_value, char **split, t_gc **head_gc);
 
 #endif

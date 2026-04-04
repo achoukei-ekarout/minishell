@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 18:56:34 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/27 19:05:50 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/30 19:36:50 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,24 @@ void	handle_dollar(t_expand *expand_data, int *i, int *j)
 			expand_data->new_value[*j] = expanded[k];
 			(*j)++;
 		}
-		free(expanded);
+	}
+}
+
+void	handle_dollar_token(t_expand *expand_data, int *i, int *j)
+{
+	char	*expanded;
+	int		k;
+
+	(*i)++;
+	expanded = get_value(expand_data->old_value, i, expand_data->vars);
+	if (expanded)
+	{
+		k = -1;
+		while (expanded[++k])
+		{
+			expand_data->new_value[*j] = expanded[k];
+			(*j)++;
+		}
 	}
 }
 

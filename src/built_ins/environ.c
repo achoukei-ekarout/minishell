@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environ.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
+/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 16:15:14 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/29 02:34:24 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/04 17:59:17 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,32 @@ t_env	*env_new(char *key, char *value, t_gc **perm_gc)
 t_env	*create_env_node(char *s, t_gc **perm_gc)
 {
 	char	**key_value;
+	char	*value;
 	t_env	*node;
 	int		i;
-	int		level;
 
 	key_value = ft_split(s, '=');
 	if (!key_value)
 		return (NULL);
-	if (!ft_strcmp(key_value[0], "SHLVL"))
-	{
-		level = ft_atoi(key_value[1]);
-		level++;
-		free(key_value[1]);
-		key_value[1] = ft_itoa(level);
-	}
-	node = env_new(key_value[0], key_value[1], perm_gc);
+	// i = 1;
+	// if (!ft_strcmp(key_value[0], "SHLVL"))
+	// 	key_value[1] = shlvl_value(key_value[1]);
+	// if (ft_count_args(key_value) > 2)
+	// {
+	// 	value = ft_strjoin_allocate(key_value[1], "=", perm_gc);
+	// 	while (key_value[++i])
+	// 	{
+	// 		value = ft_strjoin_allocate(value, key_value[i], perm_gc);
+	// 		if(key_value[i + 1])
+	// 			value = ft_strjoin_allocate(value, "=", perm_gc);
+	// 	}
+	// 	node = env_new(key_value[0], value, perm_gc);
+	// }
+	// else
+	// 	node = env_new(key_value[0], key_value[1], perm_gc);
+	i = ft_strlen(key_value[0]);
+	value = ft_substr(s, i + 1, ft_strlen(s) - i - 1);
+	node = env_new(key_value[0], value, perm_gc);
 	i = 0;
 	while (key_value[i])
 	{
@@ -51,6 +62,7 @@ t_env	*create_env_node(char *s, t_gc **perm_gc)
 		i++;
 	}
 	free(key_value);
+	free(value);
 	return (node);
 }
 
@@ -87,9 +99,11 @@ t_env	**environ_init(char **envp, t_gc **perm_gc)
 	return (env);
 }
 
-void	vars_init(t_vars *vars, char **envp, t_gc **perm_gc)
+void	vars_init(t_vars *vars, char **envp, t_gc **perm_gc, char *exec_name)
 {
 	vars->env = environ_init(envp, perm_gc);
 	vars->exp = exp_init(vars->env, perm_gc);
 	vars->exit_code = 0;
+	vars->line_counter = 0;
+	vars->executer_name = exec_name + 2;
 }

@@ -6,18 +6,14 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 21:23:55 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/27 17:52:21 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/01 16:34:33 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GARBAGE_COLLECTOR_H
 # define GARBAGE_COLLECTOR_H
 
-typedef struct e_gc
-{
-	void		*value;
-	struct e_gc	*next;
-}				t_gc;
+# include "data.h"
 
 void			*allocate(t_gc **head, size_t size);
 t_gc			*create_gc_node(void *ptr);

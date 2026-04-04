@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 20:47:34 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/28 20:52:41 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/29 23:37:36 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	free_garbage(t_gc **head)
 	while (current)
 	{
 		next = current->next;
-		if(current->value)
+		if (current->value)
 			free(current->value);
 		free(current);
 		current = next;

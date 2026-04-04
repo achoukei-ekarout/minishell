@@ -1,12 +1,12 @@
 NAME = minishell
-
+# -fsanitize=address
 CC = cc
 CFLAGS = -g -Wall -Wextra -Werror -I includes
 
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
-SRC =  main.c $(wildcard src/built_ins/*.c) $(wildcard src/execusion/*.c) $(wildcard src/helpers/*.c) $(wildcard src/parse/*.c)
+SRC =  main.c $(wildcard src/built_ins/*.c) $(wildcard src/execusion/*.c) $(wildcard src/helpers/*.c) $(wildcard src/parse/*.c) $(wildcard src/errors/*.c)
 
 OBJ = $(SRC:.c=.o)
 

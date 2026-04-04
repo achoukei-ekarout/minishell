@@ -6,11 +6,22 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 22:12:24 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/28 18:35:04 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/02 17:06:14 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*shlvl_value(char *s)
+{
+	int	level;
+
+	level = ft_atoi(s);
+	level++;
+	free(s);
+	s = ft_itoa(level);
+	return (s);
+}
 
 char	*get_env_value(t_env **env, char *key)
 {
