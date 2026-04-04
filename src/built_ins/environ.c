@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environ.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
+/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 16:15:14 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/02 21:39:28 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/04 15:27:37 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,4 +104,5 @@ void	vars_init(t_vars *vars, char **envp, t_gc **perm_gc)
 	vars->env = environ_init(envp, perm_gc);
 	vars->exp = exp_init(vars->env, perm_gc);
 	vars->exit_code = 0;
+	vars->line_counter = 0;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
+/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 13:32:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/03 11:45:28 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/04 15:34:11 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	read_input(char	*input, t_vars *vars, t_gc **gc, t_gc **perm_gc)
 	}
 	// print_tokens(tokens);
 	abstract_syntax_tree = parse(tokens, gc);
-	proccess_heredoc(abstract_syntax_tree, *vars, gc);
+	proccess_heredoc(abstract_syntax_tree, vars, gc);
 	// print_tree(abstract_syntax_tree);
 	setup_signals_exec();
 	execute_ast(abstract_syntax_tree, vars, gc, perm_gc);
@@ -78,6 +78,7 @@ void	run_shell(t_vars *vars, t_gc **perm_gc)
 		setup_signals_prompt();
 		gc = NULL;
 		input = readline("minishell$ ");
+		vars->line_counter ++;
 		if (!input)
 			input = "exit";
 		if (*input)
