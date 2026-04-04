@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 23:34:32 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/04 18:10:39 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/04/04 21:34:41 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,14 @@ void	execute_pipe(t_ast *node, t_vars *vars, t_gc **head_gc, t_gc **perm_gc)
 	if (WIFEXITED(status2))
     vars->exit_code = WEXITSTATUS(status2);
 	else if (WIFSIGNALED(status2))
-    vars->exit_code = 128 + WTERMSIG(status2);
+	{
+		vars->exit_code = 128 + WTERMSIG(status2);
+
+		if (WTERMSIG(status2) == SIGINT)
+			write(1, "\n", 1);
+		else if (WTERMSIG(status2) == SIGQUIT)
+			write(2, "Quit (core dumped)\n", 20);
+	}
 }
 
 void	child_process(t_ast *node, t_vars *vars, t_gc **head_gc)
@@ -106,6 +113,8 @@ void	execute_command(t_ast *node, t_vars *vars, t_gc **gc, t_gc **perm_gc)
 			return ;
 		}
 		vars->exit_code = call_built_ins(node->argv, vars, gc, perm_gc);
+		if (g_signal == SIGINT)
+			vars->exit_code = 130;
 		dup2(saved_stds[0], STDIN_FILENO);
 		dup2(saved_stds[1], STDOUT_FILENO);
 		close(saved_stds[0]);
@@ -120,9 +129,15 @@ void	execute_command(t_ast *node, t_vars *vars, t_gc **gc, t_gc **perm_gc)
 	// if (!isatty(STDIN_FILENO))
 	// 	exit(vars->exit_code);
 	if (WIFEXITED(status))
-    	vars->exit_code = WEXITSTATUS(status);
+	vars->exit_code = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
-    	vars->exit_code = 128 + WTERMSIG(status);
+	{
+		vars->exit_code = 128 + WTERMSIG(status);
+		if (WTERMSIG(status) == SIGINT)
+			write(1, "\n", 1);
+		else if (WTERMSIG(status) == SIGQUIT)
+			write(2, "Quit (core dumped)\n", 20);
+	}
 }
 
 // void	apply_redirections(t_redir *redir)
