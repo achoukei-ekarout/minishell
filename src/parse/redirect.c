@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
+/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/14 23:11:06 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/02 14:30:12 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/04 17:24:08 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@ int	valid_redir(char *input, t_vars *vars)
 
 	s = ft_strtrim(input, " \n\t\v\f\r");
 	i = -1;
+	if (s[0] == '|')
+	{
+		vars->exit_code = redir_error(s[i]);
+		free(s);
+		return (0);
+	}
 	while (s[++i])
 	{
 		if (s[i] == '\'')
