@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 00:21:23 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/01 15:25:23 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/03 05:00:46 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,14 @@ void	free_tokens(t_token *tokens)
 	}
 }
 
-int	is_quote(char c)
+void	remove_token(t_token **head, t_token **prev, t_token *node)
 {
-	return (c == '\'' || c == '"');
+	if (!head && !prev)
+		return ;
+	if (!*prev)
+	{
+		*head = node->next;
+		return ;
+	}
+	(*prev)->next = node->next;
 }

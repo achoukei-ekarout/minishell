@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 19:22:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/01 16:33:09 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/03 01:05:01 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@
 # include <sys/wait.h>
 # include <unistd.h>
 # include <signal.h>
+# include <sys/stat.h>
 
 #endif

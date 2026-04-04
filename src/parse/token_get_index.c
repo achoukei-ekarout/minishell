@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_get_index.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 23:31:36 by achoukei          #+#    #+#             */
-/*   Updated: 2026/03/28 23:32:13 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/04/03 04:57:22 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,9 @@ void	skip_spaces(char *line, int *i)
 {
 	while (line[*i] && ft_isspace(line[*i]))
 		(*i)++;
+}
+
+int	is_quote(char c)
+{
+	return (c == '\'' || c == '"');
 }
