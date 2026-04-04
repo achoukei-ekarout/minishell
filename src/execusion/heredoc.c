@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 08:43:13 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/04 15:36:20 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/04/04 18:10:51 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,7 @@ int	apply_heredoc(char *delimeter, t_token_type type,
 		line = readline("> ");
 		if (!line)
 		{
-			ft_putstr_fd("warning: here-document at line ", 2);
-			ft_putnbr_fd(EOF_start, 2);
-			ft_putstr_fd(" delimited by end-of-file (wanted `EOF')\n", 2);
+			heredoc_error(EOF_start, *vars);
 			break;
 		}
 		if (ft_strcmp(line, delimeter) == 0)

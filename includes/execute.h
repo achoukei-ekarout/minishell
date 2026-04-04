@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/13 17:28:46 by user              #+#    #+#             */
-/*   Updated: 2026/04/04 15:34:33 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/04/04 18:10:17 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 void	execute_ast(t_ast *node, t_vars *vars, t_gc **head_gc, t_gc **perm_gc);
 void	execute_pipe(t_ast *node, t_vars *vars, t_gc **head_gc, t_gc **perm_gc);
 void	execute_command(t_ast *node, t_vars *vars, t_gc **gc, t_gc **perm_gc);
-int		apply_redirections(t_redir *redir);
+int		apply_redirections(t_redir *redir, t_vars *vars);
 char	*get_path(char **envp);
 char	*get_path(char **envp);
 char	*get_path_name(char *func_name, char **paths);

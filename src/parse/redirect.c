@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/14 23:11:06 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/04 17:24:08 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/04/04 18:11:16 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	valid_redir(char *input, t_vars *vars)
 	i = -1;
 	if (s[0] == '|')
 	{
-		vars->exit_code = redir_error(s[i]);
+		vars->exit_code = redir_error(s[i], *vars);
 		free(s);
 		return (0);
 	}
@@ -61,7 +61,7 @@ int	valid_redir(char *input, t_vars *vars)
 				i++;
 			if (!s[i] || is_operator(s[i]))
 			{
-				vars->exit_code = redir_error(s[i]);
+				vars->exit_code = redir_error(s[i], *vars);
 				free(s);
 				return (0);
 			}

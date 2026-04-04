@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
+/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 14:53:25 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/03 05:01:15 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/04 18:13:28 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "data.h"
 
 char				**free_arr(char ***arr);
-t_token				*tokenize(char *input, t_gc **head_gc);
+t_token				*tokenize(char *input, t_gc **head_gc, t_vars *vars);
 int					is_operator(char c);
 t_token				*create_token(t_token_type type, char *value,
 						t_gc **head_gc);
@@ -40,7 +40,7 @@ void				print_tokens(t_token *tokens);
 int					is_quote(char c);
 void				print_env(char **envp);
 void				print_arr(char **arr);
-int					get_quote_index(char *line, int *i);
+int					get_quote_index(char *line, int *i, t_vars *vars);
 void				skip_spaces(char *line, int *i);
 int					valid_redir(char *input, t_vars *vars);
 void				remove_token(t_token **head, t_token **prev, t_token *node);

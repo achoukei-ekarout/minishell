@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 13:32:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/04 15:34:11 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/04/04 17:58:44 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	main(int argc, char **argv, char **envp)
 		return (0);
 	rl_catch_signals = 0;
 	perm_gc = NULL;
-	vars_init(&vars, envp, &perm_gc);
+	vars_init(&vars, envp, &perm_gc, argv[0]);
 	run_shell(&vars, &perm_gc);
 	free_garbage(&perm_gc);
 	rl_clear_history();

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
+/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 23:34:32 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/03 11:48:57 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/04 18:10:39 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	child_process(t_ast *node, t_vars *vars, t_gc **head_gc)
 
 	signal(SIGINT, SIG_DFL);
     signal(SIGQUIT, SIG_DFL);
-	if (!apply_redirections(node->redir))
+	if (!apply_redirections(node->redir, vars))
 		exit(1);
 	envp = env_to_array(vars->env, head_gc);
 	if (ft_strchr(node->argv[0], '/'))
@@ -100,7 +100,7 @@ void	execute_command(t_ast *node, t_vars *vars, t_gc **gc, t_gc **perm_gc)
 	{
 		saved_stds[0] = dup(STDIN_FILENO);
 		saved_stds[1] = dup(STDOUT_FILENO);
-		if (!apply_redirections(node->redir))
+		if (!apply_redirections(node->redir, vars))
 		{
 			vars->exit_code = 1;
 			return ;
@@ -158,7 +158,7 @@ void	execute_command(t_ast *node, t_vars *vars, t_gc **gc, t_gc **perm_gc)
 // 	}
 // }
 
-int	apply_redirections(t_redir *redir)
+int	apply_redirections(t_redir *redir, t_vars *vars)
 {
 	int	fd;
 
@@ -181,7 +181,7 @@ int	apply_redirections(t_redir *redir)
 				fd = open(redir->file, O_RDONLY);
 				if (fd < 0)
 				{
-					file_error(redir->file);
+					file_error(redir->file, *vars);
 					return (0);
 				}
 			}
