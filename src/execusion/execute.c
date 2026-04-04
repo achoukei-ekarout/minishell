@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 23:34:32 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/04 16:44:38 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/04 21:56:05 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,14 @@ void	execute_pipe(t_ast *node, t_vars *vars, t_gc **head_gc, t_gc **perm_gc)
 	if (WIFEXITED(status2))
     vars->exit_code = WEXITSTATUS(status2);
 	else if (WIFSIGNALED(status2))
-    vars->exit_code = 128 + WTERMSIG(status2);
+	{
+		vars->exit_code = 128 + WTERMSIG(status2);
+
+		if (WTERMSIG(status2) == SIGINT)
+			write(1, "\n", 1);
+		else if (WTERMSIG(status2) == SIGQUIT)
+			write(2, "Quit (core dumped)\n", 20);
+	}
 }
 
 void	child_process(t_ast *node, t_vars *vars, t_gc **head_gc)
@@ -68,7 +75,7 @@ void	child_process(t_ast *node, t_vars *vars, t_gc **head_gc)
 
 	signal(SIGINT, SIG_DFL);
     signal(SIGQUIT, SIG_DFL);
-	if (!apply_redirections(node->redir))
+	if (!apply_redirections(node->redir, vars))
 		exit(1);
 	envp = env_to_array(vars->env, head_gc);
 	if (ft_strchr(node->argv[0], '/'))
@@ -100,7 +107,7 @@ void	execute_command(t_ast *node, t_vars *vars, t_gc **gc, t_gc **perm_gc)
 	{
 		saved_stds[0] = dup(STDIN_FILENO);
 		saved_stds[1] = dup(STDOUT_FILENO);
-		if (!apply_redirections(node->redir))
+		if (!apply_redirections(node->redir, vars))
 		{
 			vars->exit_code = 1;
 			dup2(saved_stds[0], STDIN_FILENO);
@@ -110,6 +117,8 @@ void	execute_command(t_ast *node, t_vars *vars, t_gc **gc, t_gc **perm_gc)
 			return ;
 		}
 		vars->exit_code = call_built_ins(node->argv, vars, gc, perm_gc);
+		if (g_signal == SIGINT)
+			vars->exit_code = 130;
 		dup2(saved_stds[0], STDIN_FILENO);
 		dup2(saved_stds[1], STDOUT_FILENO);
 		close(saved_stds[0]);
@@ -121,9 +130,15 @@ void	execute_command(t_ast *node, t_vars *vars, t_gc **gc, t_gc **perm_gc)
 		child_process(node, vars, gc);
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
-    	vars->exit_code = WEXITSTATUS(status);
-	if (WIFSIGNALED(status))
-    	vars->exit_code = 128 + WTERMSIG(status);
+		vars->exit_code = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+	{
+		vars->exit_code = 128 + WTERMSIG(status);
+		if (WTERMSIG(status) == SIGINT)
+			write(1, "\n", 1);
+		else if (WTERMSIG(status) == SIGQUIT)
+			write(2, "Quit (core dumped)\n", 20);
+	}
 	else if (!isatty(STDIN_FILENO))
 	{
 		vars->exit_code = status >> 8;
@@ -164,7 +179,7 @@ void	execute_command(t_ast *node, t_vars *vars, t_gc **gc, t_gc **perm_gc)
 // 	}
 // }
 
-int	apply_redirections(t_redir *redir)
+int	apply_redirections(t_redir *redir, t_vars *vars)
 {
 	int	fd;
 
@@ -192,6 +207,8 @@ int	apply_redirections(t_redir *redir)
 				fd = open(redir->file, O_RDONLY);
 				if (fd < 0)
 				{
+					ft_putstr_fd(vars->executer_name, 2);
+					ft_putstr_fd(": ", 2);
 					perror(redir->file);
 					return (0);
 				}

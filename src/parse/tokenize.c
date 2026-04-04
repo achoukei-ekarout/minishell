@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
+/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 04:04:53 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/01 15:21:50 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/04 18:15:15 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*read_word(char *line, int *i, t_gc **head_gc)
+char	*read_word(char *line, int *i, t_gc **head_gc, t_vars *vars)
 {
 	int		start;
 	int		len;
@@ -29,7 +29,7 @@ char	*read_word(char *line, int *i, t_gc **head_gc)
 			while (line[*i] && line[*i] != line[quote_index])
 				(*i)++;
 			if (!line[*i])
-				return (quotes_error(), NULL);
+				return (quotes_error(*vars), NULL);
 		}
 		(*i)++;
 	}
@@ -122,14 +122,14 @@ t_token	*read_operator(char *line, int *i, t_gc **head_gc)
 // 	return (t_tokens);
 // }
 
-static t_token	*get_next_token(char *line, int *i, t_gc **head_gc)
+static t_token	*get_next_token(char *line, int *i, t_gc **head_gc, t_vars *vars)
 {
 	char	*word;
 	int		start;
 
 	if (is_quote(line[*i]))
 	{
-		start = get_quote_index(line, i);
+		start = get_quote_index(line, i, vars);
 		if (start < 0)
 			return (NULL);
 		return (create_token(0, ft_substr_allocate(line, start, (*i - start)
@@ -139,14 +139,14 @@ static t_token	*get_next_token(char *line, int *i, t_gc **head_gc)
 		return (read_operator(line, i, head_gc));
 	else
 	{
-		word = read_word(line, i, head_gc);
+		word = read_word(line, i, head_gc, vars);
 		if (!word)
 			return (NULL);
 		return (create_token(TOKEN_WORD, word, head_gc));
 	}
 }
 
-t_token	*tokenize(char *line, t_gc **head_gc)
+t_token	*tokenize(char *line, t_gc **head_gc, t_vars *vars)
 {
 	int		i;
 	t_token	*tokens;
@@ -159,7 +159,7 @@ t_token	*tokenize(char *line, t_gc **head_gc)
 		skip_spaces(line, &i);
 		if (!line[i])
 			break ;
-		token = get_next_token(line, &i, head_gc);
+		token = get_next_token(line, &i, head_gc, vars);
 		if (!token)
 			return (NULL);
 		add_token(&tokens, token);

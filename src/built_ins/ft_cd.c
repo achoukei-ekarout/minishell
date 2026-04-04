@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
+/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 02:08:53 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/28 20:28:28 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/04 21:10:30 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	ft_count_args(char **argv)
 	return (i);
 }
 
-int	ft_cd(char **argv, t_env **env, t_gc **perm_gc)
+int	ft_cd(char **argv, t_env **env, t_gc **perm_gc, t_vars *vars)
 {
 	char	*old_path;
 	char	*arg;
@@ -57,16 +57,16 @@ int	ft_cd(char **argv, t_env **env, t_gc **perm_gc)
 
 	old_path = getcwd(NULL, 0);
 	if (ft_count_args(argv) > 2)
-		return (args_error("cd"));
+		return (args_error("cd", *vars));
 	arg = argv[1];
 	if (!arg)
-		result = ft_go_home(arg, env);
+		result = ft_go_home(arg, env, vars);
 	else if (!ft_strncmp(arg, "~", 1))
-		result = ft_go_home(arg, env);
+		result = ft_go_home(arg, env, vars);
 	else if (!ft_strncmp(arg, "-", 1))
 		result = ft_go_back(env);
 	else
-		result = ft_go_dir(arg);
+		result = ft_go_dir(arg, vars);
 	if (result != -1)
 		change_env_pwd(old_path, env, perm_gc);
 	free(old_path);
