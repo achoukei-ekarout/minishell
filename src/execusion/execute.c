@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 23:34:32 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/04 23:00:00 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/04 23:15:11 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,11 +133,9 @@ void	execute_command(t_ast *node, t_vars *vars, t_gc **gc, t_gc **perm_gc)
 	waitpid(pid, &status, 0);
 	// if (WIFEXITED(status))
 	// 	vars->exit_code = WEXITSTATUS(status);
+	vars->exit_code = status >> 8;
 	if (!isatty(STDIN_FILENO))
-	{
-		vars->exit_code = status >> 8;
 		exit(vars->exit_code);
-	}
 	else if (WIFSIGNALED(status))
 	{
 		vars->exit_code = 128 + WTERMSIG(status);
