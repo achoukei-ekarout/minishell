@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 13:32:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/04 21:42:02 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/04/04 22:30:46 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,14 @@ void	read_input(char	*input, t_vars *vars, t_gc **gc, t_gc **perm_gc)
 	tokens = tokenize(input, gc, vars);
 	if (!tokens)
 	{
-		vars->exit_code = 2;
+		vars->exit_code = 0;
 		return ;
 	}
 	check_heredoc(&tokens);
 	param_expand(&tokens, *vars, gc);
 	if (!tokens)
 	{
-		vars->exit_code = 2;
+		vars->exit_code = 0;
 		return ;
 	}
 	// print_tokens(tokens);
