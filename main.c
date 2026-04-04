@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 13:32:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/04 17:58:44 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/04/04 19:46:50 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	read_input(char	*input, t_vars *vars, t_gc **gc, t_gc **perm_gc)
 	tokens = NULL;
 	if (!valid_redir(input, vars))
 		return ;
-	tokens = tokenize(input, gc);
+	tokens = tokenize(input, gc, vars);
 	if (!tokens)
 	{
 		vars->exit_code = 2;
