@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 23:34:32 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/04 23:15:11 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/04 23:40:19 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ void	execute_command(t_ast *node, t_vars *vars, t_gc **gc, t_gc **perm_gc)
 	int		saved_stds[2];
 	int		status;
 
+	if (!node->argv)
+		return ;
 	if (is_built_ins(node->argv[0]))
 	{
 		saved_stds[0] = dup(STDIN_FILENO);
