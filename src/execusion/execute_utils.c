@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
+/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 18:21:48 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/02 15:20:37 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/04 21:10:53 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	call_built_ins(char **input, t_vars *vars, t_gc **gc, t_gc **perm_gc)
 	if (ft_strcmp(str, "echo") == 0)
 		result = ft_echo(input);
 	else if (ft_strcmp(str, "cd") == 0)
-		result = ft_cd(input, vars->env, perm_gc);
+		result = ft_cd(input, vars->env, perm_gc, vars);
 	else if (ft_strcmp(str, "pwd") == 0)
 		result = ft_pwd(vars->env);
 	else if (ft_strcmp(str, "export") == 0)
@@ -107,6 +107,6 @@ int	call_built_ins(char **input, t_vars *vars, t_gc **gc, t_gc **perm_gc)
 	else if (ft_strcmp(str, "env") == 0)
 		result = ft_env(vars->env);
 	else if (ft_strcmp(str, "exit") == 0)
-		result = ft_exit(input, gc, perm_gc);
+		result = ft_exit(input, gc, perm_gc, vars);
 	return (result);
 }

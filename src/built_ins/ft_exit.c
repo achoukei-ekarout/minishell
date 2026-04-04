@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
+/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/13 23:24:47 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/02 14:42:24 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/04 21:06:59 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	exit_shell(int exit_code, t_gc **gc, t_gc **perm_gc)
 	exit(exit_code);
 }
 
-int	ft_exit(char **argv, t_gc **gc, t_gc **perm_gc)
+int	ft_exit(char **argv, t_gc **gc, t_gc **perm_gc, t_vars *vars)
 {
 	int		exit_code;
 	char	*arg;
@@ -54,7 +54,7 @@ int	ft_exit(char **argv, t_gc **gc, t_gc **perm_gc)
 	exit_code = 0;
 	ft_putstr_fd("exit\n", 1);
 	if (ft_count_args(argv) > 2)
-		return (args_error("exit"));
+		return (args_error("exit", *vars));
 	arg = argv[1];
 	if (!arg)
 		exit_shell(exit_code, gc, perm_gc);

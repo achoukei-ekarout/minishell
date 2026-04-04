@@ -6,7 +6,7 @@
 /*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 16:30:09 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/04 18:09:05 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/04/04 21:06:16 by achoukei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 # define ERRORS_H
 
 int	exit_error(char *arg);
-int	cd_dir_error(char *dir);
-int	args_error(char *fn);
-int	export_key_error(char *key);
+int	cd_dir_error(char *dir, t_vars vars);
+int	args_error(char *fn, t_vars vars);
+int	export_key_error(char *key, t_vars vars);
 int	quotes_error(t_vars vars);
 int	redir_error(char s, t_vars vars);
 int file_error(char *file, t_vars vars);
