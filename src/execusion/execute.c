@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 23:34:32 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/04 21:34:41 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/04/04 22:10:51 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,10 @@ void	execute_command(t_ast *node, t_vars *vars, t_gc **gc, t_gc **perm_gc)
 		if (!apply_redirections(node->redir, vars))
 		{
 			vars->exit_code = 1;
+			dup2(saved_stds[0], STDIN_FILENO);
+			dup2(saved_stds[1], STDIN_FILENO);
+			close(saved_stds[0]);
+			close(saved_stds[1]);
 			return ;
 		}
 		vars->exit_code = call_built_ins(node->argv, vars, gc, perm_gc);
@@ -125,11 +129,13 @@ void	execute_command(t_ast *node, t_vars *vars, t_gc **gc, t_gc **perm_gc)
 	if (pid == 0)
 		child_process(node, vars, gc);
 	waitpid(pid, &status, 0);
-	// vars->exit_code = status >> 8;
-	// if (!isatty(STDIN_FILENO))
-	// 	exit(vars->exit_code);
-	if (WIFEXITED(status))
-	vars->exit_code = WEXITSTATUS(status);
+	// if (WIFEXITED(status))
+	// 	vars->exit_code = WEXITSTATUS(status);
+	if (!isatty(STDIN_FILENO))
+	{
+		vars->exit_code = status >> 8;
+		exit(vars->exit_code);
+	}
 	else if (WIFSIGNALED(status))
 	{
 		vars->exit_code = 128 + WTERMSIG(status);
@@ -185,6 +191,11 @@ int	apply_redirections(t_redir *redir, t_vars *vars)
 				fd = open(redir->file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 			else
 				fd = open(redir->file, O_CREAT | O_WRONLY | O_APPEND, 0644);
+			if (fd < 0)
+			{
+				perror(redir->file);
+				return (0);
+			}
 			dup2(fd, STDOUT_FILENO);
 			close(fd);
 		}
@@ -196,7 +207,9 @@ int	apply_redirections(t_redir *redir, t_vars *vars)
 				fd = open(redir->file, O_RDONLY);
 				if (fd < 0)
 				{
-					file_error(redir->file, *vars);
+					ft_putstr_fd(vars->executer_name, 2);
+					ft_putstr_fd(": ", 2);
+					perror(redir->file);
 					return (0);
 				}
 			}
