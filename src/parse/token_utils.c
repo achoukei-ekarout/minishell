@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 00:21:23 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/03 05:00:46 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/04 13:49:44 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,18 @@
 t_token	*create_token(t_token_type type, char *value, t_gc **head_gc)
 {
 	t_token	*node;
+	char	*trimmed;
 
 	if (!value)
 		return (NULL);
+	trimmed = ft_strtrim(value, " \n\t\v\f\r");
 	node = allocate(head_gc, sizeof(t_token));
 	if (!node)
 		return (NULL);
 	node->type = type;
-	node->value = ft_strdup_allocate(value, head_gc);
+	node->value = ft_strdup_allocate(trimmed, head_gc);
 	node->next = NULL;
+	free(trimmed);
 	return (node);
 }
 
