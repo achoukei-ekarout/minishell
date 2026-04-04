@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/14 23:11:06 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/04 18:11:16 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/04/04 23:02:47 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ int	valid_redir(char *input, t_vars *vars)
 				break ;
 			continue ;
 		}
-		if (is_operator(s[i]))
+		if (s[i] == '>' || s[i] == '<')
 		{
 			i++;
-			if (is_operator(s[i]))
+			if (s[i] == '>' || s[i] == '<')
 				i++;
 			while (s[i] && ft_isspace(s[i]))
 				i++;
-			if (!s[i] || is_operator(s[i]))
+			if (!s[i] || s[i] == '>' || s[i] == '<')
 			{
 				vars->exit_code = redir_error(s[i], *vars);
 				free(s);
