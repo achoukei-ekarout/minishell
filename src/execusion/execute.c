@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 23:34:32 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/04 22:27:49 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/04 23:00:00 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,8 @@ void	execute_command(t_ast *node, t_vars *vars, t_gc **gc, t_gc **perm_gc)
 			dup2(saved_stds[1], STDOUT_FILENO);
 			close(saved_stds[0]);
 			close(saved_stds[1]);
+			if (!isatty(STDIN_FILENO))
+				exit(vars->exit_code);
 			return ;
 		}
 		vars->exit_code = call_built_ins(node->argv, vars, gc, perm_gc);
