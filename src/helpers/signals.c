@@ -1,43 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_get_index.c                                  :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/28 23:31:36 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/06 00:27:31 by ekarout          ###   ########.fr       */
+/*   Created: 2026/04/06 02:42:03 by ekarout           #+#    #+#             */
+/*   Updated: 2026/04/06 02:44:24 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	get_quote_index(char *line, int *i, t_vars *vars)
+void	sigint_prompt(int sig)
 {
-	int	start;
-
-	start = (*i)++;
-	while (line[*i] && line[*i] != line[start])
-	{
-		(*i)++;
-		if (!line[*i])
-		{
-			quotes_error(*vars);
-			return (-1);
-		}
-	}
-	while (line[*i] && line[*i] != ' ')
-		(*i)++;
-	return (start);
+	(void)sig;
+	g_signal = SIGINT;
+	write(1, "^C\n", 3);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 }
 
-void	skip_spaces(char *line, int *i)
+void	sigint_exec(int sig)
 {
-	while (line[*i] && ft_isspace(line[*i]))
-		(*i)++;
+	(void)sig;
+	g_signal = SIGINT;
 }
 
-int	is_quote(char c)
+void	setup_signals_prompt(void)
 {
-	return (c == '\'' || c == '"');
+	signal(SIGINT, sigint_prompt);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+void	setup_signals_exec(void)
+{
+	signal(SIGINT, sigint_exec);
+	signal(SIGQUIT, SIG_IGN);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 08:43:13 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/04 18:10:51 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/04/06 02:49:58 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,17 @@ int	apply_heredoc(char *delimeter, t_token_type type,
 	char	*line;
 	char	*expand;
 	int		fd[2];
-	int		EOF_start;
+	int		eof_start;
 
 	if (pipe(fd) == -1)
 		perror("pipe");
-	EOF_start = vars->line_counter;
+	eof_start = vars->line_counter;
 	while (1)
 	{
 		line = readline("> ");
 		if (!line)
 		{
-			heredoc_error(EOF_start, *vars);
+			heredoc_error(eof_start, *vars);
 			break;
 		}
 		if (ft_strcmp(line, delimeter) == 0)

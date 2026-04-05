@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/13 23:24:47 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/04 21:06:59 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/04/05 23:40:12 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,18 @@ int	ft_exit(char **argv, t_gc **gc, t_gc **perm_gc, t_vars *vars)
 	exit_code = exit_status_code(arg);
 	if (exit_code == -1)
 		exit_code = exit_error(arg);
-	if (ft_strlen(arg) > 19)
+	if (ft_strlen(arg) > 20)
 		exit_code = exit_error(arg);
-	if (ft_strlen(arg) == 19 && ft_strcmp(arg, "9223372036854775807") < 0)
-		exit_code = exit_error(arg);
+	if (ft_strlen(arg) >= 19 && !ft_strncmp(arg, "922337203685477580", 18))
+	{
+		if (arg[18] > '7')
+			exit_code = exit_error(arg);
+	}
+	if (ft_strlen(arg) == 20 && !ft_strncmp(arg, "-922337203685477580", 19))
+	{
+		if (arg[19] > '8')
+			exit_code = exit_error(arg);
+	}
 	exit_shell(exit_code, gc, perm_gc);
 	return (0);
 }
