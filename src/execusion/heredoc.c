@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 08:43:13 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/06 02:49:58 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/06 05:19:31 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,39 +38,16 @@ void	proccess_node_heredoc(t_ast *node, t_vars *vars, t_gc **head_gc)
 	}
 }
 
-int	apply_heredoc(char *delimeter, t_token_type type,
-		t_vars *vars, t_gc **head_gc)
+int	apply_heredoc(char *delimeter, t_token_type type, t_vars *vars, t_gc **head_gc)
 {
-	char	*line;
-	char	*expand;
-	int		fd[2];
-	int		eof_start;
+	int	fd[2];
 
 	if (pipe(fd) == -1)
 		perror("pipe");
-	eof_start = vars->line_counter;
-	while (1)
-	{
-		line = readline("> ");
-		if (!line)
-		{
-			heredoc_error(eof_start, *vars);
-			break;
-		}
-		if (ft_strcmp(line, delimeter) == 0)
-			break ;
-		if (type == TOKEN_HEREDOC)
-		{
-			expand = expand_value(line, *vars, head_gc);
-			write(fd[1], expand, ft_strlen(expand));
-		}
-		else
-			write(fd[1], line, ft_strlen(line));
-		vars->line_counter++;
-		write(fd[1], "\n", 1);
-		free(line);
-	}
-	free(line);
+	if (type == TOKEN_HEREDOC)
+		while (heredoc_readline_expand(delimeter, fd[1], vars, head_gc)) ;
+	else
+		while (heredoc_readline(delimeter, fd[1], vars)) ;
 	close(fd[1]);
 	return (fd[0]);
 }

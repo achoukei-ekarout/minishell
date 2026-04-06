@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 16:30:09 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/06 02:46:49 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/06 05:07:31 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,6 @@ int	export_key_error(char *key, t_vars vars);
 int	quotes_error(t_vars vars);
 int	redir_error(char s, t_vars vars);
 int	file_error(char *file, t_vars vars);
-int	heredoc_error(int line_num, t_vars vars);
+int	heredoc_error(t_vars vars);
 
 #endif
