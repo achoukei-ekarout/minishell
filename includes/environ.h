@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environ.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 20:09:03 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/04 17:47:12 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/04/06 07:07:06 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void		env_unset(t_env **env, char *key);
 void		add_new_node(t_env **env, char *key, char *value, t_gc **perm_gc);
 char		**env_to_array(t_env **env, t_gc **head_gc);
 int			ft_env_size(t_env *env);
-void		vars_init(t_vars *vars, char **envp, t_gc **perm_gc, char *exec_name);
+void		vars_init(t_vars *vars, char **envp,
+				t_gc **perm_gc, char *exec_name);
 
 #endif

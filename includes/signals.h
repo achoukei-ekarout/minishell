@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.h                                           :+:      :+:    :+:   */
+/*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/01 16:30:09 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/06 05:07:31 by ekarout          ###   ########.fr       */
+/*   Created: 2026/04/06 02:42:41 by ekarout           #+#    #+#             */
+/*   Updated: 2026/04/06 02:47:46 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERRORS_H
-# define ERRORS_H
+#ifndef SIGNALS_H
+# define SIGNALS_H
 
-int	exit_error(char *arg);
-int	cd_dir_error(char *dir, t_vars vars);
-int	args_error(char *fn, t_vars vars);
-int	export_key_error(char *key, t_vars vars);
-int	quotes_error(t_vars vars);
-int	redir_error(char s, t_vars vars);
-int	file_error(char *file, t_vars vars);
-int	heredoc_error(t_vars vars);
+extern int	g_signal;
+
+void	sigint_prompt(int sig);
+void	sigint_exec(int sig);
+void	setup_signals_prompt(void);
+void	setup_signals_exec(void);
 
 #endif

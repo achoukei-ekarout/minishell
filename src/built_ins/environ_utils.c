@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 22:12:24 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/02 17:06:14 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/06 07:08:24 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 char	*shlvl_value(char *s)
 {
-	int	level;
+	int		level;
+	char	*result;
 
 	level = ft_atoi(s);
 	level++;
-	free(s);
-	s = ft_itoa(level);
-	return (s);
+	result = ft_itoa(level);
+	return (result);
 }
 
 char	*get_env_value(t_env **env, char *key)
@@ -30,7 +30,7 @@ char	*get_env_value(t_env **env, char *key)
 	curr = *env;
 	while (curr)
 	{
-		if (!ft_strncmp(curr->data->key, key, ft_strlen(curr->data->key)))
+		if (!ft_strcmp(curr->data->key, key))
 			return (curr->data->value);
 		curr = curr->next;
 	}

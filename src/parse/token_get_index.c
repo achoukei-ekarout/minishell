@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_get_index.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 23:31:36 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/04 18:13:47 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/04/06 08:25:52 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,27 @@
 int	get_quote_index(char *line, int *i, t_vars *vars)
 {
 	int	start;
+	int	quote;
 
-	start = (*i)++;
-	while (line[*i] && line[*i] != line[start])
+	start = *i;
+	quote = *i;
+	while (line[*i] && !ft_isspace(line[*i]))
 	{
 		(*i)++;
+		while (line[*i] && line[*i] != line[quote])
+			(*i)++;
 		if (!line[*i])
+			return (quotes_error(*vars));
+		if (line[*i])
+			(*i)++;
+		if (is_quote(line[*i]))
 		{
-			quotes_error(*vars);
-			return (-1);
+			quote = *i;
+			continue ;
 		}
+		while (line[*i] && !ft_isspace(line[*i]))
+			(*i)++;
 	}
-	while (line[*i] && line[*i] != ' ')
-		(*i)++;
 	return (start);
 }
 

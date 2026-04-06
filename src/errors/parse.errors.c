@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.errors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 16:29:16 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/04 18:17:07 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/04/06 07:25:24 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,14 @@
 
 int	quotes_error(t_vars vars)
 {
-	ft_putchar_fd('-', 2);
 	ft_putstr_fd(vars.executer_name, 2);
 	ft_putstr_fd(": ", 2);
 	ft_putstr_fd("error: unclosed quote\n", 2);
-	return (2);
+	return (-1);
 }
 
 int	redir_error(char s, t_vars vars)
 {
-	ft_putchar_fd('-', 2);
 	ft_putstr_fd(vars.executer_name, 2);
 	ft_putstr_fd(": ", 2);
 	ft_putstr_fd("syntax error near unexpected token `", 2);
@@ -37,7 +35,6 @@ int	redir_error(char s, t_vars vars)
 
 int file_error(char *file, t_vars vars)
 {
-	ft_putchar_fd('-', 2);
 	ft_putstr_fd(vars.executer_name, 2);
 	ft_putstr_fd(": ", 2);
 	ft_putstr_fd(file, 2);
@@ -45,13 +42,12 @@ int file_error(char *file, t_vars vars)
 	return (2);
 }
 
-int	heredoc_error(int line_num, t_vars vars)
+int	heredoc_error(t_vars vars)
 {
-	ft_putchar_fd('-', 2);
 	ft_putstr_fd(vars.executer_name, 2);
 	ft_putstr_fd(": ", 2);
 	ft_putstr_fd("warning: here-document at line ", 2);
-	ft_putnbr_fd(line_num, 2);
+	ft_putnbr_fd(vars.line_counter, 2);
 	ft_putstr_fd(" delimited by end-of-file (wanted `EOF')\n", 2);
 	return (2);
 }
