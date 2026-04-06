@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/14 23:11:06 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/06 07:31:22 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/06 08:27:57 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,16 @@ int	skip_quotes(char *s, int *i)
 				return (2);
 			return (1);
 		}
-		if (s[*i] == '\"')
-		{
+	if (s[*i] == '\"')
+	{
+		(*i)++;
+		while (s[*i] && s[*i] != '\"')
 			(*i)++;
-			while (s[*i] && s[*i] != '\"')
-				(*i)++;
-			if (!s[*i])
-				return (2);
-			return (1);
-		}
+		if (!s[*i])
+			return (2);
+		return (1);
+	}
+	return (0);
 }
 
 int	valid_redir(char *input, t_vars *vars)
