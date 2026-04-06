@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc_reaadline.c                                :+:      :+:    :+:   */
+/*   heredoc_readline.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 05:19:03 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/06 05:19:34 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/06 06:53:05 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	heredoc_readline_expand(char *delimeter, int fd_out, t_vars *vars, t_gc **head_gc)
+int	heredoc_readline_expand(char *delimeter, int fd_out,
+		t_vars *vars, t_gc **head_gc)
 {
 	char	*line;
 	char	*expand;
@@ -21,12 +22,12 @@ int	heredoc_readline_expand(char *delimeter, int fd_out, t_vars *vars, t_gc **he
 	if (!line)
 	{
 		heredoc_error(*vars);
-		return (0) ;
+		return (0);
 	}
 	if (ft_strcmp(line, delimeter) == 0)
 	{
 		free(line);
-		return (0) ;
+		return (0);
 	}
 	expand = expand_value(line, *vars, head_gc);
 	write(fd_out, expand, ft_strlen(expand));
@@ -44,12 +45,12 @@ int	heredoc_readline(char *delimeter, int fd_out, t_vars *vars)
 	if (!line)
 	{
 		heredoc_error(*vars);
-		return (0) ;
+		return (0);
 	}
 	if (ft_strcmp(line, delimeter) == 0)
 	{
 		free(line);
-		return (0) ;
+		return (0);
 	}
 	write(fd_out, line, ft_strlen(line));
 	vars->line_counter++;

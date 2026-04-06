@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 16:29:16 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/06 05:06:56 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/06 07:25:24 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,14 @@
 
 int	quotes_error(t_vars vars)
 {
-	ft_putchar_fd('-', 2);
 	ft_putstr_fd(vars.executer_name, 2);
 	ft_putstr_fd(": ", 2);
 	ft_putstr_fd("error: unclosed quote\n", 2);
-	return (2);
+	return (-1);
 }
 
 int	redir_error(char s, t_vars vars)
 {
-	ft_putchar_fd('-', 2);
 	ft_putstr_fd(vars.executer_name, 2);
 	ft_putstr_fd(": ", 2);
 	ft_putstr_fd("syntax error near unexpected token `", 2);
@@ -37,7 +35,6 @@ int	redir_error(char s, t_vars vars)
 
 int file_error(char *file, t_vars vars)
 {
-	ft_putchar_fd('-', 2);
 	ft_putstr_fd(vars.executer_name, 2);
 	ft_putstr_fd(": ", 2);
 	ft_putstr_fd(file, 2);
@@ -47,7 +44,6 @@ int file_error(char *file, t_vars vars)
 
 int	heredoc_error(t_vars vars)
 {
-	ft_putchar_fd('-', 2);
 	ft_putstr_fd(vars.executer_name, 2);
 	ft_putstr_fd(": ", 2);
 	ft_putstr_fd("warning: here-document at line ", 2);

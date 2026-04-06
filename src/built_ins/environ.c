@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environ.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 16:15:14 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/04 17:59:17 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/04/06 07:06:27 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,24 +36,11 @@ t_env	*create_env_node(char *s, t_gc **perm_gc)
 	key_value = ft_split(s, '=');
 	if (!key_value)
 		return (NULL);
-	// i = 1;
-	// if (!ft_strcmp(key_value[0], "SHLVL"))
-	// 	key_value[1] = shlvl_value(key_value[1]);
-	// if (ft_count_args(key_value) > 2)
-	// {
-	// 	value = ft_strjoin_allocate(key_value[1], "=", perm_gc);
-	// 	while (key_value[++i])
-	// 	{
-	// 		value = ft_strjoin_allocate(value, key_value[i], perm_gc);
-	// 		if(key_value[i + 1])
-	// 			value = ft_strjoin_allocate(value, "=", perm_gc);
-	// 	}
-	// 	node = env_new(key_value[0], value, perm_gc);
-	// }
-	// else
-	// 	node = env_new(key_value[0], key_value[1], perm_gc);
 	i = ft_strlen(key_value[0]);
-	value = ft_substr(s, i + 1, ft_strlen(s) - i - 1);
+	if (!ft_strcmp(key_value[0], "SHLVL"))
+		value = shlvl_value(key_value[1]);
+	else
+		value = ft_substr(s, i + 1, ft_strlen(s) - i - 1);
 	node = env_new(key_value[0], value, perm_gc);
 	i = 0;
 	while (key_value[i])
@@ -96,6 +83,8 @@ t_env	**environ_init(char **envp, t_gc **perm_gc)
 		env_add_back(env, node);
 		i++;
 	}
+	if (!find_key(env, "SHLVL"))
+		add_new_node(env, "SHLVL", "1", perm_gc);
 	return (env);
 }
 
