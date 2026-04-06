@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 16:29:16 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/06 07:25:24 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/06 12:51:17 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	redir_error(char s, t_vars vars)
 	return (2);
 }
 
-int file_error(char *file, t_vars vars)
+int	file_error(char *file, t_vars vars)
 {
 	ft_putstr_fd(vars.executer_name, 2);
 	ft_putstr_fd(": ", 2);

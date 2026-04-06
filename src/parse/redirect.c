@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/14 23:11:06 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/06 08:27:57 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/06 12:50:35 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ int	is_redirection(t_token_type type)
 int	skip_quotes(char *s, int *i)
 {
 	if (s[*i] == '\'')
-		{
+	{
+		(*i)++;
+		while (s[*i] && s[*i] != '\'')
 			(*i)++;
-			while (s[*i] && s[*i] != '\'')
-				(*i)++;
-			if (!s[*i])
-				return (2);
-			return (1);
-		}
+		if (!s[*i])
+			return (2);
+		return (1);
+	}
 	if (s[*i] == '\"')
 	{
 		(*i)++;

@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 23:34:32 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/06 06:21:45 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/06 13:06:06 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ void	execute_pipe(t_ast *node, t_vars *vars, t_gc **head_gc, t_gc **perm_gc)
 	int	fd[2];
 	int	pid1;
 	int	pid2;
-	int status1;
-	int status2;
-	
+	int	status1;
+	int	status2;
+
 	pipe(fd);
 	pid1 = fork();
 	if (pid1 == 0)
@@ -58,11 +58,10 @@ void	execute_pipe(t_ast *node, t_vars *vars, t_gc **head_gc, t_gc **perm_gc)
 	waitpid(pid1, &status1, 0);
 	waitpid(pid2, &status2, 0);
 	if (WIFEXITED(status2))
-    vars->exit_code = WEXITSTATUS(status2);
+		vars->exit_code = WEXITSTATUS(status2);
 	else if (WIFSIGNALED(status2))
 	{
 		vars->exit_code = 128 + WTERMSIG(status2);
-
 		if (WTERMSIG(status2) == SIGINT)
 			write(1, "\n", 1);
 		else if (WTERMSIG(status2) == SIGQUIT)

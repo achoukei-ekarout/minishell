@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 20:10:41 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/06 09:24:44 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/06 12:49:47 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ char	*get_next_line(int fd)
 	if (i == -1)
 		i = ft_strlen_gnl(temp);
 	line = ft_substr_gnl(temp, 0, (size_t)(i + 1));
-	temp = ft_replace(temp, ft_substr_gnl(temp, i + 1, ft_strlen_gnl(temp) - (i + 1)));
+	temp = ft_replace(temp, ft_substr_gnl(temp, i + 1,
+				ft_strlen_gnl(temp) - (i + 1)));
 	return (free(buf), line);
 }

@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 16:43:20 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/06 11:18:38 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/06 12:50:57 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@
 # include <unistd.h>
 # include "../includes/minishell.h"
 
-typedef struct s_history {
+typedef struct s_history
+{
 	char				*line;
 	struct s_history	*prev;
 	struct s_history	*next;
