@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 16:15:14 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/06 07:06:27 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/06 15:26:51 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,5 @@ void	vars_init(t_vars *vars, char **envp, t_gc **perm_gc, char *exec_name)
 	vars->exit_code = 0;
 	vars->line_counter = 0;
 	vars->executer_name = exec_name + 2;
+	vars->input = NULL;
 }
