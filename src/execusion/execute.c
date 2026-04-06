@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 23:34:32 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/05 22:11:22 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/06 06:21:45 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	execute_pipe(t_ast *node, t_vars *vars, t_gc **head_gc, t_gc **perm_gc)
 		signal(SIGQUIT, SIG_DFL);
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[0]);
+		close(fd[1]);
 		execute_ast(node->left, vars, head_gc, perm_gc);
 		exit(0);
 	}
@@ -47,6 +48,7 @@ void	execute_pipe(t_ast *node, t_vars *vars, t_gc **head_gc, t_gc **perm_gc)
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		dup2(fd[0], STDIN_FILENO);
+		close(fd[0]);
 		close(fd[1]);
 		execute_ast(node->right, vars, head_gc, perm_gc);
 		exit(0);
