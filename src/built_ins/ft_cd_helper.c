@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd_helper.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 21:10:59 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/04 21:05:46 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/04/07 09:59:43 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,10 @@
 int	ft_go_home(char *dir, t_env **env, t_vars *vars)
 {
 	char	*home;
-	char	*temp;
-	char	*path;
 	int		result;
 
 	home = get_env_value(env, "HOME");
-	if (!dir)
-		path = ft_strdup(home);
-	else
-	{
-		temp = ft_substr(dir, 1, ft_strlen(dir));
-		path = ft_strjoin(home, temp);
-		free(temp);
-	}
-	result = chdir(path);
-	free(path);
+	result = chdir(home);
 	if (result == -1)
 		return (cd_dir_error(dir, *vars));
 	return (result);

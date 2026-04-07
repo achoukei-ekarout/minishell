@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 18:56:34 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/30 19:36:50 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/07 10:10:21 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,12 @@ char	*get_value(char *value, int *i, t_vars vars)
 	return (result);
 }
 
-void	handle_single_quotes(t_expand *expand_data, int *i, int *j)
+void	handle_character(t_expand *expand_data, int *i, int *j)
 {
-	(*i)++;
-	while (expand_data->old_value[*i] != '\'' && expand_data->old_value[*i])
-	{
-		expand_data->new_value[*j] = expand_data->old_value[*i];
-		(*i)++;
-		(*j)++;
-	}
-	if (expand_data->old_value[*i] == '\'')
-		(*i)++;
+	if ((expand_data->old_value)[*i] == '$')
+		handle_dollar(expand_data, i, j);
+	else if ((expand_data->old_value)[*i] == '~')
+		handle_tilde(expand_data, i, j);
 }
 
 void	handle_dollar(t_expand *expand_data, int *i, int *j)
@@ -59,6 +54,24 @@ void	handle_dollar(t_expand *expand_data, int *i, int *j)
 
 	(*i)++;
 	expanded = get_value(expand_data->old_value, i, expand_data->vars);
+	if (expanded)
+	{
+		k = -1;
+		while (expanded[++k])
+		{
+			expand_data->new_value[*j] = expanded[k];
+			(*j)++;
+		}
+	}
+}
+
+void	handle_tilde(t_expand *expand_data, int *i, int *j)
+{
+	char	*expanded;
+	int		k;
+
+	(*i)++;
+	expanded = get_env_value(expand_data->vars.env, "HOME");
 	if (expanded)
 	{
 		k = -1;
@@ -86,22 +99,4 @@ void	handle_dollar_token(t_expand *expand_data, int *i, int *j)
 			(*j)++;
 		}
 	}
-}
-
-void	handle_double_quotes(t_expand *expand_data, int *i, int *j)
-{
-	(*i)++;
-	while (expand_data->old_value[*i] != '\"' && expand_data->old_value[*i])
-	{
-		if (expand_data->old_value[*i] == '$')
-			handle_dollar(expand_data, i, j);
-		else
-		{
-			expand_data->new_value[*j] = expand_data->old_value[*i];
-			(*i)++;
-			(*j)++;
-		}
-	}
-	if (expand_data->old_value[*i] == '\"')
-		(*i)++;
 }
