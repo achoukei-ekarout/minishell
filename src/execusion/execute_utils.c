@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 18:21:48 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/07 08:17:03 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/07 11:32:24 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	call_built_ins(char **input, t_vars *vars, t_garbage garbage)
 	else if (ft_strcmp(str, "cd") == 0)
 		result = ft_cd(input, vars->env, garbage.perm_gc, vars);
 	else if (ft_strcmp(str, "pwd") == 0)
-		result = ft_pwd(vars->env);
+		result = ft_pwd();
 	else if (ft_strcmp(str, "export") == 0)
 		result = ft_export(input, vars, garbage.perm_gc);
 	else if (ft_strcmp(str, "unset") == 0)
