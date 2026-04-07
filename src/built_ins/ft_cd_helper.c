@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 21:10:59 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/07 09:59:43 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/07 13:59:46 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_go_back(t_env **env)
 {
 	if (!get_env_value(env, "OLDPWD"))
 	{
-		ft_putstr_fd("cd: OLDPWD not set", 2);
+		ft_putstr_fd("cd: OLDPWD not set\n", 2);
 		return (-1);
 	}
 	else

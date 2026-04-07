@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 17:57:18 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/29 23:12:05 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/07 16:00:17 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	delimiter(char const *s, char c)
 	{
 		if (i == 0 && s[i] != c)
 			count++;
-		while (s[i] == c)
+		while (s[i] == c && s[i])
 		{
 			if (s[i + 1] != c && s[i + 1])
 				count++;

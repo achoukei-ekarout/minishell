@@ -6,13 +6,13 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 18:56:34 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/07 10:10:21 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/07 16:01:03 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_value(char *value, int *i, t_vars vars)
+char	*get_value(char *value, int *i, t_vars vars, t_gc **head_gc)
 {
 	int		start;
 	char	*key;
@@ -22,7 +22,11 @@ char	*get_value(char *value, int *i, t_vars vars)
 	if (value[*i] == '?')
 	{
 		(*i)++;
-		return (ft_itoa(vars.exit_code));
+		key = ft_itoa(vars.exit_code);
+		value = ft_strdup_allocate(key, head_gc);
+		if (key)
+			free(key);
+		return (value);
 	}
 	if (ft_isdigit(value[*i]))
 	{
@@ -39,21 +43,21 @@ char	*get_value(char *value, int *i, t_vars vars)
 	return (result);
 }
 
-void	handle_character(t_expand *expand_data, int *i, int *j)
+void	handle_character(t_expand *expand_data, int *i, int *j, t_gc **head_gc)
 {
 	if ((expand_data->old_value)[*i] == '$')
-		handle_dollar(expand_data, i, j);
+		handle_dollar(expand_data, i, j, head_gc);
 	else if ((expand_data->old_value)[*i] == '~')
 		handle_tilde(expand_data, i, j);
 }
 
-void	handle_dollar(t_expand *expand_data, int *i, int *j)
+void	handle_dollar(t_expand *expand_data, int *i, int *j, t_gc **head_gc)
 {
 	char	*expanded;
 	int		k;
 
 	(*i)++;
-	expanded = get_value(expand_data->old_value, i, expand_data->vars);
+	expanded = get_value(expand_data->old_value, i, expand_data->vars, head_gc);
 	if (expanded)
 	{
 		k = -1;
@@ -83,13 +87,13 @@ void	handle_tilde(t_expand *expand_data, int *i, int *j)
 	}
 }
 
-void	handle_dollar_token(t_expand *expand_data, int *i, int *j)
+void	handle_dollar_token(t_expand *expand_data, int *i, int *j, t_gc **head_gc)
 {
 	char	*expanded;
 	int		k;
 
 	(*i)++;
-	expanded = get_value(expand_data->old_value, i, expand_data->vars);
+	expanded = get_value(expand_data->old_value, i, expand_data->vars, head_gc);
 	if (expanded)
 	{
 		k = -1;

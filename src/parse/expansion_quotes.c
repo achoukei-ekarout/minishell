@@ -6,19 +6,19 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 10:09:30 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/07 10:10:24 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/07 15:53:43 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handle_double_quotes(t_expand *expand_data, int *i, int *j)
+void	handle_double_quotes(t_expand *expand_data, int *i, int *j, t_gc **head_gc)
 {
 	(*i)++;
 	while (expand_data->old_value[*i] != '\"' && expand_data->old_value[*i])
 	{
 		if (expand_data->old_value[*i] == '$')
-			handle_dollar(expand_data, i, j);
+			handle_dollar(expand_data, i, j, head_gc);
 		else
 		{
 			expand_data->new_value[*j] = expand_data->old_value[*i];
