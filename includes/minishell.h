@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 19:22:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/06 11:27:25 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/07 09:14:21 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include "../libft/libft.h"
+# include "../libft/get_next_line/get_next_line.h"
 # include "built_ins.h"
 # include "data.h"
 # include "environ.h"
@@ -22,7 +23,6 @@
 # include "parse.h"
 # include "signals.h"
 # include "errors.h"
-# include "../get_next_line/get_next_line.h"
 # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>

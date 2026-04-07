@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 12:45:36 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/06 12:47:35 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/07 08:01:52 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,7 @@ void	run_shell_gnl(t_vars *vars, t_gc **perm_gc)
 {
 	char		*input;
 	t_gc		*gc;
-	// t_history	*history;
 
-	// history = NULL;
 	while (1)
 	{
 		setup_signals_prompt();
