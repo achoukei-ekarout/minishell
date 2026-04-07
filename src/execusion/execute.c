@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 23:34:32 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/06 13:06:06 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/07 07:59:28 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,10 +127,7 @@ void	execute_command(t_ast *node, t_vars *vars, t_gc **gc, t_gc **perm_gc)
 		child_process(node, vars, gc);
 	waitpid(pid, &status, 0);
 	if (!isatty(STDIN_FILENO))
-	{
-		vars->exit_code = status >> 8;
 		exit(vars->exit_code);
-	}
 	else if (WIFSIGNALED(status))
 	{
 		vars->exit_code = 128 + WTERMSIG(status);
