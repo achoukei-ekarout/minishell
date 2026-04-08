@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/13 23:24:47 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/06 15:29:31 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/07 21:43:09 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,13 @@ int	exit_status_code(char *arg)
 	return (result);
 }
 
-void	exit_shell(int exit_code, t_gc **gc, t_gc **perm_gc, char *input)
+void	exit_shell(int exit_code, t_garbage garbage, char *input)
 {
-	if  (input)
+	if (input)
 		free(input);
-	free_garbage(gc);
-	free_garbage(perm_gc);
+	free_garbage(garbage.temp_gc);
+	free_garbage(garbage.perm_gc);
+	rl_clear_history();
 	exit(exit_code);
 }
 
@@ -69,7 +70,7 @@ int	valid_exit_code(char *arg)
 	return (1);
 }
 
-int	ft_exit(char **argv, t_gc **gc, t_gc **perm_gc, t_vars *vars)
+int	ft_exit(char **argv, t_garbage garbage, t_vars *vars)
 {
 	int		exit_code;
 	char	*arg;
@@ -80,13 +81,13 @@ int	ft_exit(char **argv, t_gc **gc, t_gc **perm_gc, t_vars *vars)
 		return (args_error("exit", *vars));
 	arg = argv[1];
 	if (!arg)
-		exit_shell(exit_code, gc, perm_gc, vars->input);
+		exit_shell(exit_code, garbage, vars->input);
 	if (!valid_exit_code(arg))
 		exit_code = exit_error(arg);
 	else
 		exit_code = exit_status_code(arg);
 	if (exit_code == -1)
 		exit_code = exit_error(arg);
-	exit_shell(exit_code, gc, perm_gc, vars->input);
+	exit_shell(exit_code, garbage, vars->input);
 	return (0);
 }

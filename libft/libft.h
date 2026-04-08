@@ -6,13 +6,14 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 20:21:22 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/23 16:20:56 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/07 09:24:16 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# include "get_next_line/get_next_line.h"
 # include <stddef.h>
 # include <unistd.h>
 # include <stdlib.h>
@@ -69,5 +70,6 @@ int		ft_tolower(int c);
 int		ft_toupper(int c);
 int		ft_isspace(int c);
 int		is_numeric(char *arg);
+char	*get_next_line(int fd);
 
 #endif

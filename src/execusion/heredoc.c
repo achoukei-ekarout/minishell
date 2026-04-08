@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 08:43:13 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/06 06:55:03 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/07 08:46:50 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,13 @@ int	apply_heredoc(char *delimeter, t_token_type type, t_vars *vars,
 		while (heredoc_readline_expand(delimeter, fd[1], vars, head_gc))
 			continue ;
 	else
-		while (heredoc_readline(delimeter, fd[1], vars));
+	{
+		while (1)
+		{
+			if (!heredoc_readline(delimeter, fd[1], vars))
+				break ;
+		}
+	}
 	close(fd[1]);
 	return (fd[0]);
 }
