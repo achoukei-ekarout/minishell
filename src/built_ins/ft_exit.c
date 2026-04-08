@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/13 23:24:47 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/07 08:18:22 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/07 21:43:09 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	exit_shell(int exit_code, t_garbage garbage, char *input)
 		free(input);
 	free_garbage(garbage.temp_gc);
 	free_garbage(garbage.perm_gc);
+	rl_clear_history();
 	exit(exit_code);
 }
 

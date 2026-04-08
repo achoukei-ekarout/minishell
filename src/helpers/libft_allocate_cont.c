@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 17:57:18 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/07 16:00:17 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/08 07:34:36 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,6 @@ char	**ft_split_allocate(char const *s, char c, t_gc **head_gc)
 		i = j;
 		k++;
 	}
-	result[k] = NULL;
+	result[k] = 0;
 	return (result);
 }
