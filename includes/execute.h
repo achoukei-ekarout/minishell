@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/13 17:28:46 by user              #+#    #+#             */
-/*   Updated: 2026/04/07 08:57:08 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/08 11:17:24 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,6 @@ void	signal_exit(t_vars *vars, int status);
 void	handle_built_ins(t_ast *node, t_vars *vars, t_garbage garbage);
 int		handle_redir_out(t_redir *redir, t_vars *vars);
 int		handle_redir_in(t_redir *redir, t_vars *vars);
+void	pipe_exit(t_vars *vars, int status2);
 
 #endif

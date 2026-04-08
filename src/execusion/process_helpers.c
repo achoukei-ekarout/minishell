@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 08:32:24 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/07 08:43:23 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/08 11:17:11 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,20 @@ void	child_process(t_ast *node, t_vars *vars, t_gc **head_gc)
 	execve(path, node->argv, envp);
 	perror("exec");
 	exit(1);
+}
+
+void	pipe_exit(t_vars *vars, int status2)
+{
+	if (WIFEXITED(status2))
+		vars->exit_code = status2 >> 8;
+	else if (WIFSIGNALED(status2))
+	{
+		vars->exit_code = 128 + WTERMSIG(status2);
+		if (WTERMSIG(status2) == SIGINT)
+			write(1, "\n", 1);
+		else if (WTERMSIG(status2) == SIGQUIT)
+			write(2, "Quit (core dumped)\n", 20);
+	}
+	if (!isatty(STDIN_FILENO))
+		exit(vars->exit_code);
 }

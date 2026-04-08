@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 23:34:32 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/08 10:39:56 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/08 11:17:02 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,7 @@ void	execute_pipe(t_ast *node, t_vars *vars, t_garbage garbage)
 	close(fd[1]);
 	waitpid(pid1, &status1, 0);
 	waitpid(pid2, &status2, 0);
-	if (WIFEXITED(status2))
-		vars->exit_code = status2 >> 8;
-	else if (WIFSIGNALED(status2))
-	{
-		vars->exit_code = 128 + WTERMSIG(status2);
-
-		if (WTERMSIG(status2) == SIGINT)
-			write(1, "\n", 1);
-		else if (WTERMSIG(status2) == SIGQUIT)
-			write(2, "Quit (core dumped)\n", 20);
-	}
-	if (!isatty(STDIN_FILENO))
-		exit(vars->exit_code);
+	pipe_exit(vars, status2);
 }
 
 void	handle_built_ins(t_ast *node, t_vars *vars, t_garbage garbage)
@@ -89,10 +77,7 @@ void	execute_command(t_ast *node, t_vars *vars, t_garbage garbage)
 		return ;
 	}
 	if (is_built_ins(node->argv[0]))
-	{
-		handle_built_ins(node, vars, garbage);
-		return ;
-	}
+		return (handle_built_ins(node, vars, garbage));
 	pid = fork();
 	if (pid == 0)
 		child_process(node, vars, garbage.temp_gc);
