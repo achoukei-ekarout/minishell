@@ -1,28 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/07 02:04:09 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/08 11:11:03 by ekarout          ###   ########.fr       */
+/*   Created: 2026/04/06 02:42:03 by ekarout           #+#    #+#             */
+/*   Updated: 2026/04/06 02:44:24 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_pwd(void)
+void	sigint_prompt(int sig)
 {
-	char	*pathname;
+	(void)sig;
+	g_signal = SIGINT;
+	write(1, "^C\n", 3);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
 
-	pathname = getcwd(NULL, 0);
-	if (!pathname)
-	{
-		perror("getcwd");
-		return (1);
-	}
-	printf("%s\n", pathname);
-	free(pathname);
-	return (0);
+void	sigint_exec(int sig)
+{
+	(void)sig;
+	g_signal = SIGINT;
+}
+
+void	setup_signals_prompt(void)
+{
+	signal(SIGINT, sigint_prompt);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+void	setup_signals_exec(void)
+{
+	signal(SIGINT, sigint_exec);
+	signal(SIGQUIT, SIG_IGN);
 }

@@ -6,42 +6,13 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 13:32:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/04 22:30:46 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/08 20:25:31 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int g_signal = 0;
-
-void sigint_prompt(int sig)
-{
-	(void)sig;
-	g_signal = SIGINT;
-
-	write(1, "^C\n", 3);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
-
-void sigint_exec(int sig)
-{
-	(void)sig;
-	g_signal = SIGINT;
-}
-
-void setup_signals_prompt(void)
-{
-    signal(SIGINT, sigint_prompt);
-    signal(SIGQUIT, SIG_IGN);
-}
-
-void	setup_signals_exec(void)
-{
-    signal(SIGINT, sigint_exec);
-    signal(SIGQUIT, SIG_IGN);
-}
+int	g_signal = 0;
 
 void	read_input(char	*input, t_vars *vars, t_gc **gc, t_gc **perm_gc)
 {
@@ -49,14 +20,10 @@ void	read_input(char	*input, t_vars *vars, t_gc **gc, t_gc **perm_gc)
 	t_ast	*abstract_syntax_tree;
 
 	tokens = NULL;
+	vars->input = input;
 	if (!valid_redir(input, vars))
 		return ;
 	tokens = tokenize(input, gc, vars);
-	if (!tokens)
-	{
-		vars->exit_code = 0;
-		return ;
-	}
 	check_heredoc(&tokens);
 	param_expand(&tokens, *vars, gc);
 	if (!tokens)
@@ -86,10 +53,13 @@ void	run_shell(t_vars *vars, t_gc **perm_gc)
 		gc = NULL;
 		input = readline("minishell$ ");
 		if (g_signal == SIGINT)
+		{
+			g_signal = 0;
 			vars->exit_code = 130;
+		}
 		vars->line_counter ++;
 		if (!input)
-			input = "exit";
+			input = ft_strdup("exit");
 		if (*input)
 			add_history(input);
 		if (!*input)

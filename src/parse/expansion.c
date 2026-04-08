@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 19:39:34 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/03 05:54:30 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/08 12:08:22 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*expand_value(char *value, t_vars vars, t_gc **head_gc)
 			handle_single_quotes(expand_data, &i, &j);
 		else if (value[i] == '\"')
 			handle_double_quotes(expand_data, &i, &j);
-		else if (value[i] == '$')
+		else if (value[i] == '$' || value[i] == '~')
 			handle_dollar(expand_data, &i, &j);
 		else
 		{

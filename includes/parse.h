@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 14:53:25 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/04 18:13:28 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/04/07 08:58:25 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include "data.h"
 
+void				read_input(char	*input, t_vars *vars,
+						t_gc **gc, t_gc **perm_gc);
 char				**free_arr(char ***arr);
 t_token				*tokenize(char *input, t_gc **head_gc, t_vars *vars);
 int					is_operator(char c);

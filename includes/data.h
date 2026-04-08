@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 02:06:31 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/04 17:45:57 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/04/07 08:55:20 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_vars
 	int		exit_code;
 	int		line_counter;
 	char	*executer_name;
+	char	*input;
 }	t_vars;
 
 typedef struct e_gc
@@ -90,5 +91,11 @@ typedef struct s_ast
 	struct s_ast	*right;
 
 }					t_ast;
+
+typedef struct s_garbage
+{
+	t_gc	**temp_gc;
+	t_gc	**perm_gc;
+}	t_garbage;
 
 #endif

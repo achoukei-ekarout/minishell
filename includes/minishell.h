@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 19:22:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/04 21:21:42 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/04/07 09:14:21 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-extern int g_signal;
-
 # include "../libft/libft.h"
+# include "../libft/get_next_line/get_next_line.h"
 # include "built_ins.h"
 # include "data.h"
 # include "environ.h"
 # include "execute.h"
 # include "garbage_collector.h"
 # include "parse.h"
+# include "signals.h"
 # include "errors.h"
 # include <fcntl.h>
 # include <readline/history.h>
