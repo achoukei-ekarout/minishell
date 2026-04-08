@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 02:08:53 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/07 09:59:53 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/08 11:06:31 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ int	ft_cd(char **argv, t_env **env, t_gc **perm_gc, t_vars *vars)
 
 	old_path = getcwd(NULL, 0);
 	if (ft_count_args(argv) > 2)
+	{
+		free(old_path);
 		return (args_error("cd", *vars));
+	}
 	arg = argv[1];
 	if (!arg)
 		result = ft_go_home(arg, env, vars);
