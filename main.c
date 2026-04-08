@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 13:32:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/08 19:15:51 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/08 20:25:31 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,10 @@ void	run_shell(t_vars *vars, t_gc **perm_gc)
 		gc = NULL;
 		input = readline("minishell$ ");
 		if (g_signal == SIGINT)
+		{
+			g_signal = 0;
 			vars->exit_code = 130;
+		}
 		vars->line_counter ++;
 		if (!input)
 			input = ft_strdup("exit");

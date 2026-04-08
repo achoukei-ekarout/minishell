@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 08:35:11 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/08 19:59:30 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/08 20:15:11 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ int	*open_redirections(t_redir *redir, t_vars *vars, t_gc **head_gc)
 
 void	close_redirections(int *saved_stds)
 {
+	if (!saved_stds)
+		return ;
 	dup2(saved_stds[0], STDIN_FILENO);
 	dup2(saved_stds[1], STDOUT_FILENO);
 	close(saved_stds[0]);
