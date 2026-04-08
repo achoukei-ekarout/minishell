@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 18:56:34 by ekarout           #+#    #+#             */
-/*   Updated: 2026/03/30 19:36:50 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/08 12:20:01 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*get_value(char *value, int *i, t_vars vars)
 	char	*key;
 	char	*result;
 
+	if (!ft_strcmp(value, "HOME"))
+		return (get_env_value(vars.env, "HOME"));
 	start = *i;
 	if (value[*i] == '?')
 	{
@@ -57,8 +59,16 @@ void	handle_dollar(t_expand *expand_data, int *i, int *j)
 	char	*expanded;
 	int		k;
 
-	(*i)++;
-	expanded = get_value(expand_data->old_value, i, expand_data->vars);
+	if (expand_data->old_value[*i] == '~')
+	{
+		expanded = get_value("HOME", i, expand_data->vars);
+		(*i)++;
+	}
+	else
+	{
+		(*i)++;
+		expanded = get_value(expand_data->old_value, i, expand_data->vars);
+	}
 	if (expanded)
 	{
 		k = -1;
