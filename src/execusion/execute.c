@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 23:34:32 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/08 11:17:02 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/08 19:10:56 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	handle_built_ins(t_ast *node, t_vars *vars, t_garbage garbage)
 		vars->exit_code = call_built_ins(node->argv, vars, garbage);
 	if (g_signal == SIGINT)
 		vars->exit_code = 130;
-	close_redirections(saved_stds, vars);
+	close_redirections(saved_stds);
 	if (!isatty(STDIN_FILENO))
 		exit(vars->exit_code);
 }
@@ -71,7 +71,7 @@ void	execute_command(t_ast *node, t_vars *vars, t_garbage garbage)
 	if (!node->argv)
 	{
 		saved_stds = open_redirections(node->redir, vars, garbage.temp_gc);
-		close_redirections(saved_stds, vars);
+		close_redirections(saved_stds);
 		if (!isatty(STDIN_FILENO))
 			exit(vars->exit_code);
 		return ;
