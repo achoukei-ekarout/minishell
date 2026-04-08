@@ -6,13 +6,13 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 18:56:34 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/07 16:01:03 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/03/30 19:36:50 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_value(char *value, int *i, t_vars vars, t_gc **head_gc)
+char	*get_value(char *value, int *i, t_vars vars)
 {
 	int		start;
 	char	*key;
@@ -22,11 +22,7 @@ char	*get_value(char *value, int *i, t_vars vars, t_gc **head_gc)
 	if (value[*i] == '?')
 	{
 		(*i)++;
-		key = ft_itoa(vars.exit_code);
-		value = ft_strdup_allocate(key, head_gc);
-		if (key)
-			free(key);
-		return (value);
+		return (ft_itoa(vars.exit_code));
 	}
 	if (ft_isdigit(value[*i]))
 	{
@@ -43,21 +39,26 @@ char	*get_value(char *value, int *i, t_vars vars, t_gc **head_gc)
 	return (result);
 }
 
-void	handle_character(t_expand *expand_data, int *i, int *j, t_gc **head_gc)
+void	handle_single_quotes(t_expand *expand_data, int *i, int *j)
 {
-	if ((expand_data->old_value)[*i] == '$')
-		handle_dollar(expand_data, i, j, head_gc);
-	else if ((expand_data->old_value)[*i] == '~')
-		handle_tilde(expand_data, i, j);
+	(*i)++;
+	while (expand_data->old_value[*i] != '\'' && expand_data->old_value[*i])
+	{
+		expand_data->new_value[*j] = expand_data->old_value[*i];
+		(*i)++;
+		(*j)++;
+	}
+	if (expand_data->old_value[*i] == '\'')
+		(*i)++;
 }
 
-void	handle_dollar(t_expand *expand_data, int *i, int *j, t_gc **head_gc)
+void	handle_dollar(t_expand *expand_data, int *i, int *j)
 {
 	char	*expanded;
 	int		k;
 
 	(*i)++;
-	expanded = get_value(expand_data->old_value, i, expand_data->vars, head_gc);
+	expanded = get_value(expand_data->old_value, i, expand_data->vars);
 	if (expanded)
 	{
 		k = -1;
@@ -69,13 +70,13 @@ void	handle_dollar(t_expand *expand_data, int *i, int *j, t_gc **head_gc)
 	}
 }
 
-void	handle_tilde(t_expand *expand_data, int *i, int *j)
+void	handle_dollar_token(t_expand *expand_data, int *i, int *j)
 {
 	char	*expanded;
 	int		k;
 
 	(*i)++;
-	expanded = get_env_value(expand_data->vars.env, "HOME");
+	expanded = get_value(expand_data->old_value, i, expand_data->vars);
 	if (expanded)
 	{
 		k = -1;
@@ -87,20 +88,20 @@ void	handle_tilde(t_expand *expand_data, int *i, int *j)
 	}
 }
 
-void	handle_dollar_token(t_expand *expand_data, int *i, int *j, t_gc **head_gc)
+void	handle_double_quotes(t_expand *expand_data, int *i, int *j)
 {
-	char	*expanded;
-	int		k;
-
 	(*i)++;
-	expanded = get_value(expand_data->old_value, i, expand_data->vars, head_gc);
-	if (expanded)
+	while (expand_data->old_value[*i] != '\"' && expand_data->old_value[*i])
 	{
-		k = -1;
-		while (expanded[++k])
+		if (expand_data->old_value[*i] == '$')
+			handle_dollar(expand_data, i, j);
+		else
 		{
-			expand_data->new_value[*j] = expanded[k];
+			expand_data->new_value[*j] = expand_data->old_value[*i];
+			(*i)++;
 			(*j)++;
 		}
 	}
+	if (expand_data->old_value[*i] == '\"')
+		(*i)++;
 }
