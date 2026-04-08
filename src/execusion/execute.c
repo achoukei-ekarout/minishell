@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 23:34:32 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/06 08:58:09 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/08 10:28:22 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	execute_pipe(t_ast *node, t_vars *vars, t_gc **head_gc, t_gc **perm_gc)
 	waitpid(pid1, &status1, 0);
 	waitpid(pid2, &status2, 0);
 	if (WIFEXITED(status2))
-    vars->exit_code = WEXITSTATUS(status2);
+		vars->exit_code = status2 >> 8;
 	else if (WIFSIGNALED(status2))
 	{
 		vars->exit_code = 128 + WTERMSIG(status2);
@@ -68,6 +68,8 @@ void	execute_pipe(t_ast *node, t_vars *vars, t_gc **head_gc, t_gc **perm_gc)
 		else if (WTERMSIG(status2) == SIGQUIT)
 			write(2, "Quit (core dumped)\n", 20);
 	}
+	if (!isatty(STDIN_FILENO))
+		exit(vars->exit_code);
 }
 
 void	child_process(t_ast *node, t_vars *vars, t_gc **head_gc)
@@ -127,6 +129,7 @@ void	execute_command(t_ast *node, t_vars *vars, t_gc **gc, t_gc **perm_gc)
 	if (pid == 0)
 		child_process(node, vars, gc);
 	waitpid(pid, &status, 0);
+	vars->exit_code = status >> 8;
 	if (!isatty(STDIN_FILENO))
 		exit(vars->exit_code);
 	else if (WIFSIGNALED(status))
