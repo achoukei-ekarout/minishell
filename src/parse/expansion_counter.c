@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 18:57:58 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/08 12:27:47 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/08 13:15:36 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,22 @@
 
 int	get_value_len(char *value, int *i, t_vars vars)
 {
+	char	*new_value;
+	int		len;
+
 	if (value[*i] == '$')
 	{
 		(*i)++;
-		return (ft_strlen(get_value(value, i, vars)));
+		new_value = get_value(value, i, vars);
+		len = ft_strlen(new_value);
+		free(new_value);
+		return (len);
 	}
 	(*i)++;
-	return (ft_strlen(get_value("HOME", i, vars)));
+	new_value = get_value("HOME", i, vars);
+	len = ft_strlen(new_value);
+	free(new_value);
+	return (len);
 }
 
 void	handle_single_quotes_len(char *value, int *i, int *len)
