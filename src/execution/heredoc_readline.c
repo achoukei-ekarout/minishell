@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 05:19:03 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/07 08:00:39 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/09 21:33:53 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	heredoc_readline_expand(char *delimeter, int fd_out,
 		free(line);
 		return (0);
 	}
+	if (*line)
+		add_history(line);
 	expand = expand_value(line, *vars, head_gc);
 	write(fd_out, expand, ft_strlen(expand));
 	vars->line_counter++;

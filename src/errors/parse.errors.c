@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 16:29:16 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/06 12:51:17 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/09 22:09:48 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,16 @@ int	redir_error(char s, t_vars vars)
 
 int	file_error(char *file, t_vars vars)
 {
-	ft_putstr_fd(vars.executer_name, 2);
-	ft_putstr_fd(": ", 2);
-	ft_putstr_fd(file, 2);
-	ft_putstr_fd(": No such file or directory\n", 2);
+	char *temp1;
+	char *temp2;
+	
+	temp1 = ft_strjoin(vars.executer_name, ": ");
+	temp2 = ft_strjoin(temp1, file);
+	free(temp1);
+	temp1 = ft_strjoin(temp2," : No such file or directory\n");
+	ft_putstr_fd(temp1, 2);
+	free(temp1);
+	free(temp2);
 	return (2);
 }
 
