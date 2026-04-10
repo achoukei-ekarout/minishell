@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 12:59:11 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/10 23:39:29 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/11 00:36:20 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ char	*expand_heredoc(char *value, t_gc **head_gc)
 	int		j;
 
 	j = expand_heredoc_len(value);
-	printf("%i\n", j);
 	new_value = (char *)allocate(head_gc, (j + 1) * sizeof(char));
 	i = 0;
 	j = 0;

@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/13 17:28:46 by user              #+#    #+#             */
-/*   Updated: 2026/04/10 23:52:33 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/11 01:16:23 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int		heredoc_readline_expand(char *delimeter, int fd_out,
 int		heredoc_readline(char *delimeter, int fd_out, t_vars *vars);
 int		check_expand(t_token *token);
 void	check_heredoc(t_token **tokens, t_gc **head_gc);
-void	handle_dir(char **argv, char **envp);
+void	handle_dir(char **argv, char **envp, t_vars vars);
 int		*open_redirections(t_redir *redir, t_vars *vars, t_gc **head_gc);
 void	close_redirections(int *saved_stds);
 int		apply_heredoc(char *delimeter, t_token_type type,

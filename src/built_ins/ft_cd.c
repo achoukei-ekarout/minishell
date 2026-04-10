@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 02:08:53 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/08 11:06:31 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/11 01:19:19 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ int	ft_cd(char **argv, t_env **env, t_gc **perm_gc, t_vars *vars)
 	}
 	arg = argv[1];
 	if (!arg)
-		result = ft_go_home(arg, env, vars);
+		result = ft_go_home(arg, env, *vars);
 	else if (!ft_strncmp(arg, "-", 1))
-		result = ft_go_back(env);
+		result = ft_go_back(env, *vars);
 	else
 		result = ft_go_dir(arg, vars);
 	if (result != -1)

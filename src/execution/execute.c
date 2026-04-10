@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 23:34:32 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/08 19:10:56 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/11 01:26:50 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	execute_command(t_ast *node, t_vars *vars, t_garbage garbage)
 		signal_exit(vars, status);
 }
 
-void	handle_dir(char **argv, char **envp)
+void	handle_dir(char **argv, char **envp, t_vars vars)
 {
 	struct stat	st;
 	char		*dir;
@@ -102,8 +102,7 @@ void	handle_dir(char **argv, char **envp)
 	}
 	if (S_ISDIR(st.st_mode))
 	{
-		ft_putstr_fd(dir, 2);
-		ft_putstr_fd(": Is a directory\n", 2);
+		is_dir(dir, vars);
 		exit(126);
 	}
 	if (access(dir, X_OK) != 0)
