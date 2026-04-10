@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 13:32:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/09 21:11:40 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/11 00:09:13 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	read_input(char	*input, t_vars *vars, t_gc **gc, t_gc **perm_gc)
 	if (!valid_redir(input, vars))
 		return ;
 	tokens = tokenize(input, gc, vars);
-	check_heredoc(&tokens);
+	check_heredoc(&tokens, gc);
 	param_expand(&tokens, *vars, gc);
 	if (!tokens)
 	{

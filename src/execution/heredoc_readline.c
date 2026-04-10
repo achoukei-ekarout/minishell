@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 05:19:03 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/09 21:33:53 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/09 22:36:30 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,16 @@ int	heredoc_readline_expand(char *delimeter, int fd_out,
 	char	*line;
 	char	*expand;
 
+	signal(SIGINT, sigint_prompt);
 	line = readline("> ");
 	if (!line)
 	{
 		heredoc_error(*vars);
 		return (0);
 	}
-	if (ft_strcmp(line, delimeter) == 0)
+	if (ft_strcmp(line, delimeter) == 0 || g_signal == SIGINT)
 	{
+		g_signal = 0;
 		free(line);
 		return (0);
 	}
@@ -49,11 +51,13 @@ int	heredoc_readline(char *delimeter, int fd_out, t_vars *vars)
 		heredoc_error(*vars);
 		return (0);
 	}
-	if (ft_strcmp(line, delimeter) == 0)
+	if (ft_strcmp(line, delimeter) == 0 || g_signal == SIGINT)
 	{
 		free(line);
 		return (0);
 	}
+	if (*line)
+		add_history(line);
 	write(fd_out, line, ft_strlen(line));
 	vars->line_counter++;
 	write(fd_out, "\n", 1);
