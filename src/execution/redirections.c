@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 08:35:11 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/09 21:18:09 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/11 20:17:30 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,4 +103,17 @@ void	close_redirections(int *saved_stds)
 	dup2(saved_stds[1], STDOUT_FILENO);
 	close(saved_stds[0]);
 	close(saved_stds[1]);
+}
+
+void	close_heredoc_fds(t_ast *node)
+{
+	t_redir	*redir;
+
+	redir = node->redir;
+	while (redir)
+	{
+		if (redir->type == TOKEN_HEREDOC || redir->type == TOKEN_HEREDOC_NOEXP)
+			close(redir->fd);
+		redir = redir->next;
+	}
 }

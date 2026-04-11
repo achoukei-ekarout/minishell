@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/13 17:28:46 by user              #+#    #+#             */
-/*   Updated: 2026/04/11 01:16:23 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/11 20:18:01 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,6 @@ void	handle_built_ins(t_ast *node, t_vars *vars, t_garbage garbage);
 int		handle_redir_out(t_redir *redir, t_vars *vars);
 int		handle_redir_in(t_redir *redir, t_vars *vars);
 void	pipe_exit(t_vars *vars, int status2);
+void	close_heredoc_fds(t_ast *node);
 
 #endif
