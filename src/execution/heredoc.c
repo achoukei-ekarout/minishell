@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 08:43:13 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/10 23:58:20 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/11 20:26:44 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ void	check_heredoc(t_token **tokens, t_gc **head_gc)
 			if (check_expand(current->next))
 			{
 				current->type = TOKEN_HEREDOC_NOEXP;
-				current->next->value = expand_heredoc(current->next->value, head_gc);
+				current->next->value = expand_heredoc(
+						current->next->value, head_gc);
 			}
 			else
 				current->type = TOKEN_HEREDOC;

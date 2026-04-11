@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 21:10:59 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/11 01:09:33 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/11 20:25:16 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_go_home(char *dir, t_env **env, t_vars vars)
 	if (!home)
 	{
 		temp = ft_strjoin(vars.executer_name, ": cd: HOME not set\n");
-		ft_putstr_fd(temp , 2);
+		ft_putstr_fd(temp, 2);
 		free(temp);
 		return (-1);
 	}

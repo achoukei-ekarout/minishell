@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 19:18:59 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/10 23:51:23 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/11 20:23:58 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@ void		handle_quotes_heredoc_len(char *value, int *i, int *len);
 int			expand_heredoc_len(char *value);
 void		handle_quotes_heredoc(char *value, char *new_value, int *i, int *j);
 char		*expand_heredoc(char *value, t_gc **head_gc);
+void		clean_tokens(t_token **tokens);
 
 #endif

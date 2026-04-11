@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/14 13:34:20 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/11 00:48:31 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/11 20:25:43 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	export_key_error(char *key, t_vars vars)
 {
 	char	*temp1;
 	char	*temp2;
-	
+
 	temp1 = ft_strjoin(vars.executer_name, ": ");
 	temp2 = ft_strjoin(temp1, "export: `");
 	free(temp1);

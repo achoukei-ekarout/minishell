@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 12:59:11 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/11 00:36:20 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/11 20:25:31 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	expand_heredoc_len(char *value)
 {
 	int	len;
 	int	i;
-	
+
 	i = 0;
 	len = 0;
 	while (value[i])
@@ -86,4 +86,20 @@ char	*expand_heredoc(char *value, t_gc **head_gc)
 	}
 	new_value[j] = 0;
 	return (new_value);
+}
+
+void	clean_tokens(t_token **tokens)
+{
+	t_token	*curr;
+	t_token	*prev;
+
+	curr = *tokens;
+	prev = NULL;
+	while (curr)
+	{
+		if (!curr->value || !*(curr->value))
+			remove_token(tokens, &prev, curr);
+		prev = curr;
+		curr = curr->next;
+	}
 }
