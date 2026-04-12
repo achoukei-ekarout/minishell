@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 05:19:03 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/11 20:27:44 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/12 14:03:09 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,14 @@ int	heredoc_readline_expand(char *delimeter, int fd_out,
 	char	*line;
 	char	*expand;
 
-	signal(SIGINT, sigint_prompt);
 	line = readline("> ");
 	if (!line)
 	{
 		heredoc_error(*vars);
 		return (0);
 	}
-	if (ft_strcmp(line, delimeter) == 0 || g_signal == SIGINT)
+	if (ft_strcmp(line, delimeter) == 0)
 	{
-		g_signal = 0;
 		free(line);
 		return (0);
 	}
@@ -51,7 +49,7 @@ int	heredoc_readline(char *delimeter, int fd_out, t_vars *vars)
 		heredoc_error(*vars);
 		return (0);
 	}
-	if (ft_strcmp(line, delimeter) == 0 || g_signal == SIGINT)
+	if (ft_strcmp(line, delimeter) == 0)
 	{
 		free(line);
 		return (0);
@@ -73,7 +71,8 @@ void	close_heredoc_fds(t_ast *node)
 	while (redir)
 	{
 		if (redir->type == TOKEN_HEREDOC || redir->type == TOKEN_HEREDOC_NOEXP)
-			close(redir->fd);
+			if(redir->fd != -1)
+				close(redir->fd);
 		redir = redir->next;
 	}
 }
