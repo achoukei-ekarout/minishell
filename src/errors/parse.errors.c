@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 16:29:16 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/11 20:26:17 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/13 15:44:10 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,27 @@ int	file_error(char *file, t_vars vars)
 	return (2);
 }
 
-int	heredoc_error(t_vars vars)
+int	heredoc_error(char *delimeter, t_vars vars)
 {
 	char	*temp1;
 	char	*temp2;
+	char	*count;
 
 	temp1 = ft_strjoin(vars.executer_name, ": ");
 	temp2 = ft_strjoin(temp1, "warning: here-document at line ");
+	free(temp1);
+	count = ft_itoa(vars.line_counter);
+	temp1 = ft_strjoin(temp2, count);
+	free(temp2);
+	temp2 = ft_strjoin(temp1, " delimited by end-of-file (wanted `");
+	free(temp1);
+	temp1 = ft_strjoin(temp2, delimeter);
+	free(temp2);
+	temp2 = ft_strjoin(temp1, "')\n");
 	ft_putstr_fd(temp2, 2);
-	ft_putnbr_fd(vars.line_counter, 2);
-	ft_putstr_fd(" delimited by end-of-file (wanted `EOF')\n", 2);
 	free(temp1);
 	free(temp2);
+	free(count);
 	return (2);
 }
 
