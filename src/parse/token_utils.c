@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 00:21:23 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/04 13:49:44 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/13 12:49:15 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,20 +63,6 @@ void	replace_token(t_token **head, t_token **prev_node, t_token *new_node)
 	while (new_node->next)
 		new_node = new_node->next;
 	new_node->next = next->next;
-}
-
-void	free_tokens(t_token *tokens)
-{
-	t_token	*tmp;
-
-	while (tokens->next)
-	{
-		tmp = tokens->next;
-		if (tokens->value)
-			free(tokens->value);
-		free(tokens);
-		tokens = tmp;
-	}
 }
 
 void	remove_token(t_token **head, t_token **prev, t_token *node)

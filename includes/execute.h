@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/13 17:28:46 by user              #+#    #+#             */
-/*   Updated: 2026/04/11 20:18:01 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/13 15:00:50 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 # define EXECUTE_H
 
 # include "parse.h"
+
+struct	s_heredoc
+{
+	t_token_type	type;
+	char			*delimeter;
+};
 
 void	execute_ast(t_ast *node, t_vars *vars, t_gc **head_gc, t_gc **perm_gc);
 void	execute_pipe(t_ast *node, t_vars *vars, t_garbage garbage);
@@ -47,5 +53,7 @@ int		handle_redir_out(t_redir *redir, t_vars *vars);
 int		handle_redir_in(t_redir *redir, t_vars *vars);
 void	pipe_exit(t_vars *vars, int status2);
 void	close_heredoc_fds(t_ast *node);
+void	heredoc_child_process(int fd[2], struct s_heredoc heredoc_vars,
+			t_vars *vars, t_gc **head_gc);
 
 #endif

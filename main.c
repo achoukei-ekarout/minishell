@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 13:32:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/12 13:57:41 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/13 13:06:02 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,10 @@ void	read_input(char	*input, t_vars *vars, t_gc **gc, t_gc **perm_gc)
 		vars->exit_code = 0;
 		return ;
 	}
-	// print_tokens(tokens);
 	abstract_syntax_tree = parse(tokens, gc);
 	proccess_heredoc(abstract_syntax_tree, vars, gc);
 	if (g_signal == SIGINT)
-	{
-		vars->exit_code = 130;
-		g_signal = 0;
-		return ;
-	}
-	// print_tree(abstract_syntax_tree);
+		return (main_signals_exit(vars));
 	setup_signals_exec();
 	execute_ast(abstract_syntax_tree, vars, gc, perm_gc);
 	close_heredoc_fds(abstract_syntax_tree);

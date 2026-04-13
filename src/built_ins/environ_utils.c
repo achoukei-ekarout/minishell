@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 22:12:24 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/07 15:46:27 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/13 12:44:09 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,22 +57,4 @@ void	add_new_node(t_env **env, char *key, char *value, t_gc **perm_gc)
 
 	node = env_new(key, value, perm_gc);
 	env_add_back(env, node);
-}
-
-void	env_clear(t_env **env)
-{
-	t_env	*curr;
-	t_env	*next;
-
-	curr = *env;
-	while (curr)
-	{
-		next = curr->next;
-		free(curr->data->key);
-		free(curr->data->value);
-		free(curr->data);
-		free(curr);
-		curr = next;
-	}
-	free(env);
 }
