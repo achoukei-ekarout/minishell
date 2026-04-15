@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 10:13:50 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/15 13:48:56 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/15 13:52:25 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	check_pipe(char *s, int *i, t_vars *vars)
 
 int	check_redir(char *s, int *i, t_vars *vars)
 {
-	int redir;
+	int	redir;
 
 	redir = *i;
 	(*i)++;
