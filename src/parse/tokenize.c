@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 04:04:53 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/06 07:26:10 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/15 14:41:36 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*read_word(char *line, int *i, t_gc **head_gc, t_vars *vars)
 
 	quote_index = 0;
 	start = *i;
-	while (line[*i] && line[*i] != ' ' && !is_operator(line[*i]))
+	while (line[*i] && !ft_isspace(line[*i]) && !is_operator(line[*i]))
 	{
 		if (is_quote(line[(*i)]))
 		{
