@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoukei <achoukei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 19:16:24 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/04 21:09:57 by achoukei         ###   ########.fr       */
+/*   Updated: 2026/04/15 13:19:38 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,20 @@ int	ft_export_empty(t_vars *vars, char *arg, t_gc **perm_gc)
 int	ft_export_key_value(t_vars *vars, char *arg, t_gc **perm_gc)
 {
 	char	**key_value;
+	char	*key;
+	char	*value;
+	int		key_len;
+	int		value_len;
 
 	key_value = ft_split_allocate(arg, '=', perm_gc);
 	if (!is_valid_key(key_value[0]))
 		return (export_key_error(key_value[0], *vars));
-	change_exp_value(vars->exp, key_value[0], key_value[1], perm_gc);
-	change_env_value(vars->env, key_value[0], key_value[1], perm_gc);
+	key = key_value[0];
+	key_len = ft_strlen(key);
+	value_len = ft_strlen(arg) - key_len - 1;
+	value = ft_substr_allocate(arg, key_len + 1, value_len, perm_gc);
+	change_exp_value(vars->exp, key, value, perm_gc);
+	change_env_value(vars->env, key, value, perm_gc);
 	return (0);
 }
 

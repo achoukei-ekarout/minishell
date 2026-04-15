@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/14 13:34:20 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/11 20:25:43 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/15 13:26:52 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,12 @@ int	exit_error(char *arg, t_vars vars)
 
 int	cd_dir_error(char *dir, t_vars vars)
 {
-	char	*temp1;
-	char	*temp2;
+	char	*temp;
 
-	temp1 = ft_strjoin(vars.executer_name, ": ");
-	temp2 = ft_strjoin(temp1, "cd: ");
-	free(temp1);
-	temp1 = ft_strjoin(temp2, dir);
-	free(temp2);
-	temp2 = ft_strjoin(temp1, ": No such file or directory\n");
-	ft_putstr_fd(temp2, 2);
-	free(temp1);
-	free(temp2);
+	temp = ft_strjoin(vars.executer_name, ": cd: ");
+	ft_putstr_fd(temp, 2);
+	perror(dir);
+	free(temp);
 	return (1);
 }
 
