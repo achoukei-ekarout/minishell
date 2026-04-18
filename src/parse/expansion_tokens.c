@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 17:02:37 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/08 13:13:11 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/18 16:48:52 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_token	*expanded_token(char *value, t_vars vars, t_gc **head_gc)
 	}
 	i++;
 	expanded = get_value(value, &i, vars);
-	split = ft_split_allocate(expanded, ' ', head_gc);
+	split = ft_split_set(expanded, " \n\t\v\f\r", head_gc);
 	free(expanded);
 	if (!split)
 		return (NULL);

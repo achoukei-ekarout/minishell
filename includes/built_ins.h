@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 02:06:29 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/11 01:27:24 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/18 16:54:23 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include "garbage_collector.h"
 
 int		ft_cd(char **argv, t_env **env, t_gc **perm_gc, t_vars *vars);
-int		ft_isempty(char	*arg);
 int		ft_go_home(char *dir, t_env **env, t_vars vars);
 int		ft_go_back(t_env **env, t_vars vars);
 int		ft_go_dir(char *dir, t_vars *vars);

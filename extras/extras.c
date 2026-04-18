@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 12:42:55 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/13 13:02:59 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/18 16:15:08 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,21 @@ void	free_tokens(t_token *tokens)
 		free(tokens);
 		tokens = tmp;
 	}
+}
+
+int	ft_isempty(char	*arg)
+{
+	int	i;
+
+	i = 0;
+	while (arg[i])
+	{
+		if (arg[i] != '\f' && arg[i] != ' ' && arg[i] != '\t'
+			&& arg[i] != '\n' && arg[i] != '\r' && arg[i] != '\v')
+			break ;
+		i++;
+	}
+	if (!arg[i])
+		return (1);
+	return (0);
 }

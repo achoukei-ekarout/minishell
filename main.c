@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 13:32:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/13 13:06:02 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/17 21:46:18 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	run_shell(t_vars *vars, t_gc **perm_gc)
 			g_signal = 0;
 			vars->exit_code = 130;
 		}
-		vars->line_counter ++;
+		vars->line_counter++;
 		if (!input)
 			input = ft_strdup("exit");
 		if (*input)

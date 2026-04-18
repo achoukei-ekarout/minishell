@@ -13,7 +13,7 @@ SRC =  main.c src/built_ins/environ.c src/built_ins/ft_cd.c src/built_ins/ft_env
 	   src/execution/execute.c src/execution/execute_utils.c src/execution/heredoc.c \
 	   src/execution/heredoc_readline.c src/execution/process_helpers.c src/execution/redirections.c \
 	   src/helpers/garbage_collector.c src/helpers/libft_allocate.c src/helpers/libft_allocate_cont.c \
-	   src/helpers/signals.c src/helpers/signals_helpers.c src/parse/expand_heredoc.c \
+	   src/helpers/ft_split_set.c src/helpers/signals.c src/helpers/signals_helpers.c src/parse/expand_heredoc.c \
 	   src/parse/expansion_helper.c src/parse/parse.c src/parse/syntax.c src/parse/token_utils.c \
 	   src/parse/expansion.c src/parse/expansion_tokens.c src/parse/parse_utils.c src/parse/token_get_index.c \
 	   src/parse/tree_nodes.c src/parse/expansion_counter.c src/parse/heredoc_line_expansion.c \
