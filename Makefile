@@ -44,7 +44,7 @@ fclean: clean
 	make -C $(LIBFT_DIR) fclean
 
 valgrind:
-	valgrind --leak-check=full --show-leak-kinds=definite --track-fds=yes ./$(NAME)
+	valgrind --leak-check=full --show-leak-kinds=definite ./$(NAME)
 
 debug:
 	gdb -tui ./$(NAME)

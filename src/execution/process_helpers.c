@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 08:32:24 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/11 01:22:23 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/19 12:41:17 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	child_process(t_ast *node, t_vars *vars, t_gc **head_gc)
 		return (handle_dir(node->argv, envp, *vars));
 	else
 	{
-		path = get_path_name(node->argv[0], get_all_paths(envp, head_gc));
+		path = check_path(node->argv[0], get_all_paths(envp, head_gc), head_gc);
 		if (!path)
 		{
 			ft_putstr_fd(vars->executer_name, 2);

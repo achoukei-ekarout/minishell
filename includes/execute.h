@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/13 17:28:46 by user              #+#    #+#             */
-/*   Updated: 2026/04/13 15:00:50 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/19 12:41:17 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	execute_command(t_ast *node, t_vars *vars, t_garbage garbage);
 int		apply_redirections(t_redir *redir, t_vars *vars);
 char	*get_path(char **envp);
 char	*get_path(char **envp);
-char	*get_path_name(char *func_name, char **paths);
+char	*check_path(char *func_name, char **paths, t_gc **head_gc);
 char	**get_all_paths(char **envp, t_gc **head_gc);
 int		is_built_ins(char *str);
 int		call_built_ins(char **input, t_vars *vars, t_garbage garbage);

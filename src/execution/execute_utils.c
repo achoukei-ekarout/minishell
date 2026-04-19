@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 18:21:48 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/11 01:27:34 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/19 12:41:17 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,28 +19,30 @@ char	**get_all_paths(char **envp, t_gc **head_gc)
 	char	**paths;
 
 	full_path = get_path(envp);
+	if (!full_path)
+		return (NULL);
 	path = ft_substr_allocate(full_path, ft_strlen("PATH="),
 			ft_strlen(full_path), head_gc);
 	paths = ft_split_allocate(path, ':', head_gc);
 	return (paths);
 }
 
-char	*get_path_name(char *func_name, char **paths)
+char	*check_path(char *func_name, char **paths, t_gc **head_gc)
 {
 	int		i;
 	char	*full_path;
 	char	*add_slash;
 
 	i = 0;
+	if (!paths)
+		return (NULL);
 	while (paths[i])
 	{
-		add_slash = ft_strjoin(paths[i], "/");
-		full_path = ft_strjoin(add_slash, func_name);
+		add_slash = ft_strjoin_allocate(paths[i], "/", head_gc);
+		full_path = ft_strjoin_allocate(add_slash, func_name, head_gc);
 		if (access(full_path, X_OK) == 0)
 			return (full_path);
 		i++;
-		free(add_slash);
-		free(full_path);
 	}
 	return (NULL);
 }
