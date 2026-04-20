@@ -43,6 +43,44 @@ The goal is to deeply understand how a shell works under the hood — from token
 
 ---
 
+## Code Details
+
+The shell is structured as a classic pipeline: **tokenize → parse → execute**. Each stage is isolated, making the codebase modular and easier to debug.
+
+### Tokenisation
+
+Raw input is scanned character by character and split into meaningful elements — commands, arguments, pipes (`|`), and redirections (`<`, `>`, `<<`, `>>`). Special care is taken to handle:
+
+- Quoting rules (single and double quotes)
+- Environment variable expansion
+- Whitespace separation and edge cases (nested quotes, ambiguous redirections)
+
+The result is a clean token stream that closely mirrors Bash's lexing behavior, and serves as input to the parser.
+
+### Abstract Syntax Tree
+
+The token stream is organized into a tree that reflects the logical execution of the command. Key properties:
+
+- **Pipe nodes** are binary — left and right children map to each side of the pipe, encoding data flow naturally
+- **Command nodes** are leaves — they hold the command and its arguments, as well as redirections
+- The tree structure encodes operator precedence and chaining without extra bookkeeping
+
+This separation between syntax analysis and execution keeps the codebase clean and makes complex pipelines easy to reason about.
+
+### Execution
+
+The AST is traversed recursively, with each node type handling its own logic:
+
+| Node | Behavior |
+|---|---|
+| **Pipe** | Forks two processes, connects stdout → stdin via `pipe` + `dup2` |
+| **Command** | Executes the binary via `execve`, with full `PATH` resolution |
+| **Redirection** | Opens the target file and wires the appropriate file descriptor |
+
+Exit status propagates back up the tree, and all file descriptors are properly cleaned up after each branch resolves.
+
+---
+
 ## Instructions
 
 ### Requirements
