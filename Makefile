@@ -1,5 +1,4 @@
 NAME = minishell
-# -fsanitize=address
 CC = cc
 CFLAGS = -g -Wall -Wextra -Werror -I includes
 
@@ -43,12 +42,6 @@ fclean: clean
 	$(RM) $(NAME)
 	make -C $(LIBFT_DIR) fclean
 
-valgrind:
-	valgrind --leak-check=full --show-leak-kinds=definite ./$(NAME)
-
-debug:
-	gdb -tui ./$(NAME)
-
 re: fclean all
 
-.PHONY: all clean fclean valgrind debug re
+.PHONY: all clean fclean re
