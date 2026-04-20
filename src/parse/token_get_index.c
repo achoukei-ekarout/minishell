@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 23:31:36 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/06 08:25:52 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/20 16:27:22 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	get_quote_index(char *line, int *i, t_vars *vars)
 			quote = *i;
 			continue ;
 		}
-		while (line[*i] && !ft_isspace(line[*i]))
+		while (line[*i] && !ft_isspace(line[*i]) && !is_quote(line[*i]))
 			(*i)++;
 	}
 	return (start);
