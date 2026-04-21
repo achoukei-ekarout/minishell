@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/13 17:28:46 by user              #+#    #+#             */
-/*   Updated: 2026/04/08 13:37:58 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/19 12:41:17 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,19 @@
 
 # include "parse.h"
 
+struct	s_heredoc
+{
+	t_token_type	type;
+	char			*delimeter;
+};
+
 void	execute_ast(t_ast *node, t_vars *vars, t_gc **head_gc, t_gc **perm_gc);
 void	execute_pipe(t_ast *node, t_vars *vars, t_garbage garbage);
 void	execute_command(t_ast *node, t_vars *vars, t_garbage garbage);
 int		apply_redirections(t_redir *redir, t_vars *vars);
 char	*get_path(char **envp);
 char	*get_path(char **envp);
-char	*get_path_name(char *func_name, char **paths);
+char	*check_path(char *func_name, char **paths, t_gc **head_gc);
 char	**get_all_paths(char **envp, t_gc **head_gc);
 int		is_built_ins(char *str);
 int		call_built_ins(char **input, t_vars *vars, t_garbage garbage);
@@ -32,8 +38,8 @@ int		heredoc_readline_expand(char *delimeter, int fd_out,
 			t_vars *vars, t_gc **head_gc);
 int		heredoc_readline(char *delimeter, int fd_out, t_vars *vars);
 int		check_expand(t_token *token);
-void	check_heredoc(t_token **tokens);
-void	handle_dir(char **argv, char **envp);
+void	check_heredoc(t_token **tokens, t_gc **head_gc);
+void	handle_dir(char **argv, char **envp, t_vars vars);
 int		*open_redirections(t_redir *redir, t_vars *vars, t_gc **head_gc);
 void	close_redirections(int *saved_stds);
 int		apply_heredoc(char *delimeter, t_token_type type,
@@ -46,5 +52,8 @@ void	handle_built_ins(t_ast *node, t_vars *vars, t_garbage garbage);
 int		handle_redir_out(t_redir *redir, t_vars *vars);
 int		handle_redir_in(t_redir *redir, t_vars *vars);
 void	pipe_exit(t_vars *vars, int status2);
+void	close_heredoc_fds(t_ast *node);
+void	heredoc_child_process(int fd[2], struct s_heredoc heredoc_vars,
+			t_vars *vars, t_gc **head_gc);
 
 #endif

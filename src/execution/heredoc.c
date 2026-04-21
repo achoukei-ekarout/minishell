@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 08:43:13 by achoukei          #+#    #+#             */
-/*   Updated: 2026/04/07 08:46:50 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/13 15:05:29 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,11 @@ void	proccess_node_heredoc(t_ast *node, t_vars *vars, t_gc **head_gc)
 	while (redir)
 	{
 		if (redir->type == TOKEN_HEREDOC || redir->type == TOKEN_HEREDOC_NOEXP)
+		{
 			redir->fd = apply_heredoc(redir->file, redir->type, vars, head_gc);
+			if (redir->fd == -1)
+				return ;
+		}
 		redir = redir->next;
 	}
 }
@@ -41,22 +45,27 @@ void	proccess_node_heredoc(t_ast *node, t_vars *vars, t_gc **head_gc)
 int	apply_heredoc(char *delimeter, t_token_type type, t_vars *vars,
 		t_gc **head_gc)
 {
-	int	fd[2];
+	int					fd[2];
+	int					pid;
+	int					status;
+	struct s_heredoc	heredoc_vars;
 
 	if (pipe(fd) == -1)
-		perror("pipe");
-	if (type == TOKEN_HEREDOC)
-		while (heredoc_readline_expand(delimeter, fd[1], vars, head_gc))
-			continue ;
-	else
 	{
-		while (1)
-		{
-			if (!heredoc_readline(delimeter, fd[1], vars))
-				break ;
-		}
+		perror("pipe");
+		return (-1);
 	}
+	heredoc_vars.delimeter = delimeter;
+	heredoc_vars.type = type;
+	pid = fork();
+	if (pid == 0)
+		heredoc_child_process(fd, heredoc_vars, vars, head_gc);
 	close(fd[1]);
+	signal(SIGINT, SIG_IGN);
+	waitpid(pid, &status, 0);
+	signal(SIGINT, sigint_prompt);
+	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+		return (heredoc_signals_exit(fd[0]));
 	return (fd[0]);
 }
 
@@ -74,7 +83,7 @@ int	check_expand(t_token *token)
 	return (0);
 }
 
-void	check_heredoc(t_token **tokens)
+void	check_heredoc(t_token **tokens, t_gc **head_gc)
 {
 	t_token	*current;
 
@@ -84,7 +93,11 @@ void	check_heredoc(t_token **tokens)
 		if (current->type == TOKEN_HEREDOC && current->next)
 		{
 			if (check_expand(current->next))
+			{
 				current->type = TOKEN_HEREDOC_NOEXP;
+				current->next->value = expand_heredoc(
+						current->next->value, head_gc);
+			}
 			else
 				current->type = TOKEN_HEREDOC;
 		}

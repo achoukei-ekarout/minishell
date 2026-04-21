@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 13:32:44 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/08 20:25:31 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/17 21:46:18 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,20 @@ void	read_input(char	*input, t_vars *vars, t_gc **gc, t_gc **perm_gc)
 	if (!valid_redir(input, vars))
 		return ;
 	tokens = tokenize(input, gc, vars);
-	check_heredoc(&tokens);
+	check_heredoc(&tokens, gc);
 	param_expand(&tokens, *vars, gc);
 	if (!tokens)
 	{
 		vars->exit_code = 0;
 		return ;
 	}
-	// print_tokens(tokens);
 	abstract_syntax_tree = parse(tokens, gc);
 	proccess_heredoc(abstract_syntax_tree, vars, gc);
-	// print_tree(abstract_syntax_tree);
+	if (g_signal == SIGINT)
+		return (main_signals_exit(vars));
 	setup_signals_exec();
 	execute_ast(abstract_syntax_tree, vars, gc, perm_gc);
+	close_heredoc_fds(abstract_syntax_tree);
 	if (g_signal == SIGINT)
 		vars->exit_code = 130;
 }
@@ -57,7 +58,7 @@ void	run_shell(t_vars *vars, t_gc **perm_gc)
 			g_signal = 0;
 			vars->exit_code = 130;
 		}
-		vars->line_counter ++;
+		vars->line_counter++;
 		if (!input)
 			input = ft_strdup("exit");
 		if (*input)

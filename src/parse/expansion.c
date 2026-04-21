@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 19:39:34 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/08 12:08:22 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/11 20:24:36 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,19 +82,17 @@ void	param_expand(t_token **tokens, t_vars vars, t_gc **head_gc)
 	prev = NULL;
 	while (curr)
 	{
+		if (curr->type == TOKEN_HEREDOC || curr->type == TOKEN_HEREDOC_NOEXP)
+		{
+			prev = curr->next;
+			curr = curr->next->next;
+			continue ;
+		}
 		new_token = expand(&curr, vars, head_gc);
 		if (new_token)
 			replace_token(tokens, &prev, new_token);
 		prev = curr;
 		curr = curr->next;
 	}
-	curr = *tokens;
-	prev = NULL;
-	while (curr)
-	{
-		if (!curr->value || !*(curr->value))
-			remove_token(tokens, &prev, curr);
-		prev = curr;
-		curr = curr->next;
-	}
+	clean_tokens(tokens);
 }

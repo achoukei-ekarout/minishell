@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 17:02:37 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/08 13:13:11 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/18 23:41:07 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	get_start(char *s)
 
 t_token	*start_node(char *new_value, char **split, t_gc **head_gc)
 {
-	t_token	*start_node;
+	t_token	*first_node;
 	t_token	*next_node;
 	char	*token_value;
 	int		i;
@@ -37,16 +37,16 @@ t_token	*start_node(char *new_value, char **split, t_gc **head_gc)
 		token_value = ft_strjoin_allocate(new_value, split[0], head_gc);
 	else
 		token_value = split[0];
-	start_node = create_token(TOKEN_WORD, token_value, head_gc);
+	first_node = create_token(TOKEN_WORD, token_value, head_gc);
 	i = 1;
-	next_node = start_node;
+	next_node = first_node;
 	while (split[i])
 	{
 		next_node->next = create_token(TOKEN_WORD, split[i], head_gc);
 		next_node = next_node->next;
 		i++;
 	}
-	return (start_node);
+	return (first_node);
 }
 
 t_token	*expanded_token(char *value, t_vars vars, t_gc **head_gc)
@@ -65,7 +65,7 @@ t_token	*expanded_token(char *value, t_vars vars, t_gc **head_gc)
 	}
 	i++;
 	expanded = get_value(value, &i, vars);
-	split = ft_split_allocate(expanded, ' ', head_gc);
+	split = ft_split_set(expanded, " \n\t\v\f\r", head_gc);
 	free(expanded);
 	if (!split)
 		return (NULL);

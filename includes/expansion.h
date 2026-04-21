@@ -6,7 +6,7 @@
 /*   By: ekarout <ekarout@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 19:18:59 by ekarout           #+#    #+#             */
-/*   Updated: 2026/04/01 17:05:51 by ekarout          ###   ########.fr       */
+/*   Updated: 2026/04/13 19:25:16 by ekarout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,11 @@ char		*get_value(char *value, int *i, t_vars vars);
 int			check_for_new_token(char *value);
 t_token		*expanded_token(char *value, t_vars vars, t_gc **head_gc);
 t_token		*start_node(char *new_value, char **split, t_gc **head_gc);
+void		handle_quotes_heredoc_len(char *value, int *i, int *len);
+int			expand_heredoc_len(char *value);
+void		handle_quotes_heredoc(char *value, char *new_value, int *i, int *j);
+char		*expand_heredoc(char *value, t_gc **head_gc);
+void		clean_tokens(t_token **tokens);
+char		*heredoc_line_expand(char *line, t_vars vars, t_gc **head_gc);
 
 #endif
