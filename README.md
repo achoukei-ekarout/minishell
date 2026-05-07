@@ -93,7 +93,7 @@ This shell is not a toy; it implements:
 | Lexer | Operators | <code>&#124;</code>, `<`, `>`, `<<`, `>>` |
 | Parser | Pipelines | left-associative AST of `t_ast` nodes |
 | Parser | Multiple redirections per command | applied in order |
-| Expansion | `$VAR` / `${VAR}` | expanded outside single quotes |
+| Expansion | `$VAR` | expanded outside single quotes |
 | Expansion | `$?` | last child's exit status |
 | Expansion | Empty-expansion word splitting | unquoted `$EMPTY` removes the word |
 | Heredoc | `<< DELIM` | with expansion |
@@ -114,8 +114,8 @@ This shell is not a toy; it implements:
 
 ```text
 $ ./minishell
-minishell$ echo "Hello, $USER — your shell PID is $$"
-Hello, ekarout — your shell PID is 42
+minishell$ echo "Hello, $USER"
+Hello, ekarout
 minishell$ ls -la | grep ".c$" | wc -l
    42
 minishell$ cat << EOF > /tmp/note
@@ -277,7 +277,7 @@ typedef struct s_vars {
     char    *executer_name;  /* argv[0] — used in error messages           */
     char    *input;
 } t_vars;
-```
+``` — your shell PID is 42
 
 ### Example AST: `cat file.txt | grep foo > out.txt`
 
@@ -392,7 +392,7 @@ After the AST is walked, `close_heredoc_fds()` closes any leftover heredoc fds a
 ### Compile
 
 ```bash
-git clone https://github.com/<your-username>/minishell.git
+git clone https://github.com/achoukei-ekarout/minishell.git
 cd minishell
 make
 ```
@@ -519,8 +519,6 @@ minishell$ ls /nonexistent
 ls: cannot access '/nonexistent': No such file or directory
 minishell$ echo $?
 2
-minishell$ true && echo $?
-0
 ```
 
 ### Multi-stage pipelines with redirection
